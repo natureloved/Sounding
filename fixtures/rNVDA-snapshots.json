@@ -1,0 +1,56 @@
+[
+  {
+    "id": "snap-nvda-1",
+    "source_id": "skill-macro-analyst",
+    "source_name": "macro-analyst",
+    "kind": "signal_skill",
+    "content": "Fed interest rate pause consensus at 5.25%-5.50% sustains tech multiple expansion. High correlation between global liquidity index and AI capex commitments. Treasury yields stabilizing below 4.15% supports long-duration semiconductor valuations.",
+    "retrieved_at": "2026-09-13T03:00:00.000Z",
+    "anchor_verdict": "shut"
+  },
+  {
+    "id": "snap-nvda-2",
+    "source_id": "skill-market-intel",
+    "source_name": "market-intel",
+    "kind": "signal_skill",
+    "content": "Institutional order flow shows heavy net call buying in Oct/Nov 140-150 strike contracts. Dark pool accumulation index printed 68.4 (90th percentile). Whale wallet flows indicate continuous rebalancing into hyperscaler proxy baskets.",
+    "retrieved_at": "2026-09-14T14:45:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-nvda-3",
+    "source_id": "skill-news-briefing",
+    "source_name": "news-briefing",
+    "kind": "signal_skill",
+    "content": "Major cloud titans (MSFT, GOOGL, META) reiterate minimum 45% YoY increase in AI datacenter capex for FY27. Supply chain checks in Taiwan confirm GB200 rack production ramp progressing ahead of schedule with yield improvements.",
+    "retrieved_at": "2026-09-14T15:10:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-nvda-4",
+    "source_id": "skill-sentiment-analyst",
+    "source_name": "sentiment-analyst",
+    "kind": "signal_skill",
+    "content": "Retail sentiment index at 74/100 (Greed). Social volume spikes 42% week-on-week. Options open interest put/call ratio falls to 0.58, indicating broad crowd complacency but persistent momentum chasing.",
+    "retrieved_at": "2026-09-14T15:30:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-nvda-5",
+    "source_id": "skill-technical-analysis",
+    "source_name": "technical-analysis",
+    "kind": "signal_skill",
+    "content": "Price holding above the 20-day EMA ($128.50) and ascending channel boundary. Daily RSI at 64.2 showing healthy consolidation without overbought exhaustion. Volume expansion on up-days confirms structural bull trend with resistance at $142.",
+    "retrieved_at": "2026-09-14T15:40:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-nvda-6",
+    "source_id": "feed-bitget-market",
+    "source_name": "bitget-market",
+    "kind": "market_feed",
+    "content": "rNVDA Last: $132.80, 24h Change: +3.25%, 24h High: $134.10, 24h Low: $128.40, Volume: $84.2M, Spread: 0.04%, Reference Underlying: NVDA (NASDAQ).",
+    "retrieved_at": "2026-09-14T15:45:00.000Z",
+    "anchor_verdict": "open"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "snap-tsla-1",
+    "source_id": "skill-macro-analyst",
+    "source_name": "macro-analyst",
+    "kind": "signal_skill",
+    "content": "Automotive loan interest rates at 15-year highs continue to dampen discretionary EV purchases globally. Raw material lithium carbonate deflation offers slight gross margin buffer.",
+    "retrieved_at": "2026-09-14T14:30:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-tsla-2",
+    "source_id": "skill-market-intel",
+    "source_name": "market-intel",
+    "kind": "signal_skill",
+    "content": "Large block trades recorded selling $220 calls and buying $180 puts for December expiration. Dealer gamma position flipped negative below $215, intensifying downward sensitivity.",
+    "retrieved_at": "2026-09-14T14:45:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-tsla-3",
+    "source_id": "skill-news-briefing",
+    "source_name": "news-briefing",
+    "kind": "signal_skill",
+    "content": "Regulatory scrutiny intensifies regarding Full Self-Driving claims in Europe, delaying regulatory approval until mid-2027. Q3 European delivery numbers contract 8% YoY amid intense domestic EV competition.",
+    "retrieved_at": "2026-09-14T15:00:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-tsla-4",
+    "source_id": "skill-sentiment-analyst",
+    "source_name": "sentiment-analyst",
+    "kind": "signal_skill",
+    "content": "Retail sentiment deteriorated to 38/100 (Fear). Prominent tech commentators turn cautious regarding near-term autonomous robotaxi commercialization timelines.",
+    "retrieved_at": "2026-09-14T15:15:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-tsla-5",
+    "source_id": "skill-technical-analysis",
+    "source_name": "technical-analysis",
+    "kind": "signal_skill",
+    "content": "Breakdown below the 50-day moving average on heavy selling volume. MACD histogram expands into negative territory with next major psychological support at $195.",
+    "retrieved_at": "2026-09-14T15:30:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-tsla-6",
+    "source_id": "feed-bitget-market",
+    "source_name": "bitget-market",
+    "kind": "market_feed",
+    "content": "rTSLA Last: $204.50, 24h Change: -4.10%, 24h High: $214.20, 24h Low: $202.80, Volume: $51.8M, Spread: 0.05%, Reference Underlying: TSLA (NASDAQ).",
+    "retrieved_at": "2026-09-14T15:45:00.000Z",
+    "anchor_verdict": "open"
+  }
+]

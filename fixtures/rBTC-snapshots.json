@@ -1,0 +1,56 @@
+[
+  {
+    "id": "snap-btc-1",
+    "source_id": "skill-macro-analyst",
+    "source_name": "macro-analyst",
+    "kind": "signal_skill",
+    "content": "Global central bank easing cycle broadening. US M2 money supply growth turned positive at +3.2% YoY, historically leading Bitcoin cyclical appreciation by 90 days.",
+    "retrieved_at": "2026-09-14T10:00:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-btc-2",
+    "source_id": "skill-market-intel",
+    "source_name": "market-intel",
+    "kind": "signal_skill",
+    "content": "US Spot Bitcoin ETFs recorded net inflows of $420M over the past 48 hours. OTC desk balances dropped to multi-month lows as institutional custodians continue net accumulation.",
+    "retrieved_at": "2026-09-14T11:00:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-btc-3",
+    "source_id": "skill-news-briefing",
+    "source_name": "news-briefing",
+    "kind": "signal_skill",
+    "content": "Bipartisan crypto market structure regulatory framework advances in US Senate committee with favorable clarity for spot and derivative trading venues.",
+    "retrieved_at": "2026-09-14T12:00:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-btc-4",
+    "source_id": "skill-sentiment-analyst",
+    "source_name": "sentiment-analyst",
+    "kind": "signal_skill",
+    "content": "Crypto Fear & Greed index reaches 66 (Greed). Perpetual futures funding rate neutral at 0.009% per 8h, showing leverage remains balanced without over-extension.",
+    "retrieved_at": "2026-09-14T13:00:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-btc-5",
+    "source_id": "skill-technical-analysis",
+    "source_name": "technical-analysis",
+    "kind": "signal_skill",
+    "content": "BTC confirmed breakout above the $64,500 range resistance on above-average spot volume. Daily 50/200 EMA golden cross firmly intact with initial target at $68,200.",
+    "retrieved_at": "2026-09-14T13:30:00.000Z",
+    "anchor_verdict": "open"
+  },
+  {
+    "id": "snap-btc-6",
+    "source_id": "feed-bitget-market",
+    "source_name": "bitget-market",
+    "kind": "market_feed",
+    "content": "BTC/USDT Last: $65,420.50, 24h Change: +4.80%, 24h High: $65,890.00, 24h Low: $62,150.00, Volume: $1.42B, Spread: 0.01%.",
+    "retrieved_at": "2026-09-14T14:00:00.000Z",
+    "anchor_verdict": "open"
+  }
+]

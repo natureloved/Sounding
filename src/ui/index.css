@@ -1,0 +1,974 @@
+/* ========================================================================= */
+/* SOUNDING // INDUSTRIAL BRUTALISM & TACTICAL TELEMETRY DESIGN SYSTEM       */
+/* Archetype: Tactical Telemetry & CRT Terminal (Dark Chassis)               */
+/* Strict Directives: ZERO Border Radius, Monospace Telemetry, Blueprint Grid*/
+/* ========================================================================= */
+
+:root {
+  /* Substrates */
+  --bg-void: #06080b;
+  --bg-chassis: #0a0d14;
+  --bg-panel: #0e131d;
+  --bg-subpanel: #131926;
+  --bg-input: #070a0f;
+  --bg-highlight: #182030;
+
+  /* Structural 1px Blueprint Borders */
+  --border-tactical: #1b2333;
+  --border-tactical-bright: #2d3b55;
+  --border-tactical-focus: #00f0ff;
+
+  /* Utilitarian Signal Palette */
+  --hazard-red: #ff2a2a;
+  --hazard-red-dim: rgba(255, 42, 42, 0.12);
+  --hazard-red-border: rgba(255, 42, 42, 0.45);
+
+  --amber-tension: #ffb000;
+  --amber-tension-dim: rgba(255, 176, 0, 0.12);
+  --amber-tension-border: rgba(255, 176, 0, 0.45);
+
+  --phosphor-green: #4af626;
+  --phosphor-green-dim: rgba(74, 246, 38, 0.12);
+  --phosphor-green-border: rgba(74, 246, 38, 0.45);
+
+  --radar-cyan: #00f0ff;
+  --radar-cyan-dim: rgba(0, 240, 255, 0.12);
+  --radar-cyan-border: rgba(0, 240, 255, 0.45);
+
+  /* Telemetry Typography */
+  --text-white: #eaeaea;
+  --text-secondary: #9aa5b8;
+  --text-dim: #5c677d;
+  --text-muted: #3d4659;
+
+  --font-display: 'Archivo Black', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
+  --font-body: 'JetBrains Mono', 'Inter', monospace;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 1. ABSOLUTE REJECTION OF BORDER-RADIUS (INDUSTRIAL DIRECTIVE)             */
+/* ------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 2. BASE & CRT SCANLINE SUBSTRATE                                          */
+/* ------------------------------------------------------------------------- */
+body {
+  background-color: var(--bg-void);
+  background-image:
+    linear-gradient(rgba(27, 35, 51, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 35, 51, 0.25) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Simulated CRT Scanlines */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.8;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-tactical-bright);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--radar-cyan);
+}
+
+/* ------------------------------------------------------------------------- */
+/* 3. LAYOUT & CHASSIS STRUCTURE                                             */
+/* ------------------------------------------------------------------------- */
+.desk-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tactical HUD Header */
+.desk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--bg-chassis);
+  border-bottom: 2px solid var(--border-tactical-bright);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--bg-input);
+  border: 1px solid var(--radar-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--radar-cyan);
+  font-size: 16px;
+  box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.track-tag {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  background: var(--bg-input);
+  color: var(--radar-cyan);
+  border: 1px solid var(--radar-cyan-border);
+  padding: 2px 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.header-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  border-left: 1px solid var(--border-tactical);
+  padding-left: 12px;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--phosphor-green);
+  box-shadow: 0 0 6px var(--phosphor-green);
+}
+
+.pulse-dot.shut {
+  background: var(--hazard-red);
+  box-shadow: 0 0 6px var(--hazard-red);
+}
+
+.safety-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: var(--bg-input);
+  color: var(--phosphor-green);
+  border: 1px solid var(--phosphor-green-border);
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Main Compartment Grid */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  padding: 16px 24px;
+  flex: 1;
+}
+
+@media (max-width: 1100px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Industrial Telemetry Panel */
+.glass-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-tactical);
+  border-top: 2px solid var(--border-tactical-bright);
+  padding: 18px 20px;
+  position: relative;
+}
+
+.glass-panel:hover {
+  border-color: var(--border-tactical-bright);
+}
+
+/* Corner Crosshair Accents */
+.glass-panel::before {
+  content: "+";
+  position: absolute;
+  top: -6px;
+  left: -4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-tactical);
+}
+
+.panel-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 4. THESIS INPUT & MECHANICAL SWITCHES                                     */
+/* ------------------------------------------------------------------------- */
+.thesis-box {
+  margin-bottom: 4px;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ticker-input {
+  width: 130px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-tactical-bright);
+  padding: 10px 14px;
+  color: var(--radar-cyan);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.thesis-input {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-tactical-bright);
+  padding: 10px 14px;
+  color: var(--text-white);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.ticker-input:focus, .thesis-input:focus {
+  outline: none;
+  border-color: var(--radar-cyan);
+  background: #090e18;
+}
+
+.execute-btn {
+  background: var(--radar-cyan);
+  border: 1px solid var(--radar-cyan);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.1s ease;
+}
+
+.execute-btn:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+}
+
+.execute-btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+}
+
+.execute-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--border-tactical);
+  background: var(--bg-subpanel);
+  color: var(--text-dim);
+}
+
+/* Mechanical Switches & Pills */
+.pill-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-tactical);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.1s ease;
+}
+
+.pill-btn:hover {
+  background: var(--bg-subpanel);
+  border-color: var(--radar-cyan);
+  color: var(--text-white);
+}
+
+.pill-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.preset-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-tactical);
+}
+
+.preset-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 5. LIVE MARKET INDICATOR TELEMETRY RIBBON                                 */
+/* ------------------------------------------------------------------------- */
+.telemetry-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--bg-chassis);
+  border: 1px solid var(--border-tactical);
+  border-left: 3px solid var(--radar-cyan);
+  font-family: var(--font-mono);
+}
+
+.telemetry-price {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-white);
+}
+
+.telemetry-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.telemetry-stat strong {
+  color: var(--text-white);
+}
+
+/* ------------------------------------------------------------------------- */
+/* 6. SNAPSHOTS STREAM (MODULAR RACK TILES)                                  */
+/* ------------------------------------------------------------------------- */
+.snapshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.snapshot-card {
+  background: var(--bg-subpanel);
+  border: 1px solid var(--border-tactical);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.1s ease;
+}
+
+.snapshot-card:hover {
+  border-color: var(--border-tactical-bright);
+}
+
+.snapshot-card.is-load-bearing {
+  border-color: var(--amber-tension);
+  background: var(--amber-tension-dim);
+  border-left: 3px solid var(--amber-tension);
+}
+
+.snapshot-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.source-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-white);
+  text-transform: uppercase;
+}
+
+.anchor-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.anchor-pill.open {
+  background: var(--phosphor-green-dim);
+  color: var(--phosphor-green);
+  border: 1px solid var(--phosphor-green-border);
+}
+
+.anchor-pill.shut {
+  background: var(--hazard-red-dim);
+  color: var(--hazard-red);
+  border: 1px solid var(--hazard-red-border);
+}
+
+.snapshot-content {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+.snapshot-meta {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  border-top: 1px solid var(--border-tactical);
+  padding-top: 4px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 7. CAUSAL FOUNDATION VISUALIZER (TACTICAL STRESS-TEST HUD)                */
+/* ------------------------------------------------------------------------- */
+.foundation-visualizer-card {
+  border-top: 2px solid var(--radar-cyan);
+  background: var(--bg-panel);
+}
+
+.bridge-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.thesis-platform {
+  background: var(--bg-chassis);
+  border: 2px solid var(--border-tactical-bright);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease;
+  transform-origin: 75% center;
+  position: relative;
+}
+
+.thesis-platform::before {
+  content: "[ THESIS BEAM LOAD STRESS: NOMINAL ]";
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background: var(--bg-chassis);
+  padding: 0 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.platform-tilted {
+  border-color: var(--hazard-red);
+  background: rgba(255, 42, 42, 0.08);
+}
+
+.platform-tilted::before {
+  content: "[ ALERT: STRUCTURAL FAILURE // LOAD-BEARING COLLAPSE ]";
+  color: var(--hazard-red);
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.pillar {
+  background: var(--bg-subpanel);
+  border: 1px solid var(--border-tactical);
+  padding: 10px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  position: relative;
+}
+
+.pillar:hover {
+  border-color: var(--radar-cyan);
+  background: #141c2c;
+}
+
+.pillar:active {
+  transform: translateY(1px);
+}
+
+.pillar-load-bearing {
+  border: 1px solid var(--amber-tension);
+  background: var(--amber-tension-dim);
+  border-top: 3px solid var(--amber-tension);
+}
+
+.pillar-shut {
+  border: 1px solid var(--hazard-red);
+  background: var(--hazard-red-dim);
+}
+
+.pillar-removed {
+  opacity: 0.35;
+  border: 1px dashed var(--text-dim);
+  background: transparent;
+  transform: translateY(3px);
+}
+
+.pillar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.pillar-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.2;
+}
+
+.pillar-tag {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 4px;
+  text-transform: uppercase;
+}
+
+.hazard-strip {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--hazard-red);
+  background: var(--hazard-red-dim);
+  border: 1px solid var(--hazard-red-border);
+  padding: 2px 4px;
+  margin-top: 4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pillar-footer {
+  border-top: 1px solid var(--border-tactical);
+  padding-top: 6px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 8. ATTRIBUTION & PERMUTATION LOGS                                         */
+/* ------------------------------------------------------------------------- */
+.attribution-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.conclusion-banner {
+  background: var(--bg-chassis);
+  border: 1px solid var(--border-tactical-bright);
+  padding: 16px;
+  position: relative;
+}
+
+.conclusion-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.direction-badge {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 4px 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.direction-badge.bullish {
+  background: var(--phosphor-green-dim);
+  color: var(--phosphor-green);
+  border: 1px solid var(--phosphor-green);
+}
+
+.direction-badge.bearish {
+  background: var(--hazard-red-dim);
+  color: var(--hazard-red);
+  border: 1px solid var(--hazard-red);
+}
+
+.direction-badge.neutral {
+  background: var(--bg-subpanel);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-tactical-bright);
+}
+
+.confidence-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.confidence-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.conf-segment {
+  width: 12px;
+  height: 6px;
+  background: var(--border-tactical);
+}
+
+.conf-segment.active {
+  background: var(--radar-cyan);
+}
+
+.rationale-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-white);
+  font-family: var(--font-mono);
+}
+
+/* Inherited Anchor Alerts */
+.unanchored-alert {
+  background: var(--hazard-red-dim);
+  border: 1px solid var(--hazard-red);
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.anchored-badge {
+  background: var(--phosphor-green-dim);
+  border: 1px solid var(--phosphor-green);
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.alert-title {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 12px;
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.alert-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-family: var(--font-mono);
+}
+
+/* Load Bearing Set Block */
+.load-bearing-box {
+  border: 1px solid var(--amber-tension);
+  background: var(--amber-tension-dim);
+  padding: 14px 16px;
+}
+
+.set-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.load-bearing-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--bg-chassis);
+  padding: 4px 10px;
+  border: 1px solid;
+  letter-spacing: 0.04em;
+}
+
+/* Action Bar */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-tactical);
+}
+
+.rerun-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-tactical-bright);
+  color: var(--text-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.1s ease;
+}
+
+.rerun-btn:hover:not(:disabled) {
+  border-color: var(--radar-cyan);
+  background: var(--bg-subpanel);
+}
+
+.rerun-btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+}
+
+.reproduced-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--phosphor-green);
+}
+
+/* Removal Permutations Table */
+.permutation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+}
+
+.permutation-table th {
+  text-align: left;
+  padding: 6px 8px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border-tactical-bright);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.permutation-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border-tactical);
+}
+
+.tr-flipped {
+  background: var(--hazard-red-dim);
+}
+
+/* ------------------------------------------------------------------------- */
+/* 9. COVERAGE PANEL (SOURCE INFLUENCE RANKING)                              */
+/* ------------------------------------------------------------------------- */
+.coverage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.coverage-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  background: var(--bg-subpanel);
+  border: 1px solid var(--border-tactical);
+}
+
+.coverage-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coverage-item-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-white);
+  text-transform: uppercase;
+}
+
+.coverage-ratio {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber-tension);
+  font-weight: 700;
+}
+
+.coverage-progress-bg {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-input);
+  overflow: hidden;
+}
+
+.coverage-progress-fill {
+  height: 100%;
+  background: var(--radar-cyan);
+}
+
+/* ------------------------------------------------------------------------- */
+/* 10. MODAL HUD OVERLAYS (TACTICAL WINDOW FRAMING)                          */
+/* ------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(6, 8, 11, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 24px;
+}
+
+.modal-content {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-tactical-bright);
+  border-top: 3px solid var(--radar-cyan);
+  width: 100%;
+  max-width: 820px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: var(--bg-chassis);
+  border-bottom: 1px solid var(--border-tactical-bright);
+}
+
+.modal-body {
+  padding: 18px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--text-white);
+}
+
+.close-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-tactical);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #fff;
+  border-color: var(--hazard-red);
+  background: var(--hazard-red-dim);
+}
