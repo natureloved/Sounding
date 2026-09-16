@@ -22,20 +22,20 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
   let simulatedConfidence = conclusion.confidence_band;
   let tiltDegrees = 0;
   let statusMessage =
-    'SELECT ANY FOUNDATION STRUT BELOW TO "PULL THE PIN" AND TEST STRUCTURAL INTEGRITY.';
+    'Select any source pillar below to "pull the pin" and stress-test whether the thesis stands.';
 
   if (isLoadBearingDisabled) {
     simulatedDirection = 'neutral';
     simulatedConfidence = 'low';
-    tiltDegrees = -8; // Visibly tilt down to the left
-    statusMessage = `[!] CRITICAL STRUCTURAL COLLAPSE: REMOVAL OF LOAD-BEARING STRUT [${attribution.load_bearing_set.join(
+    tiltDegrees = -7; // Visibly tilt down to the left
+    statusMessage = `Critical Structural Collapse: Removal of load-bearing pillar [${attribution.load_bearing_set.join(
       ', '
-    )}] INVALIDATES THE SYNTHESIS FOUNDATION.`;
+    )}] causes the thesis foundation to fail.`;
   } else if (disabledSources.size > 0) {
     tiltDegrees = 0;
-    statusMessage = `[+] REDUNDANT STRUT REMOVED: PLATFORM EQUILIBRIUM MAINTAINED. REMOVAL OF [${Array.from(
+    statusMessage = `Redundant Source Removed: Thesis platform remains in equilibrium. Removal of [${Array.from(
       disabledSources
-    ).join(', ')}] DOES NOT FLIP CONCLUSION.`;
+    ).join(', ')}] does not alter the call.`;
   }
 
   const handleTogglePillar = (sourceName: string) => {
@@ -56,25 +56,25 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
     <div className="glass-panel foundation-visualizer-card">
       <div className="panel-header">
         <span className="panel-title">
-          <span>[#]</span> CAUSAL FOUNDATION VISUALIZER // LEAVE-ONE-OUT STRESS TEST
+          <span>Causal Foundation Visualizer</span>
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {disabledSources.size > 0 && (
-            <button className="pill-btn" onClick={handleReset} style={{ borderColor: 'var(--radar-cyan)', color: 'var(--radar-cyan)' }}>
-              [ RESTORE ALL STRUTS ]
+            <button className="pill-btn" onClick={handleReset} style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}>
+              Restore All Pillars
             </button>
           )}
-          <span className="track-tag">ATTRIBUTION PROOF</span>
+          <span className="track-tag">Leave-One-Out Simulation</span>
         </div>
       </div>
 
       <div
         style={{
-          fontSize: '11px',
+          fontSize: '12px',
           fontFamily: 'var(--font-mono)',
-          color: isLoadBearingDisabled ? 'var(--hazard-red)' : 'var(--text-secondary)',
+          color: isLoadBearingDisabled ? 'var(--accent-rose)' : 'var(--text-secondary)',
           marginBottom: '16px',
-          letterSpacing: '0.04em'
+          letterSpacing: '0.01em'
         }}
       >
         {statusMessage}
@@ -87,24 +87,24 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
           className={`thesis-platform ${isLoadBearingDisabled ? 'platform-tilted' : ''}`}
           style={{ transform: `rotate(${tiltDegrees}deg)` }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-              SYNTHESIS BEAM:
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              Thesis Platform:
             </span>
-            <span className={`direction-badge ${simulatedDirection}`} style={{ padding: '2px 8px', fontSize: '11px' }}>
-              {simulatedDirection.toUpperCase()} // {simulatedConfidence.toUpperCase()}_CONVICTION
+            <span className={`direction-badge ${simulatedDirection}`} style={{ padding: '3px 12px', fontSize: '12px' }}>
+              {simulatedDirection.toUpperCase()} ({simulatedConfidence.toUpperCase()})
             </span>
           </div>
           <span
             style={{
-              fontSize: '10px',
+              fontSize: '11px',
               fontFamily: 'var(--font-mono)',
               fontWeight: 700,
-              color: isLoadBearingDisabled ? 'var(--hazard-red)' : 'var(--phosphor-green)',
-              letterSpacing: '0.05em'
+              color: isLoadBearingDisabled ? 'var(--accent-rose)' : 'var(--accent-emerald)',
+              letterSpacing: '0.03em'
             }}
           >
-            {isLoadBearingDisabled ? '/// BEAM TILTED: COLLAPSE ///' : '=== FOUNDATION ANCHORED ==='}
+            {isLoadBearingDisabled ? '⚠️ Foundation Destabilized' : '🛡️ Foundation Supported'}
           </span>
         </div>
 
@@ -125,37 +125,50 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
                 key={snap.id}
                 className={pillarClass}
                 onClick={() => handleTogglePillar(snap.source_name)}
-                title={`Click to ${isRemoved ? 'restore' : 'pull pin on'} this source`}
+                title={`Click to ${isRemoved ? 'restore' : 'remove'} this pillar`}
               >
                 <div className="pillar-header">
                   <span className="pillar-name">{snap.source_name}</span>
-                  <span className={`pillar-tag ${isShut ? 'tag-shut' : 'tag-open'}`}>
+                  <span className={`pillar-tag ${isShut ? 'tag-shut anchor-pill shut' : 'tag-open anchor-pill open'}`}>
                     {snap.anchor_verdict.toUpperCase()}
                   </span>
                 </div>
 
                 <div className="pillar-body" style={{ margin: '8px 0' }}>
                   {isRemoved ? (
-                    <div style={{ color: 'var(--text-dim)', fontSize: '10px', textAlign: 'center', fontFamily: 'var(--font-mono)' }}>
-                      [ PIN PULLED ]
+                    <div style={{ color: 'var(--text-muted)', fontSize: '11px', textAlign: 'center', fontFamily: 'var(--font-mono)' }}>
+                      [Removed]
                       <br />
-                      <span style={{ fontSize: '8px' }}>&lt; CLICK TO RESTORE &gt;</span>
+                      <span style={{ fontSize: '9px' }}>Click to restore</span>
                     </div>
                   ) : (
                     <>
                       <div
                         style={{
-                          fontSize: '9px',
+                          fontSize: '10px',
                           fontFamily: 'var(--font-mono)',
                           fontWeight: 700,
-                          color: isLB ? 'var(--amber-tension)' : 'var(--text-dim)'
+                          color: isLB ? 'var(--accent-amber)' : 'var(--text-muted)'
                         }}
                       >
-                        {isLB ? '[ LOAD-BEARING ]' : '[ REDUNDANT ]'}
+                        {isLB ? '⚡ Load-Bearing' : 'Redundant'}
                       </div>
                       {isShut && (
-                        <div className="hazard-strip">
-                          ! UNANCHORED SHUT !
+                        <div
+                          style={{
+                            fontSize: '9px',
+                            fontFamily: 'var(--font-mono)',
+                            fontWeight: 700,
+                            color: 'var(--accent-rose)',
+                            background: 'var(--accent-rose-dim)',
+                            border: '1px solid var(--accent-rose-border)',
+                            padding: '2px 5px',
+                            borderRadius: '4px',
+                            marginTop: '4px',
+                            textAlign: 'center'
+                          }}
+                        >
+                          Off-Hours (Shut)
                         </div>
                       )}
                     </>
@@ -163,8 +176,8 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
                 </div>
 
                 <div className="pillar-footer">
-                  <span style={{ fontSize: '8px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', letterSpacing: '0.05em' }}>
-                    {isRemoved ? '[+] RESTORE STRUT' : '[-] PULL PIN'}
+                  <span style={{ fontSize: '9px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', letterSpacing: '0.04em' }}>
+                    {isRemoved ? 'Click to Restore' : 'Click to Pull Pin'}
                   </span>
                 </div>
               </div>

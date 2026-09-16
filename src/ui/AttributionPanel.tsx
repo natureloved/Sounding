@@ -34,7 +34,7 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
       <div className="conclusion-banner">
         <div className="conclusion-top">
           <div className={`direction-badge ${conclusion.direction}`}>
-            [{conclusion.direction.toUpperCase()}]
+            {conclusion.direction.toUpperCase()}
           </div>
           <div className="confidence-bar-wrap">
             <span>CONVICTION:</span>
@@ -49,40 +49,36 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
               />
               <div className={`conf-segment ${conclusion.confidence_band === 'high' ? 'active' : ''}`} />
             </div>
-            <span>[{conclusion.confidence_band.toUpperCase()}]</span>
+            <span style={{ fontWeight: 700 }}>{conclusion.confidence_band.toUpperCase()}</span>
           </div>
         </div>
-        <p className="rationale-text">&gt;&gt;&gt; {conclusion.rationale}</p>
+        <p className="rationale-text">{conclusion.rationale}</p>
       </div>
 
-      {/* 2. Inherited Anchor Status Banner (The Critical Demo Moment!) */}
+      {/* 2. Inherited Anchor Status Banner */}
       {isUnanchored ? (
         <div className="unanchored-alert">
-          <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--hazard-red)', fontSize: '16px' }}>
-            [!]
-          </div>
+          <div style={{ fontSize: '20px', lineHeight: 1 }}>⚠️</div>
           <div>
-            <div className="alert-title" style={{ color: 'var(--hazard-red)' }}>
-              RESTING ON UNANCHORED GROUND // REFERENCE MARKET SHUT
+            <div className="alert-title" style={{ color: 'var(--accent-rose)' }}>
+              Resting on Unanchored Ground (Reference Market Shut)
             </div>
             <div className="alert-desc">
               The load-bearing conclusion for this instrument depends upon source(s) captured while the reference market was <strong>SHUT</strong>.
               <br />
               Offending unanchored source:{' '}
-              <span style={{ color: 'var(--hazard-red)', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
-                [{attribution.offending_sources?.join(', ') || loadBearingMembers.join(', ')}]
+              <span style={{ color: 'var(--accent-rose)', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+                {attribution.offending_sources?.join(', ') || loadBearingMembers.join(', ')}
               </span>
             </div>
           </div>
         </div>
       ) : (
         <div className="anchored-badge">
-          <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--phosphor-green)', fontSize: '16px' }}>
-            [+]
-          </div>
+          <div style={{ fontSize: '20px', lineHeight: 1 }}>🛡️</div>
           <div>
-            <div className="alert-title" style={{ color: 'var(--phosphor-green)' }}>
-              FIRMLY ANCHORED // REGULAR TRADING HOURS ACTIVE
+            <div className="alert-title" style={{ color: 'var(--accent-emerald)' }}>
+              Firmly Anchored (Regular Trading Hours Active)
             </div>
             <div className="alert-desc">
               Every source carrying this thesis was retrieved during active reference market price discovery. Weakest clock verdict: <strong>OPEN</strong>.
@@ -95,20 +91,20 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
       <div className="load-bearing-box">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <span style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', letterSpacing: '0.05em' }}>
-              ATTRIBUTION MEASURED BY REMOVAL // LEAVE-ONE-OUT / LEAVE-PAIR-OUT
+            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+              ATTRIBUTION MEASURED BY REMOVAL (LEAVE-ONE-OUT / LEAVE-PAIR-OUT)
             </span>
-            <h4 style={{ fontSize: '14px', fontFamily: 'var(--font-mono)', fontWeight: 800, marginTop: '2px', color: 'var(--text-white)' }}>
-              {isRobust ? 'ROBUST VIEW (MULTI-SOURCE CONSENSUS)' : 'LOAD-BEARING SET // SMALLEST DECISIVE COALITION'}
+            <h4 style={{ fontSize: '15px', fontWeight: 700, marginTop: '2px', color: 'var(--text-primary)' }}>
+              {isRobust ? 'Robust View (Multi-Source Consensus)' : 'Load-Bearing Set (Smallest Decisive Coalition)'}
             </h4>
           </div>
           <span className="track-tag">
-            {isRobust ? 'ZERO PERMUTATION FLIPS' : `${loadBearingMembers.length} LOAD-BEARING SOURCE(S)`}
+            {isRobust ? 'Zero Flips' : `${loadBearingMembers.length} Load-Bearing Source(s)`}
           </span>
         </div>
 
         {isRobust ? (
-          <p style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: 1.5 }}>
             No single or paired removal flipped direction or shifted the confidence band. The synthesis stands on redundant multi-source consensus. Noise figure: {attribution.noise_figure.toFixed(2)}.
           </p>
         ) : (
@@ -122,17 +118,17 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
                     key={name}
                     className="load-bearing-pill"
                     style={{
-                      borderColor: isShut ? 'var(--hazard-red)' : 'var(--amber-tension)',
-                      color: isShut ? 'var(--hazard-red)' : 'var(--amber-tension)',
-                      background: isShut ? 'var(--hazard-red-dim)' : 'var(--amber-tension-dim)'
+                      borderColor: isShut ? 'var(--accent-rose-border)' : 'var(--accent-amber-border)',
+                      color: isShut ? 'var(--accent-rose)' : 'var(--accent-amber)',
+                      background: isShut ? 'var(--accent-rose-dim)' : 'var(--accent-amber-dim)'
                     }}
                   >
-                    [{name}] {isShut ? '// CLOCK: SHUT' : '// CLOCK: OPEN'}
+                    {name} {isShut ? '(SHUT ⚠️)' : '(OPEN ✓)'}
                   </span>
                 );
               })}
             </div>
-            <p style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: 1.4 }}>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: 1.4 }}>
               Removal of this minimal set flips the derived answer. Attribution is measured by removal, never claimed by citation.
             </p>
           </div>
@@ -141,18 +137,18 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
 
       {/* 4. Action Bar with [Re-run Derivation] (Invariant I7) */}
       <div className="action-bar">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <button
             className="rerun-btn"
             onClick={onRerun}
             disabled={isRerunning}
             id="rerun-derivation-btn"
           >
-            <span>{isRerunning ? '[ REPRODUCING... ]' : '[ RE-RUN DERIVATION ]'}</span>
+            <span>{isRerunning ? '🔄 Reproducing...' : '🔁 Re-run Derivation'}</span>
           </button>
           {rerunCount > 0 && (
             <span className="reproduced-badge">
-              [✓ VERIFIED FROM STORED INPUTS // RUN #{rerunCount}]
+              ✓ Verified from stored inputs (Run #{rerunCount})
             </span>
           )}
         </div>
@@ -162,13 +158,13 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
           onClick={() => setShowPermutations(!showPermutations)}
           id="toggle-permutations-btn"
         >
-          {showPermutations ? '[ HIDE PERMUTATIONS ]' : `[ INSPECT ${attribution.tested_removals.length} REMOVALS ]`}
+          {showPermutations ? 'Hide Removal Permutations' : `Inspect ${attribution.tested_removals.length} Removals`}
         </button>
       </div>
 
       {/* 5. Removal Permutation Table */}
       {showPermutations && (
-        <div style={{ marginTop: '8px', border: '1px solid var(--border-tactical)', background: 'var(--bg-chassis)' }}>
+        <div style={{ marginTop: '10px', background: 'var(--bg-input)', borderRadius: 'var(--radius-inner)', border: '1px solid var(--border-hairline)', overflow: 'hidden' }}>
           <table className="permutation-table">
             <thead>
               <tr>
@@ -176,22 +172,22 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
                 <th>RESULTING CALL</th>
                 <th>BAND</th>
                 <th>STATUS</th>
-                <th>DIAGNOSTIC LOG</th>
+                <th>DIAGNOSTIC REASON</th>
               </tr>
             </thead>
             <tbody>
               {attribution.tested_removals.map((rem, idx) => (
                 <tr key={idx} className={rem.changed ? 'tr-flipped' : ''}>
-                  <td style={{ color: rem.changed ? 'var(--amber-tension)' : 'inherit', fontWeight: 700 }}>
-                    [{rem.removed_sources.join(' + ')}]
+                  <td style={{ color: rem.changed ? 'var(--accent-amber)' : 'inherit', fontWeight: 600 }}>
+                    {rem.removed_sources.join(' + ')}
                   </td>
                   <td style={{ textTransform: 'uppercase' }}>{rem.direction}</td>
                   <td style={{ textTransform: 'uppercase' }}>{rem.confidence_band}</td>
                   <td>
                     {rem.changed ? (
-                      <span style={{ color: 'var(--hazard-red)', fontWeight: 800 }}>FLIPPED [!]</span>
+                      <span style={{ color: 'var(--accent-rose)', fontWeight: 700 }}>FLIPPED ⚡</span>
                     ) : (
-                      <span style={{ color: 'var(--text-dim)' }}>STABLE</span>
+                      <span style={{ color: 'var(--text-muted)' }}>UNCHANGED</span>
                     )}
                   </td>
                   <td style={{ color: 'var(--text-secondary)' }}>{rem.reason}</td>

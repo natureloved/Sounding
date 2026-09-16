@@ -11,13 +11,13 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
     <div className="glass-panel" style={{ height: 'fit-content' }}>
       <div className="panel-header">
         <span className="panel-title">
-          <span>[#]</span> SOURCE INFLUENCE METRICS
+          <span>Source Influence</span>
         </span>
-        <span className="track-tag">COVERAGE</span>
+        <span className="track-tag">Coverage</span>
       </div>
 
-      <p style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '14px', lineHeight: 1.4 }}>
-        RANKED STRICTLY BY MEMBERSHIP IN LOAD-BEARING SETS. DISTINGUISHES DECISIVE EVIDENCE FROM DECORATIVE CITATIONS.
+      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '14px', lineHeight: 1.5 }}>
+        Ranked strictly by historical membership in load-bearing sets. Distinguishes decisive market evidence from cosmetic citations.
       </p>
 
       <div className="coverage-list">
@@ -26,7 +26,7 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
           return (
             <div key={item.source_name} className="coverage-item">
               <div className="coverage-item-header">
-                <span className="coverage-item-name">[{item.source_name}]</span>
+                <span className="coverage-item-name">{item.source_name}</span>
                 <span className="coverage-ratio">{pct}% LB</span>
               </div>
               <div className="coverage-progress-bg">
@@ -36,15 +36,15 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
                     width: `${Math.max(pct, 4)}%`,
                     background:
                       pct >= 50
-                        ? 'var(--amber-tension)'
-                        : 'var(--border-tactical-bright)'
+                        ? 'linear-gradient(90deg, var(--accent-cyan), var(--accent-amber))'
+                        : 'rgba(255, 255, 255, 0.2)'
                   }}
                 />
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>
-                <span>CAPTURED: {item.total_captured}x</span>
-                <span style={{ color: item.last_anchor_verdict === 'open' ? 'var(--phosphor-green)' : 'var(--hazard-red)' }}>
-                  CLOCK: {item.last_anchor_verdict.toUpperCase()}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                <span>Captured: {item.total_captured}x</span>
+                <span style={{ color: item.last_anchor_verdict === 'open' ? 'var(--accent-emerald)' : 'var(--accent-rose)', fontWeight: 600 }}>
+                  Clock: {item.last_anchor_verdict.toUpperCase()}
                 </span>
               </div>
             </div>
@@ -52,14 +52,14 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
         })}
       </div>
 
-      <div style={{ marginTop: '20px', paddingTop: '14px', borderTop: '1px solid var(--border-tactical)' }}>
+      <div style={{ marginTop: '20px', paddingTop: '14px', borderTop: '1px solid var(--border-hairline-subtle)' }}>
         <button
           className="pill-btn"
-          style={{ width: '100%', padding: '10px', textAlign: 'center', fontWeight: 700, borderColor: 'var(--border-tactical-bright)' }}
+          style={{ width: '100%', padding: '9px', justifyContent: 'center', fontWeight: 600 }}
           onClick={onOpenProjectDoc}
           id="open-submission-doc-btn"
         >
-          [ VIEW BITGET PROJECT SPECIFICATION ]
+          📄 View Bitget Project Specification
         </button>
       </div>
     </div>
