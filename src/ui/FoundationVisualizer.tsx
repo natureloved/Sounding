@@ -87,7 +87,7 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
           className={`thesis-platform ${isLoadBearingDisabled ? 'platform-tilted' : ''}`}
           style={{ transform: `rotate(${tiltDegrees}deg)` }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="thesis-platform-info">
             <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Thesis Platform:
             </span>
@@ -96,6 +96,7 @@ export const FoundationVisualizer: React.FC<FoundationVisualizerProps> = ({
             </span>
           </div>
           <span
+            className="thesis-platform-status"
             style={{
               fontSize: '11px',
               fontFamily: 'var(--font-mono)',

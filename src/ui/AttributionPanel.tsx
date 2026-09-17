@@ -162,9 +162,8 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
         </button>
       </div>
 
-      {/* 5. Removal Permutation Table */}
       {showPermutations && (
-        <div style={{ marginTop: '10px', background: 'var(--bg-input)', borderRadius: 'var(--radius-inner)', border: '1px solid var(--border-hairline)', overflow: 'hidden' }}>
+        <div className="permutation-table-wrap">
           <table className="permutation-table">
             <thead>
               <tr>

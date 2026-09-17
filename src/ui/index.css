@@ -74,6 +74,12 @@
   padding: 0;
 }
 
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--bg-canvas);
   background-image:
@@ -1083,3 +1089,916 @@ body {
   color: var(--accent-rose);
   border-color: var(--accent-rose-border);
 }
+
+/* ------------------------------------------------------------------------- */
+/* 11. LANDING PAGE STYLES                                                   */
+/* ------------------------------------------------------------------------- */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-canvas);
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.landing-hero {
+  padding: 60px 24px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.hero-headline {
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.hero-gradient-text {
+  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtext {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  max-width: 760px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.hero-btn {
+  padding: 12px 32px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.hero-btn-secondary {
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.hero-telemetry-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline-bright);
+  border-radius: var(--radius-pill);
+  padding: 8px 20px;
+  box-shadow: var(--bevel-card);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  max-width: 100%;
+}
+
+.hero-telemetry-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-telemetry-divider {
+  color: var(--border-hairline-bright);
+}
+
+/* Demo Section */
+.landing-demo-section {
+  padding: 50px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.demo-header-wrap {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 8px auto 0;
+  line-height: 1.5;
+}
+
+.landing-demo-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline-bright);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  box-shadow: var(--bevel-card);
+}
+
+.demo-platform {
+  background: linear-gradient(135deg, #131926, #0d121c);
+  border: 1px solid var(--border-hairline-bright);
+  border-radius: var(--radius-inner);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease;
+  transform-origin: 80% center;
+}
+
+.demo-platform.tilted {
+  background: rgba(244, 63, 94, 0.1);
+  border-color: var(--accent-rose);
+  transform: rotate(-5deg);
+}
+
+.demo-platform-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demo-platform-badge-wrap {
+  text-align: right;
+}
+
+.demo-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.demo-callout {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border-hairline);
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.demo-callout.callout-alert {
+  background: var(--accent-rose-dim);
+  border-color: var(--accent-rose-border);
+  color: #fecdd3;
+}
+
+/* Primitives Section */
+.primitives-section {
+  padding: 40px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.primitives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.primitive-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  box-shadow: var(--bevel-card);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.primitive-card:hover {
+  border-color: var(--border-hairline-bright);
+}
+
+.primitive-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+/* Scenarios Playground */
+.scenarios-section {
+  padding: 50px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.scenarios-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.scenario-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline-bright);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--bevel-card);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.scenario-card:hover {
+  transform: translateY(-2px);
+}
+
+.scenario-btn {
+  margin-top: 20px;
+  width: 100%;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* CTA Banner */
+.cta-section {
+  padding: 60px 24px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.cta-banner {
+  background: linear-gradient(180deg, rgba(14, 20, 31, 0.9), rgba(10, 14, 22, 0.95));
+  border: 1px solid var(--accent-cyan-border);
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.cta-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.cta-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin: 0 auto 24px;
+  line-height: 1.5;
+}
+
+.cta-btn {
+  padding: 14px 36px;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+/* Institutional Footer */
+.landing-footer {
+  border-top: 1px solid var(--border-hairline);
+  background: linear-gradient(180deg, var(--bg-surface) 0%, #05070a 100%);
+  padding: 60px 32px 36px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-hairline);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------------- */
+/* 12. COMPONENT UTILITIES (STANCE, PERMUTATIONS, BENCHMARKS)                 */
+/* ------------------------------------------------------------------------- */
+.stance-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.stance-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stance-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stance-options {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leverage-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leverage-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.leverage-options {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.exec-receipt-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.permutation-table-wrap {
+  margin-top: 10px;
+  background: var(--bg-input);
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--border-hairline);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.benchmark-grid {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.thesis-platform-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 13. RESPONSIVE ARCHITECTURE (TABLETS & MOBILE DEVICES)                    */
+/* ------------------------------------------------------------------------- */
+
+/* Tablet & Smaller Desktop Breakpoint (<= 880px) */
+@media (max-width: 880px) {
+  .desk-header {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo-group {
+    order: 1;
+    gap: 8px;
+  }
+
+  .header-status-bar {
+    order: 2;
+    margin-left: auto;
+    gap: 8px;
+  }
+
+  .header-view-toggle {
+    order: 3;
+    width: 100%;
+    margin-top: 2px;
+    display: flex;
+    justify-content: stretch;
+  }
+
+  .header-view-toggle button {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .desk-container {
+    padding: 16px 16px 48px;
+    gap: 16px;
+  }
+
+  .benchmark-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .primitives-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+/* Compact Mobile Breakpoint (<= 560px) */
+@media (max-width: 560px) {
+  /* Chassis & Nav */
+  .desk-header {
+    padding: 10px 12px;
+  }
+
+  .brand-title {
+    font-size: 15px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .status-indicator {
+    display: none;
+  }
+
+  .safety-pill {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .safety-pill-text {
+    display: none;
+  }
+
+  .settings-btn-text {
+    display: none;
+  }
+
+  #settings-btn {
+    padding: 6px 10px;
+  }
+
+  /* Desk Main Container */
+  .desk-container {
+    padding: 10px 10px 36px;
+    gap: 12px;
+  }
+
+  .glass-panel {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .panel-header .pill-btn,
+  .panel-header .track-tag,
+  .panel-header .anchor-pill {
+    align-self: flex-start;
+  }
+
+  /* Conversational Thesis Form */
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ticker-input {
+    width: 100%;
+    font-size: 14px;
+    min-height: 42px;
+    padding: 8px 12px;
+  }
+
+  .thesis-input {
+    width: 100%;
+    font-size: 13px;
+    min-height: 42px;
+    padding: 8px 12px;
+  }
+
+  .execute-btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Stance & Leverage Selectors */
+  .stance-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .stance-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .stance-options {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .stance-btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 38px;
+    font-size: 12px;
+    padding: 6px 4px;
+  }
+
+  .leverage-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .leverage-options {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .leverage-btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 36px;
+    padding: 6px 2px;
+    font-size: 12px;
+  }
+
+  /* Preset Pills */
+  .preset-pills {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .preset-pills .pill-btn {
+    width: 100%;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.35;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    border-radius: 8px;
+  }
+
+  .preset-label {
+    margin-bottom: 2px;
+  }
+
+  /* Executive Summary Bar */
+  .exec-summary-bar {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .exec-metric {
+    padding: 8px 10px;
+  }
+
+  .exec-receipt-action {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .exec-receipt-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  /* Subnav Tabs */
+  .desk-subnav {
+    gap: 6px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .subnav-btn {
+    padding: 7px 12px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+
+  /* Foundation Bridge Visualizer */
+  .thesis-platform {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .thesis-platform-info {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .thesis-platform-status {
+    align-self: flex-start;
+  }
+
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .pillar {
+    padding: 8px;
+    min-height: 96px;
+  }
+
+  .pillar-name {
+    font-size: 11px;
+    word-break: break-all;
+  }
+
+  /* Derived Conclusion & Attribution Panel */
+  .conclusion-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .unanchored-alert, .anchored-badge {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .load-bearing-box > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .rerun-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 42px;
+  }
+
+  .action-bar .pill-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 38px;
+  }
+
+  .permutation-table {
+    min-width: 520px;
+  }
+
+  /* Live Market Feed Ribbon */
+  .telemetry-ribbon {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .telemetry-ribbon > div:last-child {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+
+  .telemetry-ribbon .anchor-pill {
+    grid-column: span 2;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Snapshots Grid */
+  .snapshots-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Modals */
+  .modal-overlay {
+    padding: 10px;
+    align-items: center;
+  }
+
+  .modal-content {
+    max-height: 90vh;
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+  }
+
+  .modal-body {
+    padding: 16px 14px;
+  }
+
+  /* Landing Page Mobile Adjustments */
+  .landing-hero {
+    padding: 36px 16px 24px;
+  }
+
+  .hero-headline {
+    font-size: 28px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .hero-subtext {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .hero-btn, .hero-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .hero-telemetry-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 100%;
+  }
+
+  .hero-telemetry-divider {
+    display: none;
+  }
+
+  .landing-demo-section {
+    padding: 28px 14px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .landing-demo-card {
+    padding: 16px 12px;
+  }
+
+  .demo-platform {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+
+  .demo-platform-badge-wrap {
+    align-self: flex-start;
+  }
+
+  .demo-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .primitives-section {
+    padding: 24px 14px;
+  }
+
+  .scenarios-section {
+    padding: 28px 14px;
+  }
+
+  .cta-section {
+    padding: 32px 14px;
+    margin-bottom: 20px;
+  }
+
+  .cta-banner {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .cta-title {
+    font-size: 22px;
+  }
+
+  .cta-desc {
+    font-size: 13.5px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .landing-footer {
+    padding: 36px 16px 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+

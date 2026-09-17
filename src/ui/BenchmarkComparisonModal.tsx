@@ -17,7 +17,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
           </button>
         </div>
 
-        <div style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px' }}>
+        <div className="benchmark-grid">
           {/* Left Column: Generic Chatbot */}
           <div
             style={{

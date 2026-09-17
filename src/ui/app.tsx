@@ -295,7 +295,7 @@ export const App: React.FC = () => {
         </div>
 
         {/* Center View Mode Switcher (Overview vs Desk) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255, 255, 255, 0.04)', padding: '3px', borderRadius: 'var(--radius-btn)', border: '1px solid var(--border-hairline)' }}>
+        <div className="header-view-toggle">
           <button
             className="pill-btn"
             style={{
@@ -331,7 +331,7 @@ export const App: React.FC = () => {
         <div className="header-status-bar">
           <div className="safety-pill">
             <span>🛡️</span>
-            <span>--read-only Active</span>
+            <span className="safety-pill-text">--read-only Active</span>
           </div>
 
           <button
@@ -340,7 +340,7 @@ export const App: React.FC = () => {
             id="settings-btn"
           >
             <span>⚙️</span>
-            <span>{settings.apiKey ? 'Live API Key Set' : 'Gateway Settings'}</span>
+            <span className="settings-btn-text">{settings.apiKey ? 'Live API Key Set' : 'Gateway Settings'}</span>
           </button>
         </div>
       </header>
@@ -400,73 +400,77 @@ export const App: React.FC = () => {
               </div>
 
               {/* Row 2: Personalized Position Stance & Leverage */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '14px', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                    Your Position Stance:
+              <div className="stance-row">
+                <div className="stance-group">
+                  <span className="stance-label">
+                    Position Stance:
                   </span>
-                  <button
-                    type="button"
-                    className="pill-btn"
-                    style={{
-                      borderColor: positionStance === 'long' ? 'var(--accent-emerald)' : 'var(--border-hairline)',
-                      background: positionStance === 'long' ? 'var(--accent-emerald-dim)' : 'transparent',
-                      color: positionStance === 'long' ? 'var(--accent-emerald)' : 'inherit',
-                      fontWeight: 600
-                    }}
-                    onClick={() => setPositionStance('long')}
-                  >
-                    ▲ Long
-                  </button>
-                  <button
-                    type="button"
-                    className="pill-btn"
-                    style={{
-                      borderColor: positionStance === 'short' ? 'var(--accent-rose)' : 'var(--border-hairline)',
-                      background: positionStance === 'short' ? 'var(--accent-rose-dim)' : 'transparent',
-                      color: positionStance === 'short' ? 'var(--accent-rose)' : 'inherit',
-                      fontWeight: 600
-                    }}
-                    onClick={() => setPositionStance('short')}
-                  >
-                    ▼ Short
-                  </button>
-                  <button
-                    type="button"
-                    className="pill-btn"
-                    style={{
-                      borderColor: positionStance === 'flat' ? 'var(--accent-cyan)' : 'var(--border-hairline)',
-                      background: positionStance === 'flat' ? 'var(--accent-cyan-dim)' : 'transparent',
-                      color: positionStance === 'flat' ? 'var(--accent-cyan)' : 'inherit',
-                      fontWeight: 600
-                    }}
-                    onClick={() => setPositionStance('flat')}
-                  >
-                    ● Flat
-                  </button>
+                  <div className="stance-options">
+                    <button
+                      type="button"
+                      className="pill-btn stance-btn"
+                      style={{
+                        borderColor: positionStance === 'long' ? 'var(--accent-emerald)' : 'var(--border-hairline)',
+                        background: positionStance === 'long' ? 'var(--accent-emerald-dim)' : 'transparent',
+                        color: positionStance === 'long' ? 'var(--accent-emerald)' : 'inherit',
+                        fontWeight: 600
+                      }}
+                      onClick={() => setPositionStance('long')}
+                    >
+                      ▲ Long
+                    </button>
+                    <button
+                      type="button"
+                      className="pill-btn stance-btn"
+                      style={{
+                        borderColor: positionStance === 'short' ? 'var(--accent-rose)' : 'var(--border-hairline)',
+                        background: positionStance === 'short' ? 'var(--accent-rose-dim)' : 'transparent',
+                        color: positionStance === 'short' ? 'var(--accent-rose)' : 'inherit',
+                        fontWeight: 600
+                      }}
+                      onClick={() => setPositionStance('short')}
+                    >
+                      ▼ Short
+                    </button>
+                    <button
+                      type="button"
+                      className="pill-btn stance-btn"
+                      style={{
+                        borderColor: positionStance === 'flat' ? 'var(--accent-cyan)' : 'var(--border-hairline)',
+                        background: positionStance === 'flat' ? 'var(--accent-cyan-dim)' : 'transparent',
+                        color: positionStance === 'flat' ? 'var(--accent-cyan)' : 'inherit',
+                        fontWeight: 600
+                      }}
+                      onClick={() => setPositionStance('flat')}
+                    >
+                      ● Flat
+                    </button>
+                  </div>
                 </div>
 
                 {positionStance !== 'flat' && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                  <div className="leverage-group">
+                    <span className="leverage-label">
                       Leverage:
                     </span>
-                    {[1, 2, 3, 5, 10].map((lvl) => (
-                      <button
-                        key={lvl}
-                        type="button"
-                        className="pill-btn"
-                        style={{
-                          borderColor: leverage === lvl ? 'var(--accent-amber)' : 'var(--border-hairline)',
-                          background: leverage === lvl ? 'var(--accent-amber-dim)' : 'transparent',
-                          color: leverage === lvl ? 'var(--accent-amber)' : 'inherit',
-                          fontWeight: 700
-                        }}
-                        onClick={() => setLeverage(lvl)}
-                      >
-                        {lvl}x
-                      </button>
-                    ))}
+                    <div className="leverage-options">
+                      {[1, 2, 3, 5, 10].map((lvl) => (
+                        <button
+                          key={lvl}
+                          type="button"
+                          className="pill-btn leverage-btn"
+                          style={{
+                            borderColor: leverage === lvl ? 'var(--accent-amber)' : 'var(--border-hairline)',
+                            background: leverage === lvl ? 'var(--accent-amber-dim)' : 'transparent',
+                            color: leverage === lvl ? 'var(--accent-amber)' : 'inherit',
+                            fontWeight: 700
+                          }}
+                          onClick={() => setLeverage(lvl)}
+                        >
+                          {lvl}x
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -607,9 +611,9 @@ export const App: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
+              <div className="exec-receipt-action">
                 <button
-                  className="pill-btn"
+                  className="pill-btn exec-receipt-btn"
                   style={{
                     borderColor: receiptCopied ? 'var(--accent-emerald)' : 'var(--border-hairline-bright)',
                     color: receiptCopied ? 'var(--accent-emerald)' : 'inherit',

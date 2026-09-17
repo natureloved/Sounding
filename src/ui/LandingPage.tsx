@@ -22,27 +22,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg-canvas)' }}>
+    <div className="landing-container">
       {/* 1. Hero Section */}
-      <section style={{ padding: '60px 24px 40px', maxWidth: '1200px', margin: '0 auto', width: '100%', textAlign: 'center' }}>
+      <section className="landing-hero">
         {/* Headline */}
-        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', color: '#ffffff', maxWidth: '900px', margin: '0 auto 20px' }}>
+        <h1 className="hero-headline">
           Don't trade on cosmetic citations.{' '}
-          <span style={{ background: 'linear-gradient(135deg, #38bdf8, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span className="hero-gradient-text">
             Know what your call is standing on.
           </span>
         </h1>
 
         {/* Subtext */}
-        <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'var(--text-secondary)', maxWidth: '760px', margin: '0 auto 32px', lineHeight: 1.6 }}>
+        <p className="hero-subtext">
           Sounding is a read-only research desk that measures attribution strictly by <strong>source removal</strong> (never claimed by citation) and binds thesis trust to the <strong>deterministic market clock</strong> of the underlying reference asset.
         </p>
 
         {/* Hero Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '40px' }}>
+        <div className="hero-actions">
           <button
-            className="execute-btn"
-            style={{ padding: '12px 32px', fontSize: '15px', borderRadius: '10px' }}
+            className="execute-btn hero-btn"
             onClick={() => onLaunchDesk()}
             id="hero-launch-desk-btn"
           >
@@ -51,68 +50,55 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </button>
           <a
             href="#interactive-demo"
-            className="pill-btn"
-            style={{ padding: '12px 24px', fontSize: '14px', borderRadius: '10px' }}
+            className="pill-btn hero-btn-secondary"
           >
             <span>Interactive Explainer ↓</span>
           </a>
         </div>
 
         {/* Live Market Clock Telemetry Bar */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '16px', background: 'var(--bg-surface)', border: '1px solid var(--border-hairline-bright)', borderRadius: 'var(--radius-pill)', padding: '8px 20px', boxShadow: 'var(--bevel-card)', fontSize: '12px', fontFamily: 'var(--font-mono)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="hero-telemetry-bar">
+          <div className="hero-telemetry-item">
             <span className={`pulse-dot ${marketIsOpen ? '' : 'shut'}`} />
             <span style={{ color: 'var(--text-secondary)' }}>
-              NYSE / NASDAQ Reference Clock:{' '}
+              NYSE/NASDAQ Reference Clock:{' '}
               <strong style={{ color: marketIsOpen ? 'var(--accent-emerald)' : 'var(--accent-amber)' }}>
-                {marketIsOpen ? 'OPEN (09:30-16:00 ET)' : 'SHUT (OFF-HOURS)'}
+                {marketIsOpen ? 'OPEN (RTH)' : 'SHUT (OFF-HOURS)'}
               </strong>
               {' '}[{etTime.hour.toString().padStart(2, '0')}:{etTime.minute.toString().padStart(2, '0')}:{etTime.second.toString().padStart(2, '0')} ET]
             </span>
           </div>
-          <span style={{ color: 'var(--border-hairline-bright)' }}>|</span>
-          <span style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>
+          <span className="hero-telemetry-divider">|</span>
+          <span className="hero-telemetry-item" style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>
             ✓ Invariants I1–I7 Verified
           </span>
-          <span style={{ color: 'var(--border-hairline-bright)' }}>|</span>
-          <span style={{ color: 'var(--text-muted)' }}>
+          <span className="hero-telemetry-divider">|</span>
+          <span className="hero-telemetry-item" style={{ color: 'var(--text-muted)' }}>
             🛡️ Read-Only Guard Active
           </span>
         </div>
       </section>
 
       {/* 2. Interactive "Bridge Test" Explainer (Fun to explore) */}
-      <section id="interactive-demo" style={{ padding: '50px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <section id="interactive-demo" className="landing-demo-section">
+        <div className="demo-header-wrap">
+          <span className="section-eyebrow">
             Interactive Demo · Try It Below
           </span>
-          <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', marginTop: '6px' }}>
+          <h2 className="section-title">
             The Delete-Test: Citation vs. Removal
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '640px', margin: '8px auto 0' }}>
+          <p className="section-desc">
             Conventional tools list sources as citations. But citation does not measure influence. Click any pillar below to "pull the pin" and see which source is actually carrying the call.
           </p>
         </div>
 
-        <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-hairline-bright)', borderRadius: 'var(--radius-card)', padding: '28px', boxShadow: 'var(--bevel-card)' }}>
+        <div className="landing-demo-card">
           {/* Simulated Thesis Platform */}
           <div
-            style={{
-              background: removedPillar === 'macro' ? 'rgba(244, 63, 94, 0.1)' : 'linear-gradient(135deg, #131926, #0d121c)',
-              border: `1px solid ${removedPillar === 'macro' ? 'var(--accent-rose)' : 'var(--border-hairline-bright)'}`,
-              borderRadius: 'var(--radius-inner)',
-              padding: '16px 24px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '24px',
-              transform: removedPillar === 'macro' ? 'rotate(-6deg)' : 'none',
-              transition: 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease',
-              transformOrigin: '80% center'
-            }}
+            className={`demo-platform ${removedPillar === 'macro' ? 'tilted' : ''}`}
           >
-            <div>
+            <div className="demo-platform-text">
               <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Simulated Thesis:
               </span>
@@ -121,7 +107,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            <div style={{ textAlign: 'right' }}>
+            <div className="demo-platform-badge-wrap">
               <span
                 style={{
                   fontSize: '13px',
@@ -140,7 +126,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Interactive Source Pillars */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
+          <div className="demo-pillars-grid">
             {pillars.map((p) => {
               const isRemoved = removedPillar === p.id;
               return (
@@ -191,7 +177,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Interactive Callout */}
-          <div style={{ marginTop: '20px', padding: '14px 18px', background: removedPillar === 'macro' ? 'var(--accent-rose-dim)' : 'rgba(255, 255, 255, 0.02)', borderRadius: 'var(--radius-btn)', border: `1px solid ${removedPillar === 'macro' ? 'var(--accent-rose-border)' : 'var(--border-hairline)'}`, fontSize: '12.5px', color: removedPillar === 'macro' ? '#fecdd3' : 'var(--text-secondary)', lineHeight: 1.5 }}>
+          <div className={`demo-callout ${removedPillar === 'macro' ? 'callout-alert' : ''}`}>
             {removedPillar === 'macro' ? (
               <span>
                 <strong>⚡ Structural Collapse Observed!</strong> Removing <code>macro-analyst</code> flipped the derived direction from Bullish to Neutral. That proves <code>macro-analyst</code> is the load-bearing source. Furthermore, notice its market clock was <strong>SHUT</strong> — meaning this thesis was standing on weekend off-hours chatter!
@@ -210,11 +196,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* 3. The Two Groundbreaking Primitives */}
-      <section style={{ padding: '40px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+      <section className="primitives-section">
+        <div className="primitives-grid">
           {/* Primitive 1 */}
-          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-card)', padding: '28px', boxShadow: 'var(--bevel-card)' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--accent-cyan-dim)', border: '1px solid var(--accent-cyan-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: 'var(--accent-cyan)', marginBottom: '16px' }}>
+          <div className="primitive-card">
+            <div className="primitive-icon" style={{ background: 'var(--accent-cyan-dim)', borderColor: 'var(--accent-cyan-border)', color: 'var(--accent-cyan)' }}>
               ⚖️
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', marginBottom: '10px' }}>
@@ -226,8 +212,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Primitive 2 */}
-          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-card)', padding: '28px', boxShadow: 'var(--bevel-card)' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--accent-amber-dim)', border: '1px solid var(--accent-amber-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: 'var(--accent-amber)', marginBottom: '16px' }}>
+          <div className="primitive-card">
+            <div className="primitive-icon" style={{ background: 'var(--accent-amber-dim)', borderColor: 'var(--accent-amber-border)', color: 'var(--accent-amber)' }}>
               ⏱️
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', marginBottom: '10px' }}>
@@ -241,33 +227,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* 4. One-Click Interactive Scenario Playground */}
-      <section style={{ padding: '50px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <section className="scenarios-section">
+        <div className="scenarios-header">
+          <span className="section-eyebrow">
             Instant Testing · 1-Click Launchers
           </span>
-          <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', marginTop: '6px' }}>
+          <h2 className="section-title">
             Explore Pre-Configured Scenarios
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+          <p className="section-desc">
             Click any scenario card below to launch directly into the live research workbench with that thesis preloaded.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '18px' }}>
+        <div className="scenarios-grid">
           {/* Card 1: rNVDA Weekend Trap */}
-          <div
-            style={{
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--accent-amber-border)',
-              borderRadius: 'var(--radius-card)',
-              padding: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: 'var(--glow-amber)'
-            }}
-          >
+          <div className="scenario-card" style={{ borderColor: 'var(--accent-amber-border)', boxShadow: 'var(--glow-amber)' }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
@@ -290,8 +265,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             <button
-              className="execute-btn"
-              style={{ marginTop: '20px', width: '100%', justifyContent: 'center', padding: '10px' }}
+              className="execute-btn scenario-btn"
               onClick={() =>
                 onLaunchDesk(
                   'rNVDA',
@@ -306,18 +280,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Card 2: rTSLA Anchored Bearish */}
-          <div
-            style={{
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-hairline-bright)',
-              borderRadius: 'var(--radius-card)',
-              padding: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: 'var(--bevel-card)'
-            }}
-          >
+          <div className="scenario-card">
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
@@ -340,8 +303,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             <button
-              className="execute-btn"
-              style={{ marginTop: '20px', width: '100%', justifyContent: 'center', padding: '10px' }}
+              className="execute-btn scenario-btn"
               onClick={() =>
                 onLaunchDesk(
                   'rTSLA',
@@ -356,18 +318,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Card 3: BTC Continuous Crypto */}
-          <div
-            style={{
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-hairline-bright)',
-              borderRadius: 'var(--radius-card)',
-              padding: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              boxShadow: 'var(--bevel-card)'
-            }}
-          >
+          <div className="scenario-card">
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ fontSize: '18px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
@@ -390,8 +341,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             <button
-              className="execute-btn"
-              style={{ marginTop: '20px', width: '100%', justifyContent: 'center', padding: '10px' }}
+              className="execute-btn scenario-btn"
               onClick={() =>
                 onLaunchDesk(
                   'BTC',
@@ -408,17 +358,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* 5. Bottom Call to Action Banner */}
-      <section style={{ padding: '60px 24px', maxWidth: '900px', margin: '0 auto 40px', width: '100%', textAlign: 'center' }}>
-        <div style={{ background: 'linear-gradient(180deg, rgba(14, 20, 31, 0.9), rgba(10, 14, 22, 0.95))', border: '1px solid var(--accent-cyan-border)', borderRadius: '20px', padding: '40px 32px', boxShadow: '0 20px 50px rgba(0,0,0,0.6)' }}>
-          <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#ffffff', marginBottom: '12px' }}>
+      <section className="cta-section">
+        <div className="cta-banner">
+          <h2 className="cta-title">
             Ready to test your market thesis?
           </h2>
-          <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '580px', margin: '0 auto 24px', lineHeight: 1.5 }}>
+          <p className="cta-desc">
             State any thesis in plain natural language. Sounding will fetch the sources, measure the load-bearing set, and verify market clock anchors.
           </p>
           <button
-            className="execute-btn"
-            style={{ padding: '14px 36px', fontSize: '16px', borderRadius: '10px', margin: '0 auto' }}
+            className="execute-btn cta-btn"
             onClick={() => onLaunchDesk()}
           >
             Enter Sounding Trading Desk →
@@ -427,24 +376,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* 6. Institutional Footer */}
-      <footer
-        style={{
-          borderTop: '1px solid var(--border-hairline)',
-          background: 'linear-gradient(180deg, var(--bg-surface) 0%, #05070a 100%)',
-          padding: '60px 32px 36px',
-          marginTop: 'auto'
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '40px',
-            marginBottom: '48px'
-          }}
-        >
+      <footer className="landing-footer">
+        <div className="footer-grid">
           {/* Column 1: Brand & Causal Architecture Statement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -624,21 +557,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
 
         {/* Bottom Bar: Copyright, Legal Disclaimer & System Telemetry */}
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            paddingTop: '24px',
-            borderTop: '1px solid var(--border-hairline)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '16px',
-            fontSize: '11.5px',
-            color: 'var(--text-muted)'
-          }}
-        >
+        <div className="footer-bottom">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ color: 'var(--text-secondary)' }}>
               © 2026 Sounding Research Desk. All rights reserved.
