@@ -227,6 +227,127 @@ body {
   }
 }
 
+.desk-container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 20px 28px 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+
+.desk-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .desk-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Executive Summary Bar */
+.exec-summary-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline-bright);
+  border-radius: var(--radius-card);
+  padding: 14px 18px;
+  box-shadow: var(--bevel-card);
+}
+
+.exec-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-hairline-subtle);
+  border-radius: var(--radius-inner);
+}
+
+.exec-label {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.exec-value {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+}
+
+/* Desk Subnav Tabs */
+.desk-subnav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 12px;
+  overflow-x: auto;
+}
+
+.subnav-btn {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-btn);
+  padding: 8px 18px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.subnav-btn:hover {
+  background: var(--bg-chip-hover);
+  border-color: var(--border-hairline-bright);
+  color: #ffffff;
+}
+
+.subnav-btn.active {
+  background: var(--accent-cyan-dim);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.15);
+}
+
+.tab-alert-badge {
+  background: var(--accent-rose);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+}
+
+/* Tab Content Canvas */
+.desk-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 /* Vanguard Double-Bezel Card Container */
 .glass-panel {
   background: var(--bg-surface);

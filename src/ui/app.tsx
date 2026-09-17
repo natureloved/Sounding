@@ -39,6 +39,7 @@ import { generateProjectDescription, generateCompliantXPost } from '../metrics/e
 export const App: React.FC = () => {
   // Navigation view mode: 'landing' (Homepage / Explainer) vs 'desk' (Interactive Workbench)
   const [viewMode, setViewMode] = useState<'landing' | 'desk'>('landing');
+  const [deskTab, setDeskTab] = useState<'attribution' | 'risk' | 'sources' | 'all'>('attribution');
 
   const [ticker, setTicker] = useState('rNVDA');
   const [thesisText, setThesisText] = useState(
@@ -370,438 +371,568 @@ export const App: React.FC = () => {
           etTime={{ hour: et.hour, minute: et.minute, second: currentTime.getSeconds() }}
         />
       ) : (
-        /* Main Desk Layout */
-        <main className="main-content">
-          {/* Left Column: Thesis & Attribution Desk */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {/* Conversational Thesis Box with Position Stance */}
-            <div className="glass-panel thesis-box">
-              <div className="panel-header">
-                <span className="panel-title">
-                  <span>💬 State Thesis &amp; Personalized Position</span>
-                </span>
-                <span className="track-tag">
-                  Autonomous Attribution Workbench
-                </span>
+        /* Main Desk Layout: Spacious, clear, and organized */
+        <main className="desk-container">
+          {/* 1. Conversational Thesis Box with Position Stance */}
+          <div className="glass-panel thesis-box">
+            <div className="panel-header">
+              <span className="panel-title">
+                <span>💬 State Investment Thesis &amp; Position</span>
+              </span>
+              <button
+                type="button"
+                className="pill-btn"
+                onClick={() => setShowUserDocInput(!showUserDocInput)}
+              >
+                {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Add Custom S7 Notes'}
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleRunAnalysis(ticker, thesisText, positionStance, leverage);
+              }}
+            >
+              {/* Row 1: Ticker & Thesis Input */}
+              <div className="form-row">
+                <input
+                  type="text"
+                  className="ticker-input"
+                  value={ticker}
+                  onChange={(e) => setTicker(e.target.value)}
+                  placeholder="TICKER"
+                  id="ticker-input"
+                />
+                <input
+                  type="text"
+                  className="thesis-input"
+                  value={thesisText}
+                  onChange={(e) => setThesisText(e.target.value)}
+                  placeholder="State your investment thesis in natural language..."
+                  id="thesis-input"
+                />
+                <button type="submit" className="execute-btn" disabled={isLoading} id="run-analysis-btn">
+                  {isLoading ? 'Synthesizing...' : 'Sound Desk'}
+                </button>
               </div>
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleRunAnalysis(ticker, thesisText, positionStance, leverage);
-                }}
-              >
-                {/* Row 1: Ticker & Thesis Input */}
-                <div className="form-row">
-                  <input
-                    type="text"
-                    className="ticker-input"
-                    value={ticker}
-                    onChange={(e) => setTicker(e.target.value)}
-                    placeholder="TICKER"
-                    id="ticker-input"
-                  />
-                  <input
-                    type="text"
-                    className="thesis-input"
-                    value={thesisText}
-                    onChange={(e) => setThesisText(e.target.value)}
-                    placeholder="State your investment thesis in natural language..."
-                    id="thesis-input"
-                  />
-                  <button type="submit" className="execute-btn" disabled={isLoading} id="run-analysis-btn">
-                    {isLoading ? 'Synthesizing...' : 'Sound Desk'}
+              {/* Row 2: Personalized Position Stance & Leverage */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '14px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                    Your Position Stance:
+                  </span>
+                  <button
+                    type="button"
+                    className="pill-btn"
+                    style={{
+                      borderColor: positionStance === 'long' ? 'var(--accent-emerald)' : 'var(--border-hairline)',
+                      background: positionStance === 'long' ? 'var(--accent-emerald-dim)' : 'transparent',
+                      color: positionStance === 'long' ? 'var(--accent-emerald)' : 'inherit',
+                      fontWeight: 600
+                    }}
+                    onClick={() => setPositionStance('long')}
+                  >
+                    ▲ Long
+                  </button>
+                  <button
+                    type="button"
+                    className="pill-btn"
+                    style={{
+                      borderColor: positionStance === 'short' ? 'var(--accent-rose)' : 'var(--border-hairline)',
+                      background: positionStance === 'short' ? 'var(--accent-rose-dim)' : 'transparent',
+                      color: positionStance === 'short' ? 'var(--accent-rose)' : 'inherit',
+                      fontWeight: 600
+                    }}
+                    onClick={() => setPositionStance('short')}
+                  >
+                    ▼ Short
+                  </button>
+                  <button
+                    type="button"
+                    className="pill-btn"
+                    style={{
+                      borderColor: positionStance === 'flat' ? 'var(--accent-cyan)' : 'var(--border-hairline)',
+                      background: positionStance === 'flat' ? 'var(--accent-cyan-dim)' : 'transparent',
+                      color: positionStance === 'flat' ? 'var(--accent-cyan)' : 'inherit',
+                      fontWeight: 600
+                    }}
+                    onClick={() => setPositionStance('flat')}
+                  >
+                    ● Flat
                   </button>
                 </div>
 
-                {/* Row 2: Personalized Position Stance & Leverage */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '14px', flexWrap: 'wrap' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                      Your Position Stance:
+                {positionStance !== 'flat' && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                      Leverage:
                     </span>
-                    <button
-                      type="button"
-                      className="pill-btn"
-                      style={{
-                        borderColor: positionStance === 'long' ? 'var(--accent-emerald)' : 'var(--border-hairline)',
-                        background: positionStance === 'long' ? 'var(--accent-emerald-dim)' : 'transparent',
-                        color: positionStance === 'long' ? 'var(--accent-emerald)' : 'inherit',
-                        fontWeight: 600
-                      }}
-                      onClick={() => setPositionStance('long')}
-                    >
-                      ▲ Long
-                    </button>
-                    <button
-                      type="button"
-                      className="pill-btn"
-                      style={{
-                        borderColor: positionStance === 'short' ? 'var(--accent-rose)' : 'var(--border-hairline)',
-                        background: positionStance === 'short' ? 'var(--accent-rose-dim)' : 'transparent',
-                        color: positionStance === 'short' ? 'var(--accent-rose)' : 'inherit',
-                        fontWeight: 600
-                      }}
-                      onClick={() => setPositionStance('short')}
-                    >
-                      ▼ Short
-                    </button>
-                    <button
-                      type="button"
-                      className="pill-btn"
-                      style={{
-                        borderColor: positionStance === 'flat' ? 'var(--accent-cyan)' : 'var(--border-hairline)',
-                        background: positionStance === 'flat' ? 'var(--accent-cyan-dim)' : 'transparent',
-                        color: positionStance === 'flat' ? 'var(--accent-cyan)' : 'inherit',
-                        fontWeight: 600
-                      }}
-                      onClick={() => setPositionStance('flat')}
-                    >
-                      ● Flat
-                    </button>
+                    {[1, 2, 3, 5, 10].map((lvl) => (
+                      <button
+                        key={lvl}
+                        type="button"
+                        className="pill-btn"
+                        style={{
+                          borderColor: leverage === lvl ? 'var(--accent-amber)' : 'var(--border-hairline)',
+                          background: leverage === lvl ? 'var(--accent-amber-dim)' : 'transparent',
+                          color: leverage === lvl ? 'var(--accent-amber)' : 'inherit',
+                          fontWeight: 700
+                        }}
+                        onClick={() => setLeverage(lvl)}
+                      >
+                        {lvl}x
+                      </button>
+                    ))}
                   </div>
-
-                  {positionStance !== 'flat' && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                        Leverage:
-                      </span>
-                      {[1, 2, 3, 5, 10].map((lvl) => (
-                        <button
-                          key={lvl}
-                          type="button"
-                          className="pill-btn"
-                          style={{
-                            borderColor: leverage === lvl ? 'var(--accent-amber)' : 'var(--border-hairline)',
-                            background: leverage === lvl ? 'var(--accent-amber-dim)' : 'transparent',
-                            color: leverage === lvl ? 'var(--accent-amber)' : 'inherit',
-                            fontWeight: 700
-                          }}
-                          onClick={() => setLeverage(lvl)}
-                        >
-                          {lvl}x
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </form>
-
-              {/* Quick Presets */}
-              <div className="preset-pills">
-                <span className="preset-label">Scenarios:</span>
-                <button
-                  className="pill-btn"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'rNVDA',
-                      'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
-                      'long',
-                      3
-                    )
-                  }
-                >
-                  ⚡ rNVDA (Weekend Unanchored Call · High Fragility)
-                </button>
-                <button
-                  className="pill-btn"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'rTSLA',
-                      'Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples',
-                      'short',
-                      2
-                    )
-                  }
-                >
-                  🛡️ rTSLA (Regular Hours Anchored Bearish)
-                </button>
-                <button
-                  className="pill-btn"
-                  onClick={() =>
-                    handleSelectPreset(
-                      'BTC',
-                      'Global central bank easing and Spot ETF inflows signal long-term cyclical continuation',
-                      'long',
-                      1
-                    )
-                  }
-                >
-                  🌐 BTC (Continuous 24/7 Crypto)
-                </button>
-
-                <button
-                  className="pill-btn"
-                  onClick={() => setShowUserDocInput(!showUserDocInput)}
-                  style={{ marginLeft: 'auto', borderColor: 'var(--border-hairline-bright)' }}
-                >
-                  {showUserDocInput ? '▲ Hide S7 Custom Doc' : '▼ Add S7 Custom Doc'}
-                </button>
+                )}
               </div>
+            </form>
 
-              {showUserDocInput && (
-                <div style={{ marginTop: '14px' }}>
-                  <textarea
-                    className="thesis-input"
-                    style={{ width: '100%', height: '80px', resize: 'vertical' }}
-                    placeholder="Paste custom analyst memo, earnings transcript, or research notes (ingested as S7 user_doc)..."
-                    value={userDocText}
-                    onChange={(e) => setUserDocText(e.target.value)}
-                  />
-                </div>
-              )}
+            {/* Quick Presets */}
+            <div className="preset-pills">
+              <span className="preset-label">Scenarios:</span>
+              <button
+                className="pill-btn"
+                onClick={() =>
+                  handleSelectPreset(
+                    'rNVDA',
+                    'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
+                    'long',
+                    3
+                  )
+                }
+              >
+                ⚡ rNVDA (Weekend Unanchored Call · High Fragility)
+              </button>
+              <button
+                className="pill-btn"
+                onClick={() =>
+                  handleSelectPreset(
+                    'rTSLA',
+                    'Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples',
+                    'short',
+                    2
+                  )
+                }
+              >
+                🛡️ rTSLA (Regular Hours Anchored Bearish)
+              </button>
+              <button
+                className="pill-btn"
+                onClick={() =>
+                  handleSelectPreset(
+                    'BTC',
+                    'Global central bank easing and Spot ETF inflows signal long-term cyclical continuation',
+                    'long',
+                    1
+                  )
+                }
+              >
+                🌐 BTC (Continuous 24/7 Crypto)
+              </button>
             </div>
 
-            {/* Live Market Indicators Ribbon */}
-            {liveIndicators && (
-              <div className="telemetry-ribbon">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                    BITGET LIVE FEED:
-                  </span>
-                  <span className="telemetry-price">
-                    ${liveIndicators.lastPrice.toLocaleString()}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '12px',
-                      fontFamily: 'var(--font-mono)',
-                      fontWeight: 700,
-                      color: liveIndicators.change24h >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'
-                    }}
-                  >
-                    {liveIndicators.change24h >= 0 ? '+' : ''}
-                    {liveIndicators.change24h}%
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
-                  <span className="telemetry-stat">
-                    RSI-14: <strong style={{ color: 'var(--accent-cyan)' }}>{liveIndicators.rsi}</strong>
-                  </span>
-                  <span className="telemetry-stat">
-                    EMA-20: <strong>${liveIndicators.ema20}</strong>
-                  </span>
-                  <span className="telemetry-stat">
-                    EMA-50: <strong>${liveIndicators.ema50}</strong>
-                  </span>
-                  <span className="telemetry-stat">
-                    MACD: <strong style={{ color: liveIndicators.macd >= liveIndicators.signal ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>{liveIndicators.macd}</strong>
-                  </span>
-                  <span
-                    className="anchor-pill"
-                    style={{
-                      background: liveIndicators.trend === 'bullish' ? 'var(--accent-emerald-dim)' : 'var(--accent-rose-dim)',
-                      color: liveIndicators.trend === 'bullish' ? 'var(--accent-emerald)' : 'var(--accent-rose)',
-                      border: `1px solid ${liveIndicators.trend === 'bullish' ? 'var(--accent-emerald-border)' : 'var(--accent-rose-border)'}`
-                    }}
-                  >
-                    TREND: {liveIndicators.trend.toUpperCase()}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Weekend Trap / Monday Gap Exposure Alert */}
-            {weekendTrap && weekendTrap.isRToken && weekendTrap.gap_risk_level !== 'LOW' && (
-              <div
-                style={{
-                  background: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose-dim)' : 'var(--accent-amber-dim)',
-                  border: `1px solid ${weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose-border)' : 'var(--accent-amber-border)'}`,
-                  borderRadius: 'var(--radius-card)',
-                  padding: '16px 20px',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '14px',
-                  boxShadow: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--glow-rose)' : 'var(--glow-amber)'
-                }}
-              >
-                <div style={{ fontSize: '22px', lineHeight: 1 }}>🚨</div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '14px', color: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose)' : 'var(--accent-amber)', marginBottom: '4px' }}>
-                    {weekendTrap.warning_title}
-                  </div>
-                  <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                    {weekendTrap.warning_description}
-                  </div>
-                  <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Underlying: {weekendTrap.underlying_exchange} · Real Opening Bell: {weekendTrap.next_open_utc}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Contradiction Alert */}
-            {contradictions.length > 0 && (
-              <div
-                style={{
-                  background: 'var(--accent-rose-dim)',
-                  border: '1px solid var(--accent-rose-border)',
-                  borderRadius: 'var(--radius-card)',
-                  padding: '14px 18px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '6px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-rose)', fontWeight: 700, fontSize: '13px' }}>
-                  <span>⚡</span>
-                  <span>Cross-Source Contradictions Detected ({contradictions.length})</span>
-                </div>
-                {contradictions.map((c, idx) => (
-                  <div key={idx} style={{ fontSize: '12px', color: '#fca5a5' }}>
-                    • <strong>[{c.source_a}]</strong> vs <strong>[{c.source_b}]</strong>: {c.divergence_summary}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Personalized Position Alignment Card */}
-            {alignment && currentThesis?.user_position?.stance !== 'flat' && (
-              <div
-                style={{
-                  background:
-                    alignment.risk_flag === 'CRITICAL'
-                      ? 'var(--accent-rose-dim)'
-                      : alignment.risk_flag === 'HIGH'
-                      ? 'var(--accent-amber-dim)'
-                      : 'var(--accent-emerald-dim)',
-                  border: `1px solid ${
-                    alignment.risk_flag === 'CRITICAL'
-                      ? 'var(--accent-rose-border)'
-                      : alignment.risk_flag === 'HIGH'
-                      ? 'var(--accent-amber-border)'
-                      : 'var(--accent-emerald-border)'
-                  }`,
-                  borderRadius: 'var(--radius-card)',
-                  padding: '18px 20px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px',
-                  boxShadow:
-                    alignment.risk_flag === 'CRITICAL'
-                      ? 'var(--glow-rose)'
-                      : alignment.risk_flag === 'HIGH'
-                      ? 'var(--glow-amber)'
-                      : 'var(--glow-emerald)'
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '12px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)' }}>
-                    🎯 Personalized Position Alignment
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '11px',
-                      fontWeight: 700,
-                      padding: '3px 9px',
-                      borderRadius: 'var(--radius-pill)',
-                      background:
-                        alignment.risk_flag === 'CRITICAL'
-                          ? 'var(--accent-rose)'
-                          : alignment.risk_flag === 'HIGH'
-                          ? 'var(--accent-amber)'
-                          : 'var(--accent-emerald)',
-                      color: '#ffffff'
-                    }}
-                  >
-                    Fragility: {alignment.fragility_score}/100 [{alignment.risk_flag}]
-                  </span>
-                </div>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                  {alignment.summary}
-                </p>
-                <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
-                  <strong style={{ color: 'var(--text-muted)' }}>Trader Action:</strong> {alignment.recommendation}
-                </p>
-              </div>
-            )}
-
-            {/* Interactive Foundation Pillar Visualizer */}
-            {conclusion && attribution && (
-              <FoundationVisualizer
-                snapshots={snapshots}
-                attribution={attribution}
-                conclusion={conclusion}
-              />
-            )}
-
-            {/* Actionable Thesis Invalidation Tripwires & Freshness */}
-            {conclusion && attribution && tripwires.length > 0 && (
-              <TripwireCard tripwires={tripwires} decayList={decayList} />
-            )}
-
-            {/* Captured Sources Tray */}
-            <div className="glass-panel">
-              <div className="panel-header">
-                <span className="panel-title">
-                  <span>📡 Captured Source Snapshots ({snapshots.length})</span>
-                </span>
-                <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
-                  S1..S5 Bitget-Signal · S6 Market Feed · S7 User Doc
-                </span>
-              </div>
-
-              <div className="snapshots-grid">
-                {snapshots.map((snap) => {
-                  const isLB = attribution?.load_bearing_set.includes(snap.source_name);
-                  const isShut = snap.anchor_verdict === 'shut';
-                  return (
-                    <div key={snap.id} className={`snapshot-card ${isLB ? 'is-load-bearing' : ''}`} title={snap.content}>
-                      <div className="snapshot-card-top">
-                        <span className="source-badge">
-                          {isLB ? '★ ' : ''}
-                          {snap.source_name}
-                        </span>
-                        <span className={`anchor-pill ${snap.anchor_verdict}`}>
-                          {snap.anchor_verdict} {isShut ? '⚠️' : '✓'}
-                        </span>
-                      </div>
-                      <p className="snapshot-content">{snap.content}</p>
-                      <div className="snapshot-meta">
-                        Captured: {new Date(snap.retrieved_at).toUTCString().replace('GMT', 'UTC')}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Derived Conclusion & Attribution Panel */}
-            {conclusion && attribution && (
-              <div className="glass-panel" style={{ borderTop: '2px solid var(--accent-cyan)' }}>
-                <div className="panel-header">
-                  <span className="panel-title">
-                    <span>🎯 Derived Conclusion &amp; Attribution Proof</span>
-                  </span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <button
-                      className="pill-btn"
-                      style={{ borderColor: receiptCopied ? 'var(--accent-emerald)' : 'var(--border-hairline-bright)' }}
-                      onClick={handleCopyReceipt}
-                      id="copy-receipt-btn"
-                    >
-                      {receiptCopied ? '✓ Receipt Copied!' : '📋 Export Attribution Receipt'}
-                    </button>
-                    <span className="track-tag">Weakest Anchor: {attribution.inherited_anchor.toUpperCase()}</span>
-                  </div>
-                </div>
-
-                <AttributionPanel
-                  conclusion={conclusion}
-                  attribution={attribution}
-                  snapshots={snapshots}
-                  onRerun={handleRerun}
-                  isRerunning={isRerunning}
-                  rerunCount={rerunCount}
+            {showUserDocInput && (
+              <div style={{ marginTop: '14px' }}>
+                <textarea
+                  className="thesis-input"
+                  style={{ width: '100%', height: '80px', resize: 'vertical' }}
+                  placeholder="Paste custom analyst memo, earnings transcript, or research notes (ingested as S7 user_doc)..."
+                  value={userDocText}
+                  onChange={(e) => setUserDocText(e.target.value)}
                 />
               </div>
             )}
           </div>
 
-          {/* Right Column: Source Influence Ranking */}
-          <CoveragePanel stats={coverageStats} onOpenProjectDoc={() => setShowProjectModal(true)} />
+          {/* 2. Executive Telemetry Summary Bar (At a Glance) */}
+          {conclusion && attribution && (
+            <div className="exec-summary-bar">
+              <div className="exec-metric">
+                <span className="exec-label">Derived Market Call</span>
+                <div className="exec-value">
+                  <span
+                    style={{
+                      color:
+                        conclusion.direction === 'bullish'
+                          ? 'var(--accent-emerald)'
+                          : conclusion.direction === 'bearish'
+                          ? 'var(--accent-rose)'
+                          : 'var(--accent-cyan)'
+                    }}
+                  >
+                    {conclusion.direction === 'bullish' ? '▲ BULLISH' : conclusion.direction === 'bearish' ? '▼ BEARISH' : '● NEUTRAL'}
+                  </span>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                    ({conclusion.confidence_band.toUpperCase()} CONVICTION)
+                  </span>
+                </div>
+              </div>
+
+              <div className="exec-metric">
+                <span className="exec-label">Market Clock Grounding</span>
+                <div className="exec-value">
+                  {attribution.inherited_anchor === 'shut' ? (
+                    <span style={{ color: 'var(--accent-amber)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span>⚠️ UNANCHORED</span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>(Market Shut)</span>
+                    </span>
+                  ) : (
+                    <span style={{ color: 'var(--accent-emerald)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span>🛡️ FIRMLY ANCHORED</span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>(RTH Active)</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="exec-metric">
+                <span className="exec-label">Load-Bearing Foundation</span>
+                <div className="exec-value">
+                  {attribution.load_bearing_set.length > 0 ? (
+                    <span style={{ color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>
+                      ⚡ [ {attribution.load_bearing_set.join(', ')} ]
+                    </span>
+                  ) : (
+                    <span style={{ color: 'var(--accent-emerald)', fontSize: '12px' }}>
+                      ✓ Robust (Multi-Source Consensus)
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="exec-metric">
+                <span className="exec-label">Position Alignment &amp; Fragility</span>
+                <div className="exec-value">
+                  {alignment ? (
+                    <span
+                      style={{
+                        color:
+                          alignment.risk_flag === 'CRITICAL'
+                            ? 'var(--accent-rose)'
+                            : alignment.risk_flag === 'HIGH'
+                            ? 'var(--accent-amber)'
+                            : 'var(--accent-emerald)'
+                      }}
+                    >
+                      {alignment.fragility_score}/100 [{alignment.risk_flag}]
+                    </span>
+                  ) : (
+                    <span style={{ color: 'var(--text-muted)' }}>Flat Stance</span>
+                  )}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end' }}>
+                <button
+                  className="pill-btn"
+                  style={{
+                    borderColor: receiptCopied ? 'var(--accent-emerald)' : 'var(--border-hairline-bright)',
+                    color: receiptCopied ? 'var(--accent-emerald)' : 'inherit',
+                    padding: '8px 14px'
+                  }}
+                  onClick={handleCopyReceipt}
+                  id="copy-receipt-btn"
+                >
+                  {receiptCopied ? '✓ Receipt Copied' : '📋 Export Receipt'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 3. Desk Subnavigation Tabs */}
+          <div className="desk-subnav">
+            <button
+              className={`subnav-btn ${deskTab === 'attribution' ? 'active' : ''}`}
+              onClick={() => setDeskTab('attribution')}
+            >
+              🏛️ Causal Attribution &amp; Bridge
+            </button>
+            <button
+              className={`subnav-btn ${deskTab === 'risk' ? 'active' : ''}`}
+              onClick={() => setDeskTab('risk')}
+            >
+              ⏱️ Market Clocks &amp; Risk Guard
+              {weekendTrap && weekendTrap.isRToken && weekendTrap.gap_risk_level === 'EXTREME' && (
+                <span className="tab-alert-badge">GAP RISK</span>
+              )}
+            </button>
+            <button
+              className={`subnav-btn ${deskTab === 'sources' ? 'active' : ''}`}
+              onClick={() => setDeskTab('sources')}
+            >
+              📡 Source Intelligence &amp; Stream ({snapshots.length})
+            </button>
+            <button
+              className={`subnav-btn ${deskTab === 'all' ? 'active' : ''}`}
+              onClick={() => setDeskTab('all')}
+            >
+              📋 All Sections
+            </button>
+          </div>
+
+          {/* 4. Tab Contents */}
+          {/* TAB 1: Causal Attribution & Bridge */}
+          {(deskTab === 'attribution' || deskTab === 'all') && (
+            <div className="desk-tab-content">
+              {/* Interactive Foundation Pillar Visualizer */}
+              {conclusion && attribution && (
+                <FoundationVisualizer
+                  snapshots={snapshots}
+                  attribution={attribution}
+                  conclusion={conclusion}
+                />
+              )}
+
+              {/* Derived Conclusion & Attribution Panel */}
+              {conclusion && attribution && (
+                <div className="glass-panel" style={{ borderTop: '2px solid var(--accent-cyan)' }}>
+                  <div className="panel-header">
+                    <span className="panel-title">
+                      <span>🎯 Combinatorial Attribution Proof</span>
+                    </span>
+                    <span className="anchor-pill" style={{ background: 'var(--bg-chip)', color: 'var(--text-secondary)', border: '1px solid var(--border-hairline)' }}>
+                      Weakest Anchor: {attribution.inherited_anchor.toUpperCase()}
+                    </span>
+                  </div>
+
+                  <AttributionPanel
+                    conclusion={conclusion}
+                    attribution={attribution}
+                    snapshots={snapshots}
+                    onRerun={handleRerun}
+                    isRerunning={isRerunning}
+                    rerunCount={rerunCount}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 2: Market Clocks & Risk Guard */}
+          {(deskTab === 'risk' || deskTab === 'all') && (
+            <div className="desk-tab-content">
+              {/* Weekend Trap Alert */}
+              {weekendTrap && weekendTrap.isRToken && weekendTrap.gap_risk_level !== 'LOW' && (
+                <div
+                  style={{
+                    background: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose-dim)' : 'var(--accent-amber-dim)',
+                    border: `1px solid ${weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose-border)' : 'var(--accent-amber-border)'}`,
+                    borderRadius: 'var(--radius-card)',
+                    padding: '16px 20px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '14px',
+                    boxShadow: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--glow-rose)' : 'var(--glow-amber)'
+                  }}
+                >
+                  <div style={{ fontSize: '22px', lineHeight: 1 }}>🚨</div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '14px', color: weekendTrap.gap_risk_level === 'EXTREME' ? 'var(--accent-rose)' : 'var(--accent-amber)', marginBottom: '4px' }}>
+                      {weekendTrap.warning_title}
+                    </div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                      {weekendTrap.warning_description}
+                    </div>
+                    <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginTop: '6px' }}>
+                      Underlying: {weekendTrap.underlying_exchange} · Real Opening Bell: {weekendTrap.next_open_utc}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Contradiction Alert */}
+              {contradictions.length > 0 && (
+                <div
+                  style={{
+                    background: 'var(--accent-rose-dim)',
+                    border: '1px solid var(--accent-rose-border)',
+                    borderRadius: 'var(--radius-card)',
+                    padding: '14px 18px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-rose)', fontWeight: 700, fontSize: '13px' }}>
+                    <span>⚡</span>
+                    <span>Cross-Source Contradictions Detected ({contradictions.length})</span>
+                  </div>
+                  {contradictions.map((c, idx) => (
+                    <div key={idx} style={{ fontSize: '12px', color: '#fca5a5' }}>
+                      • <strong>[{c.source_a}]</strong> vs <strong>[{c.source_b}]</strong>: {c.divergence_summary}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Personalized Position Alignment Card */}
+              {alignment && currentThesis?.user_position?.stance !== 'flat' && (
+                <div
+                  style={{
+                    background:
+                      alignment.risk_flag === 'CRITICAL'
+                        ? 'var(--accent-rose-dim)'
+                        : alignment.risk_flag === 'HIGH'
+                        ? 'var(--accent-amber-dim)'
+                        : 'var(--accent-emerald-dim)',
+                    border: `1px solid ${
+                      alignment.risk_flag === 'CRITICAL'
+                        ? 'var(--accent-rose-border)'
+                        : alignment.risk_flag === 'HIGH'
+                        ? 'var(--accent-amber-border)'
+                        : 'var(--accent-emerald-border)'
+                    }`,
+                    borderRadius: 'var(--radius-card)',
+                    padding: '18px 20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    boxShadow:
+                      alignment.risk_flag === 'CRITICAL'
+                        ? 'var(--glow-rose)'
+                        : alignment.risk_flag === 'HIGH'
+                        ? 'var(--glow-amber)'
+                        : 'var(--glow-emerald)'
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '12px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      🎯 Personalized Position Alignment
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        padding: '3px 9px',
+                        borderRadius: 'var(--radius-pill)',
+                        background:
+                          alignment.risk_flag === 'CRITICAL'
+                            ? 'var(--accent-rose)'
+                            : alignment.risk_flag === 'HIGH'
+                            ? 'var(--accent-amber)'
+                            : 'var(--accent-emerald)',
+                        color: '#ffffff'
+                      }}
+                    >
+                      Fragility: {alignment.fragility_score}/100 [{alignment.risk_flag}]
+                    </span>
+                  </div>
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                    {alignment.summary}
+                  </p>
+                  <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                    <strong style={{ color: 'var(--text-muted)' }}>Trader Action:</strong> {alignment.recommendation}
+                  </p>
+                </div>
+              )}
+
+              {/* Actionable Thesis Invalidation Tripwires & Freshness */}
+              {conclusion && attribution && tripwires.length > 0 && (
+                <TripwireCard tripwires={tripwires} decayList={decayList} />
+              )}
+            </div>
+          )}
+
+          {/* TAB 3: Source Intelligence & Stream */}
+          {(deskTab === 'sources' || deskTab === 'all') && (
+            <div className="desk-tab-content">
+              {/* Live Market Indicators Ribbon */}
+              {liveIndicators && (
+                <div className="telemetry-ribbon">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                      LIVE MARKET FEED:
+                    </span>
+                    <span className="telemetry-price">
+                      ${liveIndicators.lastPrice.toLocaleString()}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '12px',
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: 700,
+                        color: liveIndicators.change24h >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)'
+                      }}
+                    >
+                      {liveIndicators.change24h >= 0 ? '+' : ''}
+                      {liveIndicators.change24h}%
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px' }}>
+                    <span className="telemetry-stat">
+                      RSI-14: <strong style={{ color: 'var(--accent-cyan)' }}>{liveIndicators.rsi}</strong>
+                    </span>
+                    <span className="telemetry-stat">
+                      EMA-20: <strong>${liveIndicators.ema20}</strong>
+                    </span>
+                    <span className="telemetry-stat">
+                      EMA-50: <strong>${liveIndicators.ema50}</strong>
+                    </span>
+                    <span className="telemetry-stat">
+                      MACD: <strong style={{ color: liveIndicators.macd >= liveIndicators.signal ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>{liveIndicators.macd}</strong>
+                    </span>
+                    <span
+                      className="anchor-pill"
+                      style={{
+                        background: liveIndicators.trend === 'bullish' ? 'var(--accent-emerald-dim)' : 'var(--accent-rose-dim)',
+                        color: liveIndicators.trend === 'bullish' ? 'var(--accent-emerald)' : 'var(--accent-rose)',
+                        border: `1px solid ${liveIndicators.trend === 'bullish' ? 'var(--accent-emerald-border)' : 'var(--accent-rose-border)'}`
+                      }}
+                    >
+                      TREND: {liveIndicators.trend.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* 2-Column Sources Layout: Snapshots on Left + Influence Ranking on Right */}
+              <div className="desk-layout-grid">
+                {/* Captured Sources Tray */}
+                <div className="glass-panel">
+                  <div className="panel-header">
+                    <span className="panel-title">
+                      <span>📡 Captured Source Snapshots ({snapshots.length})</span>
+                    </span>
+                    <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                      Multi-Agent Perception Layer
+                    </span>
+                  </div>
+
+                  <div className="snapshots-grid">
+                    {snapshots.map((snap) => {
+                      const isLB = attribution?.load_bearing_set.includes(snap.source_name);
+                      const isShut = snap.anchor_verdict === 'shut';
+                      return (
+                        <div key={snap.id} className={`snapshot-card ${isLB ? 'is-load-bearing' : ''}`} title={snap.content}>
+                          <div className="snapshot-card-top">
+                            <span className="source-badge">
+                              {isLB ? '★ ' : ''}
+                              {snap.source_name}
+                            </span>
+                            <span className={`anchor-pill ${snap.anchor_verdict}`}>
+                              {snap.anchor_verdict} {isShut ? '⚠️' : '✓'}
+                            </span>
+                          </div>
+                          <p className="snapshot-content">{snap.content}</p>
+                          <div className="snapshot-meta">
+                            Captured: {new Date(snap.retrieved_at).toUTCString().replace('GMT', 'UTC')}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Source Influence Ranking */}
+                <CoveragePanel stats={coverageStats} onOpenProjectDoc={() => setShowProjectModal(true)} />
+              </div>
+            </div>
+          )}
         </main>
       )}
 
