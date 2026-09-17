@@ -59,7 +59,7 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
           onClick={onOpenProjectDoc}
           id="open-submission-doc-btn"
         >
-          📄 View Bitget Project Specification
+          📄 View System Architecture &amp; Specification
         </button>
       </div>
     </div>

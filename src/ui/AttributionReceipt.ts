@@ -18,8 +18,8 @@ export function generateAttributionReceipt(
   return `
 \`\`\`text
 ================================================================================
-SOUNDING // AI TRADING DESK ATTRIBUTION RECEIPT
-Track 3 // AI Research Workbench | Bitget Base Camp Hackathon S2
+SOUNDING // AUTONOMOUS ATTRIBUTION RESEARCH DESK
+Causal Verification Receipt | sha256 Audit Trail
 ================================================================================
 Timestamp:       ${timestamp}
 Audit Hash:      sha256-${conclusion.id.slice(-8)}-${attribution.id.slice(-8)}

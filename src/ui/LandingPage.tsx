@@ -426,17 +426,255 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* 6. Footer */}
-      <footer style={{ borderTop: '1px solid var(--border-hairline)', padding: '24px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', fontSize: '12px', color: 'var(--text-muted)' }}>
-        <div>
-          <strong>SOUNDING</strong> · Bitget AI Base Camp Hackathon (Season 2 · Track 3)
+      {/* 6. Institutional Footer */}
+      <footer
+        style={{
+          borderTop: '1px solid var(--border-hairline)',
+          background: 'linear-gradient(180deg, var(--bg-surface) 0%, #05070a 100%)',
+          padding: '60px 32px 36px',
+          marginTop: 'auto'
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '40px',
+            marginBottom: '48px'
+          }}
+        >
+          {/* Column 1: Brand & Causal Architecture Statement */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span className="pulse-dot" />
+              <span style={{ fontSize: '18px', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff', fontFamily: 'var(--font-display)' }}>
+                SOUNDING
+              </span>
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontFamily: 'var(--font-mono)',
+                  padding: '2px 8px',
+                  borderRadius: 'var(--radius-pill)',
+                  background: 'var(--accent-cyan-dim)',
+                  color: 'var(--accent-cyan)',
+                  border: '1px solid var(--accent-cyan-border)',
+                  fontWeight: 700
+                }}
+              >
+                PRO DESK
+              </span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+              Autonomous attribution and market-clock grounding desk. Built to expose cosmetic citations through combinatorial source removal and anchor algorithmic conviction to real-world market hours.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+                <span style={{ color: 'var(--accent-emerald)' }}>✓</span>
+                <span>Combinatorial Leave-One-Out (L1O/L2O)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+                <span style={{ color: 'var(--accent-emerald)' }}>✓</span>
+                <span>Deterministic Reference Market Clocks</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+                <span style={{ color: 'var(--accent-emerald)' }}>✓</span>
+                <span>Zero Execution Risk (Read-Only Guard)</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Research Architecture */}
+          <div>
+            <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>
+              Research Architecture
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <li style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Causal Removal Engine</strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Combinatorial re-derivation isolates true load-bearing pillars</span>
+              </li>
+              <li style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Market Clock Anchoring</strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Deterministic calendar verifies trading session validity</span>
+              </li>
+              <li style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Fragility &amp; Asymmetry Matrix</strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Evaluates trader leverage against unanchored fragility</span>
+              </li>
+              <li style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Signal Decay Tracking</strong>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Dynamic half-life decay on inputs and market fixtures</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: System Invariants */}
+          <div>
+            <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-amber)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>
+              Core Invariants
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '12.5px', color: 'var(--text-secondary)' }}>
+              <li style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I1</span>
+                <span><strong>Removal Attribution:</strong> Zero credit granted solely by citation</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I2</span>
+                <span><strong>Clock Grounding:</strong> Off-hours chatter cannot anchor RTH calls</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I3</span>
+                <span><strong>Human Sovereignty:</strong> Human trader holds absolute decision authority</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I4</span>
+                <span><strong>Immutable Audit:</strong> Cryptographic receipts for every thesis derivation</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I5–7</span>
+                <span><strong>Read-Only Safety:</strong> Strictly zero execution, zero custody, zero private keys</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Workbench Launch & Scenarios */}
+          <div>
+            <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>
+              Instant Scenarios
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                className="pill-btn"
+                style={{
+                  justifyContent: 'space-between',
+                  padding: '9px 12px',
+                  width: '100%',
+                  fontSize: '12px',
+                  background: 'rgba(255, 255, 255, 0.03)'
+                }}
+                onClick={() =>
+                  onLaunchDesk(
+                    'rNVDA',
+                    'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
+                    'long',
+                    3
+                  )
+                }
+              >
+                <span>⚡ Test rNVDA Weekend Trap</span>
+                <span style={{ color: 'var(--accent-amber)', fontFamily: 'var(--font-mono)' }}>SHUT</span>
+              </button>
+
+              <button
+                className="pill-btn"
+                style={{
+                  justifyContent: 'space-between',
+                  padding: '9px 12px',
+                  width: '100%',
+                  fontSize: '12px',
+                  background: 'rgba(255, 255, 255, 0.03)'
+                }}
+                onClick={() =>
+                  onLaunchDesk(
+                    'rTSLA',
+                    'Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples',
+                    'short',
+                    2
+                  )
+                }
+              >
+                <span>📉 Test rTSLA Anchored Bear</span>
+                <span style={{ color: 'var(--accent-emerald)', fontFamily: 'var(--font-mono)' }}>OPEN</span>
+              </button>
+
+              <button
+                className="pill-btn"
+                style={{
+                  justifyContent: 'space-between',
+                  padding: '9px 12px',
+                  width: '100%',
+                  fontSize: '12px',
+                  background: 'rgba(255, 255, 255, 0.03)'
+                }}
+                onClick={() =>
+                  onLaunchDesk(
+                    'BTC',
+                    'Global central bank easing and Spot ETF inflows signal long-term cyclical continuation',
+                    'long',
+                    1
+                  )
+                }
+              >
+                <span>🌐 Test BTC Continuous Flow</span>
+                <span style={{ color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>24/7</span>
+              </button>
+
+              <button
+                className="execute-btn"
+                style={{ marginTop: '6px', padding: '10px 14px', fontSize: '13px', justifyContent: 'center' }}
+                onClick={() => onLaunchDesk()}
+              >
+                Launch Workbench Desk →
+              </button>
+            </div>
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <span>Node 24 Native SQLite</span>
-          <span>•</span>
-          <span>Invariants I1–I7 Verified</span>
-          <span>•</span>
-          <span>--read-only Active</span>
+
+        {/* Bottom Bar: Copyright, Legal Disclaimer & System Telemetry */}
+        <div
+          style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            paddingTop: '24px',
+            borderTop: '1px solid var(--border-hairline)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '16px',
+            fontSize: '11.5px',
+            color: 'var(--text-muted)'
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ color: 'var(--text-secondary)' }}>
+              © 2026 Sounding Research Desk. All rights reserved.
+            </div>
+            <div>
+              Sounding is an advisory research tool enforcing read-only analysis. It does not execute trades, manage funds, or hold custody.
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <a
+              href="#interactive-demo"
+              style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
+              onMouseOver={(e) => (e.currentTarget.style.color = '#ffffff')}
+              onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            >
+              Interactive Delete-Test
+            </a>
+            <span style={{ color: 'var(--border-hairline-bright)' }}>•</span>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--accent-cyan)',
+                cursor: 'pointer',
+                fontSize: '11.5px',
+                fontFamily: 'var(--font-mono)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              Back to Top ↑
+            </button>
+          </div>
         </div>
       </footer>
     </div>

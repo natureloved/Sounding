@@ -91,7 +91,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
                 SOUNDING RESEARCH WORKBENCH
               </span>
               <span className="track-tag" style={{ fontSize: '10px' }}>
-                Track 3 Winner
+                Causal Attribution Engine
               </span>
             </div>
 
@@ -125,7 +125,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
               <br />
               • Inherited anchor binds trust to the deterministic market clock.
               <br />
-              • Fulfills Track 3 delete-test: human trader makes final decision!
+              • Strict human-in-the-loop guarantee: trader retains absolute decision authority!
             </div>
           </div>
         </div>

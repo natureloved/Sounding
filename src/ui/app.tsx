@@ -381,7 +381,7 @@ export const App: React.FC = () => {
                   <span>💬 State Thesis &amp; Personalized Position</span>
                 </span>
                 <span className="track-tag">
-                  Track 3 Research Workbench
+                  Autonomous Attribution Workbench
                 </span>
               </div>
 
@@ -825,7 +825,7 @@ export const App: React.FC = () => {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <span style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>
-                Official Track 3 Project Description &amp; Compliant X Post
+                System Architecture Specification &amp; Public Summary
               </span>
               <button className="close-btn" onClick={() => setShowProjectModal(false)}>
                 ✕
