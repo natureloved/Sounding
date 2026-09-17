@@ -11,6 +11,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
   const [apiKey, setApiKey] = useState(settings.apiKey || '');
   const [baseUrl, setBaseUrl] = useState(settings.baseUrl || 'https://hackathon.bitgetops.com/v1');
   const [model, setModel] = useState(settings.model || 'qwen3.8-max');
+  const [mcpServerUrl, setMcpServerUrl] = useState(settings.mcpServerUrl || 'http://localhost:3001');
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
@@ -68,7 +69,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
     onSave({
       apiKey: apiKey.trim(),
       baseUrl: baseUrl.trim(),
-      model: model.trim()
+      model: model.trim(),
+      mcpServerUrl: mcpServerUrl.trim()
     });
     onClose();
   };
@@ -134,6 +136,23 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
               <option value="deepseek-v3">deepseek-v3</option>
               <option value="gpt-4o-mini">gpt-4o-mini</option>
             </select>
+          </div>
+
+          {/* Bitget MCP Server URL */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <label style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+              BITGET-MCP-SERVER URL (US DATA &amp; FUNDAMENTALS LAYER)
+            </label>
+            <input
+              type="text"
+              className="thesis-input"
+              value={mcpServerUrl}
+              onChange={(e) => setMcpServerUrl(e.target.value)}
+              placeholder="http://localhost:3001 (Optional local MCP server)"
+            />
+            <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
+              Official data layer for US stocks/ETF quotes &amp; fundamentals (e.g. <code>npx bitget-mcp-server</code>).
+            </span>
           </div>
 
           {/* Ping Test */}

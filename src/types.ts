@@ -150,4 +150,5 @@ export interface WorkbenchSettings {
   apiKey?: string;
   baseUrl?: string;
   model?: string;
+  mcpServerUrl?: string;
 }
