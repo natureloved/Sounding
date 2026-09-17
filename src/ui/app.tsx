@@ -329,24 +329,6 @@ export const App: React.FC = () => {
 
         {/* Right Status Controls */}
         <div className="header-status-bar">
-          <button
-            className="pill-btn"
-            style={{ borderColor: 'var(--accent-cyan-border)', color: 'var(--accent-cyan)', fontWeight: 600 }}
-            onClick={() => setShowBenchmarkModal(true)}
-            id="open-benchmark-btn"
-          >
-            ⚔️ Benchmark: Sounding vs Generic AI
-          </button>
-
-          <div className="status-indicator">
-            <span className={`pulse-dot ${marketIsOpen ? '' : 'shut'}`} />
-            <span>
-              NYSE Clock: {marketIsOpen ? 'OPEN' : 'SHUT'} [
-              {et.hour.toString().padStart(2, '0')}:{et.minute.toString().padStart(2, '0')}:
-              {currentTime.getSeconds().toString().padStart(2, '0')} ET]
-            </span>
-          </div>
-
           <div className="safety-pill">
             <span>🛡️</span>
             <span>--read-only Active</span>
