@@ -25,14 +25,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg-canvas)' }}>
       {/* 1. Hero Section */}
       <section style={{ padding: '60px 24px 40px', maxWidth: '1200px', margin: '0 auto', width: '100%', textAlign: 'center' }}>
-        {/* Eyebrow Badge */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', background: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.25)', borderRadius: 'var(--radius-pill)', marginBottom: '24px' }}>
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-cyan)', boxShadow: '0 0 8px var(--accent-cyan)' }} />
-          <span style={{ fontSize: '12px', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--accent-cyan)', letterSpacing: '0.04em' }}>
-            BITGET BASE CAMP HACKATHON S2 · TRACK 3: AI TRADING DESK
-          </span>
-        </div>
-
         {/* Headline */}
         <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', color: '#ffffff', maxWidth: '900px', margin: '0 auto 20px' }}>
           Don't trade on cosmetic citations.{' '}
