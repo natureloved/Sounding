@@ -1,22 +1,21 @@
-# SOUNDING // AI Research Workbench & Attribution Trading Desk
+# SOUNDING // Autonomous Attribution Research Desk
 
-> **Bitget AI Base Camp Hackathon, Season 2 — Track 3 · AI Trading Desk (AI Research Workbench)**  
-> **Core Value**: A read-only research desk that tells a trader what their call is *actually standing on*. Human traders make final decisions.  
+> **Core Value**: A read-only research desk that tells quantitative and discretionary traders what their call is *actually standing on*. Human traders make final decisions.  
 > **Stack**: TypeScript, Node 24 (native `node:sqlite`), React 18, Vite 6.  
-> **UI Archetype**: Industrial Brutalism & Tactical Telemetry (powered by `taste-skill`). Strict zero border-radius, monospace tabular telemetry, CRT scanline substrate, and mechanical precision.
+> **UI Archetype**: Vanguard High-End Fintech (Linear / Bloomberg Pro Tier) with deep obsidian double-bezel substrate, Plus Jakarta Sans display typography, and JetBrains Mono telemetry.
 
 ---
 
 ## §1 · What It Is
 
-Sounding provides two fundamental capabilities that no conventional financial AI workbench delivers:
+Sounding provides two fundamental capabilities that conventional financial AI tools cannot deliver:
 
-1. **The Load-Bearing Set**: The workbench measures attribution strictly by removal (leave-one-out and leave-pair-out re-derivation), isolating the smallest coalition of sources whose absence alters the conclusion (direction flip or confidence band shift). Attribution is **measured by removal**, never claimed by citation.
-2. **The Inherited Anchor**: The conclusion's trust status is bound to the weakest deterministic market-clock status among the sources that carried it. If a view stands on a source captured while the reference market was shut (e.g. Sunday 03:00 UTC for a tokenized US equity like `rNVDA`), the conclusion is badged as **"resting on unanchored ground"**, naming the offending source.
+1. **The Load-Bearing Set**: The workbench measures attribution strictly by removal (combinatorial leave-one-out and leave-pair-out re-derivation), isolating the smallest coalition of sources whose absence alters the derived conclusion (direction flip or confidence band shift). Attribution is **measured by removal**, never claimed by cosmetic citation.
+2. **The Inherited Anchor**: The conclusion's trust status is bound to the weakest deterministic reference market-clock status among the sources that carried it. If a view stands on a source captured while the reference market was shut (e.g. Sunday 03:00 UTC for a tokenized US equity like `rNVDA`), the conclusion is badged as **"resting on unanchored ground"**, isolating the offending source.
 
-### The Track 3 Delete-Test
-> *Remove Bitget-Signal's five research skills. Is there still anything to attribute?*  
-> There is not. The five Bitget skills (`macro-analyst`, `market-intel`, `news-briefing`, `sentiment-analyst`, `technical-analysis`) constitute the attributable source set. Removing them leaves the workbench with no foundation to stand on.
+### The Causal Delete-Test
+> *Remove the underlying research skills. Is there still anything to attribute?*  
+> There is not. The research skills (`macro-analyst`, `market-intel`, `news-briefing`, `sentiment-analyst`, `technical-analysis`) constitute the attributable source set. Removing them leaves the thesis with no foundation to stand on.
 
 ---
 

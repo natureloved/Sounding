@@ -1,6 +1,6 @@
 /**
- * Sounding Core Types
- * Bitget AI Base Camp Hackathon Track 3: AI Trading Desk / AI Research Workbench
+ * Core Type Definitions & Schemas
+ * Sounding: Autonomous Attribution & Market Clock Grounding Research Desk
  */
 
 export type SourceKind = 'signal_skill' | 'market_feed' | 'user_doc';

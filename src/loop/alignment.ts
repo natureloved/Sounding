@@ -1,6 +1,5 @@
 /**
- * Personalized Thesis & Position Alignment Engine
- * Track 3 Rubric Focus: "Personalized Thesis"
+ * Personalized Position Alignment & Risk Assessment
  * Evaluates whether the user's specific capital stance and leverage align with the load-bearing set
  * and calculates the Asymmetric Fragility Index.
  */

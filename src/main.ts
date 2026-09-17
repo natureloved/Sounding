@@ -1,6 +1,6 @@
 /**
  * Sounding: CLI + Local Server Entry Point
- * Track 3 · AI Trading Desk (AI Research Workbench)
+ * Autonomous Attribution Research Desk
  *
  * CRITICAL: Asserts Invariant I5 (--read-only) before any operation!
  */
