@@ -135,27 +135,11 @@ Output EXACT JSON:
       const isBrowser = typeof window !== 'undefined';
       const endpoint = isBrowser ? '/api/chat' : `${baseUrl}/chat/completions`;
 
-      let resp = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model,
-          temperature,
-          baseUrl,
-          apiKey,
-          messages: [
-            { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
-            { role: 'user', content: prompt }
-          ],
-          response_format: { type: 'json_object' }
-        })
-      });
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 5000);
 
-      // If gateway rejects response_format (e.g. 400 Bad Request), retry once with pure prompt instruction
-      if (!resp.ok && resp.status === 400) {
+      let resp: Response;
+      try {
         resp = await fetch(endpoint, {
           method: 'POST',
           headers: {
@@ -168,11 +152,37 @@ Output EXACT JSON:
             baseUrl,
             apiKey,
             messages: [
-              { role: 'system', content: 'You are Sounding, a deterministic trading desk. Always output raw JSON only.' },
+              { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
               { role: 'user', content: prompt }
-            ]
-          })
+            ],
+            response_format: { type: 'json_object' }
+          }),
+          signal: controller.signal
         });
+
+        // If gateway rejects response_format (e.g. 400 Bad Request), retry once with pure prompt instruction
+        if (!resp.ok && resp.status === 400) {
+          resp = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model,
+              temperature,
+              baseUrl,
+              apiKey,
+              messages: [
+                { role: 'system', content: 'You are Sounding, a deterministic trading desk. Always output raw JSON only.' },
+                { role: 'user', content: prompt }
+              ]
+            }),
+            signal: controller.signal
+          });
+        }
+      } finally {
+        clearTimeout(timer);
       }
 
       if (resp.ok) {

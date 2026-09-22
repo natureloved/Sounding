@@ -60,7 +60,7 @@ export default async function handler(req: any, res: any) {
     if (response_format) upstreamPayload.response_format = response_format;
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    const timeout = setTimeout(() => controller.abort(), 7000);
 
     let upstreamResp = await fetch(`${baseUrl}/chat/completions`, {
       method: 'POST',
@@ -90,10 +90,23 @@ export default async function handler(req: any, res: any) {
 
     const data = await upstreamResp.text();
     res.setHeader('Content-Type', 'application/json');
-    return res.status(upstreamResp.status).send(data);
+    if (typeof res.status === 'function') {
+      res.status(upstreamResp.status);
+    } else {
+      res.statusCode = upstreamResp.status;
+    }
+    if (typeof res.send === 'function') {
+      return res.send(data);
+    }
+    return res.end(data);
   } catch (err: any) {
-    return res.status(500).json({
-      error: `Proxy error: ${err.message || 'Failed to connect to gateway'}`
-    });
+    if (typeof res.status === 'function') {
+      return res.status(500).json({
+        error: `Proxy error: ${err.message || 'Failed to connect to gateway'}`
+      });
+    }
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'application/json');
+    return res.end(JSON.stringify({ error: `Proxy error: ${err.message || 'Failed to connect to gateway'}` }));
   }
 }

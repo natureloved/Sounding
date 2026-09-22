@@ -46,15 +46,20 @@ export async function computeCoalitionRemoval(
     );
   }
 
-  // 1. Single-source removals (Leave-one-out)
+  // 1. Single-source removals (Leave-one-out) - evaluated in parallel for high responsiveness
   const singleChanges: Array<{ name: string; result: DerivationResult }> = [];
+  const singleRemovalCandidates = eligibleSources.slice(0, maxRemovals);
+  removalCalls += singleRemovalCandidates.length;
 
-  for (const snap of eligibleSources) {
-    if (removalCalls >= maxRemovals) break;
-    removalCalls++;
+  const singleResults = await Promise.all(
+    singleRemovalCandidates.map(async (snap) => {
+      const subset = snapshots.filter((s) => s.id !== snap.id);
+      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
+      return { snap, result };
+    })
+  );
 
-    const subset = snapshots.filter((s) => s.id !== snap.id);
-    const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
+  for (const { snap, result } of singleResults) {
     const changed = isChanged(result);
 
     const reason = changed
@@ -91,38 +96,46 @@ export async function computeCoalitionRemoval(
     };
   }
 
-  // 2. Pair removals (Leave-pair-out)
+  // 2. Pair removals (Leave-pair-out) - evaluated in parallel for high responsiveness
   const pairChanges: Array<{ names: [string, string]; result: DerivationResult }> = [];
+  const pairCandidates: Array<[Snapshot, Snapshot]> = [];
 
   for (let i = 0; i < eligibleSources.length; i++) {
     for (let j = i + 1; j < eligibleSources.length; j++) {
-      if (removalCalls >= maxRemovals) break;
-      removalCalls++;
-
-      const s1 = eligibleSources[i];
-      const s2 = eligibleSources[j];
-      const subset = snapshots.filter((s) => s.id !== s1.id && s.id !== s2.id);
-      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
-      const changed = isChanged(result);
-
-      const reason = changed
-        ? `Joint removal of [${s1.source_name}, ${s2.source_name}] flipped conclusion`
-        : `Conclusion unchanged without [${s1.source_name}, ${s2.source_name}]`;
-
-      tested_removals.push({
-        removed_sources: [s1.source_name, s2.source_name],
-        direction: result.direction,
-        confidence_band: result.confidence_band,
-        changed,
-        reason
-      });
-
-      if (changed) {
-        pairChanges.push({ names: [s1.source_name, s2.source_name], result });
-        break; // Smallest pair found
+      if (removalCalls + pairCandidates.length < maxRemovals) {
+        pairCandidates.push([eligibleSources[i], eligibleSources[j]]);
       }
     }
-    if (pairChanges.length > 0 || removalCalls >= maxRemovals) break;
+  }
+
+  removalCalls += pairCandidates.length;
+
+  const pairResults = await Promise.all(
+    pairCandidates.map(async ([s1, s2]) => {
+      const subset = snapshots.filter((s) => s.id !== s1.id && s.id !== s2.id);
+      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
+      return { s1, s2, result };
+    })
+  );
+
+  for (const { s1, s2, result } of pairResults) {
+    const changed = isChanged(result);
+
+    const reason = changed
+      ? `Joint removal of [${s1.source_name}, ${s2.source_name}] flipped conclusion`
+      : `Conclusion unchanged without [${s1.source_name}, ${s2.source_name}]`;
+
+    tested_removals.push({
+      removed_sources: [s1.source_name, s2.source_name],
+      direction: result.direction,
+      confidence_band: result.confidence_band,
+      changed,
+      reason
+    });
+
+    if (changed) {
+      pairChanges.push({ names: [s1.source_name, s2.source_name], result });
+    }
   }
 
   if (pairChanges.length > 0) {
