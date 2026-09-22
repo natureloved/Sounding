@@ -10,6 +10,7 @@ import { runLiveMarketTests } from './live-market.test.js';
 import { runAlignmentTests } from './alignment.test.js';
 import { runWeekendTrapTests } from './weekend-trap.test.js';
 import { runTripwireTests } from './tripwires.test.js';
+import { runDeriveLLMTests } from './derive-llm.test.js';
 
 async function runAll() {
   console.log('======================================================');
@@ -23,9 +24,10 @@ async function runAll() {
   const align = runAlignmentTests();
   const trap = runWeekendTrapTests();
   const trip = runTripwireTests();
+  const llm = await runDeriveLLMTests();
 
-  const totalPassed = cal.passed + coal.passed + inv.passed + live.passed + align.passed + trap.passed + trip.passed;
-  const totalFailed = cal.failed + coal.failed + inv.failed + live.failed + align.failed + trap.failed + trip.failed;
+  const totalPassed = cal.passed + coal.passed + inv.passed + live.passed + align.passed + trap.passed + trip.passed + llm.passed;
+  const totalFailed = cal.failed + coal.failed + inv.failed + live.failed + align.failed + trap.failed + trip.failed + llm.failed;
 
   console.log('\n======================================================');
   console.log(`📋 FINAL TEST SUMMARY:`);
@@ -36,6 +38,7 @@ async function runAll() {
   console.log(`   Alignment Tests:   ${align.passed} passed, ${align.failed} failed`);
   console.log(`   Weekend Trap Tests:${trap.passed} passed, ${trap.failed} failed`);
   console.log(`   Tripwire Tests:    ${trip.passed} passed, ${trip.failed} failed`);
+  console.log(`   Derive & LLM Tests:${llm.passed} passed, ${llm.failed} failed`);
   console.log(`------------------------------------------------------`);
   console.log(`   Total Passed:      ${totalPassed}`);
   console.log(`   Total Failed:      ${totalFailed}`);

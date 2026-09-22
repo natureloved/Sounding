@@ -15,10 +15,11 @@ export interface CaptureConfig {
   userDocs?: string[];
   forceFixture?: boolean;
   timestamp?: string;
+  mcpUrl?: string;
 }
 
 export async function captureSourceSet(config: CaptureConfig): Promise<Snapshot[]> {
-  const { ticker, userDocs = [], forceFixture = false, timestamp } = config;
+  const { ticker, userDocs = [], forceFixture = false, timestamp, mcpUrl } = config;
 
   if (forceFixture) {
     const fixtureSnaps = loadFixtureSnapshots(ticker);
@@ -32,7 +33,7 @@ export async function captureSourceSet(config: CaptureConfig): Promise<Snapshot[
 
   // 1. Capture 5 signal skills in parallel
   const skillPromises = SIGNAL_SKILL_NAMES.map((name) =>
-    captureSignalSkill(name, ticker, timestamp)
+    captureSignalSkill(name, ticker, timestamp, mcpUrl)
   );
 
   // 2. Capture Bitget market feed

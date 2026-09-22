@@ -37,14 +37,17 @@ export interface CaptureOptions {
  */
 export function loadFixtureSnapshots(ticker: string): Snapshot[] {
   const cleanTicker = ticker.trim().toUpperCase();
+  let list: Snapshot[];
 
   if (cleanTicker.includes('TSLA')) {
-    return JSON.parse(JSON.stringify(rTslaFixtures)) as Snapshot[];
+    list = JSON.parse(JSON.stringify(rTslaFixtures)) as Snapshot[];
+  } else if (cleanTicker.includes('BTC')) {
+    list = JSON.parse(JSON.stringify(rBtcFixtures)) as Snapshot[];
+  } else {
+    list = JSON.parse(JSON.stringify(rNvdaFixtures)) as Snapshot[];
   }
-  if (cleanTicker.includes('BTC')) {
-    return JSON.parse(JSON.stringify(rBtcFixtures)) as Snapshot[];
-  }
-  return JSON.parse(JSON.stringify(rNvdaFixtures)) as Snapshot[];
+
+  return list.map((s) => ({ ...s, provenance: 'fixture' as const }));
 }
 
 /**
@@ -82,7 +85,8 @@ function buildLiveSkillContent(
 export async function captureSignalSkill(
   skillName: SignalSkillName,
   ticker: string,
-  timestamp: string = new Date().toISOString()
+  timestamp: string = new Date().toISOString(),
+  mcpUrlOverride?: string
 ): Promise<Snapshot> {
   const cleanTicker = ticker.trim().toUpperCase();
 
@@ -90,13 +94,13 @@ export async function captureSignalSkill(
   if (cleanTicker === 'RNVDA' && timestamp.includes('2026-09-13T03:00:00')) {
     const fixtures = loadFixtureSnapshots(cleanTicker);
     const found = fixtures.find((f) => f.source_name === skillName);
-    if (found) return found;
+    if (found) return { ...found, provenance: 'fixture' };
   }
 
   // 1. Check local MCP service if configured
   try {
     const isNode = typeof process !== 'undefined' && process.env;
-    const mcpUrl = isNode ? process.env.BITGET_SIGNAL_MCP_URL : undefined;
+    const mcpUrl = (mcpUrlOverride || (isNode ? process.env.BITGET_SIGNAL_MCP_URL : undefined) || '').trim();
     if (mcpUrl) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 1500);
@@ -118,7 +122,8 @@ export async function captureSignalSkill(
             kind: 'signal_skill',
             content: body.content,
             retrieved_at: timestamp,
-            anchor_verdict: getAnchorVerdict(cleanTicker, timestamp)
+            anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
+            provenance: 'live-mcp'
           };
         }
       }
@@ -140,7 +145,8 @@ export async function captureSignalSkill(
       kind: 'signal_skill',
       content,
       retrieved_at: timestamp,
-      anchor_verdict: anchor
+      anchor_verdict: anchor,
+      provenance: 'live-market-derived'
     };
   } catch {
     // Fallback to fixture
@@ -150,7 +156,8 @@ export async function captureSignalSkill(
       return {
         ...found,
         retrieved_at: found.retrieved_at || timestamp,
-        anchor_verdict: found.anchor_verdict || getAnchorVerdict(cleanTicker, found.retrieved_at || timestamp)
+        anchor_verdict: found.anchor_verdict || getAnchorVerdict(cleanTicker, found.retrieved_at || timestamp),
+        provenance: 'fixture'
       };
     }
 
@@ -161,7 +168,8 @@ export async function captureSignalSkill(
       kind: 'signal_skill',
       content: `${skillName} analysis for ${cleanTicker}. Market structures and cross-sectional signals reflect current liquidity regime.`,
       retrieved_at: timestamp,
-      anchor_verdict: getAnchorVerdict(cleanTicker, timestamp)
+      anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
+      provenance: 'fixture'
     };
   }
 }

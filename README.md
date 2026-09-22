@@ -1,7 +1,14 @@
 # SOUNDING // Autonomous Attribution Research Desk
+### Bitget AI Base Camp Hackathon (Season 2) — Track 3: AI Trading Desk
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-natureloved%2FSounding-blue?logo=github)](https://github.com/natureloved/Sounding)
+[![Test Suite](https://img.shields.io/badge/Tests-68%2F68%20Passing-emerald)](https://github.com/natureloved/Sounding)
+[![Invariants](https://img.shields.io/badge/Invariants-I1--I7%20Verified-cyan)](https://github.com/natureloved/Sounding)
+[![Day--1 Spike](https://img.shields.io/badge/A1%20Spike-10%2F10%20PASS-amber)](https://github.com/natureloved/Sounding)
+
+> **Repository & Materials Link**: [https://github.com/natureloved/Sounding](https://github.com/natureloved/Sounding)  
 > **Core Value**: A read-only research desk that tells quantitative and discretionary traders what their call is *actually standing on*. Human traders make final decisions.  
-> **Stack**: TypeScript, Node 24 (native `node:sqlite`), React 18, Vite 6.  
+> **Stack**: TypeScript, Node 24 (native `node:sqlite`), React 18, Vite 6, Bitget Qwen Gateway (qwen3.8-max).  
 > **UI Archetype**: Vanguard High-End Fintech (Linear / Bloomberg Pro Tier) with deep obsidian double-bezel substrate, Plus Jakarta Sans display typography, and JetBrains Mono telemetry.
 
 ---

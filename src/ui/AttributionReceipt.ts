@@ -28,6 +28,7 @@ Thesis:          "${thesis.text}"
 Trader Position: ${thesis.user_position?.stance.toUpperCase() || 'FLAT'} (${thesis.user_position?.leverage || 1}x Leverage)
 --------------------------------------------------------------------------------
 SYNTHESIS RESULT:
+Engine:          ${conclusion.engine === 'live_llm' ? `Live LLM (${conclusion.model || 'qwen3.8-max'} · temp ${conclusion.temperature ?? 0})` : 'Offline Heuristic Fallback (Keyword Count)'}
 Direction:       ${conclusion.direction.toUpperCase()}
 Conviction Band: ${conclusion.confidence_band.toUpperCase()}
 Rationale:       ${conclusion.rationale}
@@ -41,7 +42,7 @@ ${alignment ? `Fragility Index: ${alignment.fragility_score}/100 [${alignment.ri
 ${alignment ? `Trader Guidance: ${alignment.recommendation}` : ''}
 --------------------------------------------------------------------------------
 CAPTURED ATTRIBUTABLE SOURCES (${snapshots.length}):
-${snapshots.map((s) => `• [${s.source_name.padEnd(20)}] Clock: ${s.anchor_verdict.toUpperCase().padEnd(6)} | Retrieved: ${s.retrieved_at}`).join('\n')}
+${snapshots.map((s) => `• [${s.source_name.padEnd(20)}] Clock: ${s.anchor_verdict.toUpperCase().padEnd(6)} | Provenance: ${(s.provenance || (s.kind === 'market_feed' ? 'live-market-derived' : 'fixture')).padEnd(19)} | Retrieved: ${s.retrieved_at}`).join('\n')}
 --------------------------------------------------------------------------------
 TESTED REMOVAL PERMUTATIONS (${attribution.tested_removals.length}):
 ${attribution.tested_removals

@@ -5,7 +5,7 @@
  */
 
 import { Snapshot, Direction, ConfidenceBand, TestedRemoval } from '../types.js';
-import { deriveConclusion, DerivationResult } from './derive.js';
+import { deriveConclusion, DerivationResult, DerivationOptions } from './derive.js';
 import { assertI4 } from '../store/schema.js';
 
 export interface CoalitionResult {
@@ -17,6 +17,7 @@ export interface CoalitionResult {
 
 export interface CoalitionOptions {
   maxRemovals?: number;
+  derivationOptions?: DerivationOptions;
 }
 
 export async function computeCoalitionRemoval(
@@ -27,6 +28,7 @@ export async function computeCoalitionRemoval(
 ): Promise<CoalitionResult> {
   const env = typeof process !== 'undefined' && process.env ? process.env : {};
   const maxRemovals = options.maxRemovals ?? (env.SOUNDING_MAX_REMOVALS ? parseInt(env.SOUNDING_MAX_REMOVALS, 10) : 12);
+  const derivationOptions = options.derivationOptions || {};
   const tested_removals: TestedRemoval[] = [];
 
   // Filter out any source that is 'unknown' from being considered load-bearing candidate per I4
@@ -34,7 +36,7 @@ export async function computeCoalitionRemoval(
   const unknownSources = snapshots.filter((s) => s.anchor_verdict === 'unknown');
 
   // Baseline derivation with all available snapshots
-  const baseline = await deriveConclusion(thesis, ticker, snapshots);
+  const baseline = await deriveConclusion(thesis, ticker, snapshots, derivationOptions);
   let removalCalls = 0;
 
   function isChanged(candidate: DerivationResult): boolean {
@@ -52,7 +54,7 @@ export async function computeCoalitionRemoval(
     removalCalls++;
 
     const subset = snapshots.filter((s) => s.id !== snap.id);
-    const result = await deriveConclusion(thesis, ticker, subset);
+    const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
     const changed = isChanged(result);
 
     const reason = changed
@@ -100,7 +102,7 @@ export async function computeCoalitionRemoval(
       const s1 = eligibleSources[i];
       const s2 = eligibleSources[j];
       const subset = snapshots.filter((s) => s.id !== s1.id && s.id !== s2.id);
-      const result = await deriveConclusion(thesis, ticker, subset);
+      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
       const changed = isChanged(result);
 
       const reason = changed
@@ -147,7 +149,7 @@ export async function computeCoalitionRemoval(
       const [removed] = remaining.splice(idx, 1);
       greedyRemoved.push(removed.source_name);
 
-      const result = await deriveConclusion(thesis, ticker, remaining);
+      const result = await deriveConclusion(thesis, ticker, remaining, derivationOptions);
       const changed = isChanged(result);
 
       tested_removals.push({

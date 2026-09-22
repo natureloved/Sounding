@@ -18,6 +18,7 @@ export function createUserDocSnapshot(
     kind: 'user_doc',
     content: content.trim(),
     retrieved_at: timestamp,
-    anchor_verdict: getAnchorVerdict(ticker, timestamp)
+    anchor_verdict: getAnchorVerdict(ticker, timestamp),
+    provenance: 'user-submitted'
   };
 }

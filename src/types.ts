@@ -87,6 +87,8 @@ export interface Source {
   name: string;
 }
 
+export type Provenance = 'live-mcp' | 'live-market-derived' | 'fixture' | 'user-submitted';
+
 export interface Snapshot {
   id: string;
   source_id: string;
@@ -95,6 +97,7 @@ export interface Snapshot {
   content: string;
   retrieved_at: string;
   anchor_verdict: AnchorVerdict;
+  provenance?: Provenance;
 }
 
 export interface Conclusion {
@@ -106,6 +109,9 @@ export interface Conclusion {
   rationale: string;
   cited_sources: string[];
   created_at: string;
+  engine?: 'live_llm' | 'offline_heuristic';
+  model?: string;
+  temperature?: number;
 }
 
 export interface TestedRemoval {

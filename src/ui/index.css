@@ -626,6 +626,42 @@ body {
   border: 1px solid var(--accent-rose-border);
 }
 
+.provenance-chip {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1.5px 6px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.provenance-chip.live-mcp {
+  background: var(--accent-emerald-dim);
+  color: var(--accent-emerald);
+  border: 1px solid var(--accent-emerald-border);
+}
+
+.provenance-chip.live-market-derived {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan-border);
+}
+
+.provenance-chip.fixture {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.provenance-chip.user-submitted {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
 .snapshot-content {
   font-size: 12px;
   color: var(--text-secondary);
@@ -808,6 +844,48 @@ body {
   background: rgba(148, 163, 184, 0.12);
   color: var(--text-secondary);
   border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.engine-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.engine-badge.live {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan-border);
+  box-shadow: var(--glow-cyan);
+}
+
+.engine-badge.offline {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.github-link-btn {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hairline-bright);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.github-link-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: var(--accent-cyan);
 }
 
 .confidence-bar-wrap {

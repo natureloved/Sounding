@@ -54,6 +54,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           >
             <span>Interactive Explainer ↓</span>
           </a>
+          <a
+            href="https://github.com/natureloved/Sounding"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pill-btn hero-btn-secondary"
+            id="hero-github-link"
+          >
+            <span>GitHub Code &amp; Tests ↗</span>
+          </a>
         </div>
 
         {/* Live Market Clock Telemetry Bar */}
@@ -568,6 +577,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <a
+              href="https://github.com/natureloved/Sounding"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
+              onMouseOver={(e) => (e.currentTarget.style.color = '#ffffff')}
+              onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            >
+              GitHub (Code &amp; Tests) ↗
+            </a>
+            <span style={{ color: 'var(--border-hairline-bright)' }}>•</span>
             <a
               href="#interactive-demo"
               style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}

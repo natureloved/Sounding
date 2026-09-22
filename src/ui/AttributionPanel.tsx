@@ -33,8 +33,19 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
       {/* 1. Derived Conclusion Card */}
       <div className="conclusion-banner">
         <div className="conclusion-top">
-          <div className={`direction-badge ${conclusion.direction}`}>
-            {conclusion.direction.toUpperCase()}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+            <div className={`direction-badge ${conclusion.direction}`}>
+              {conclusion.direction.toUpperCase()}
+            </div>
+            {conclusion.engine === 'live_llm' ? (
+              <span className="engine-badge live" id="engine-status-badge" title="Synthesized live via Bitget Qwen Gateway">
+                ⚡ Derived by {conclusion.model || 'qwen3.8-max'} · temp {conclusion.temperature ?? 0}
+              </span>
+            ) : (
+              <span className="engine-badge offline" id="engine-status-badge" title="Deterministic keyword-heuristic engine. Configure API key in Gateway Settings for live LLM.">
+                ⚙️ Offline heuristic fallback
+              </span>
+            )}
           </div>
           <div className="confidence-bar-wrap">
             <span>CONVICTION:</span>

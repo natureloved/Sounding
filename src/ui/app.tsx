@@ -16,6 +16,7 @@ import {
 } from '../types.js';
 import { captureSourceSet } from '../loop/capture.js';
 import { computeCoalitionRemoval } from '../loop/coalition.js';
+import { DerivationOptions } from '../loop/derive.js';
 import { computeInheritedAnchor } from '../loop/inherit.js';
 import { evaluatePositionAlignment } from '../loop/alignment.js';
 import { detectContradictions } from '../loop/contradiction.js';
@@ -95,9 +96,60 @@ export const App: React.FC = () => {
     setCoverageStats(stats);
   };
 
-  // Run initial analysis in background
+  // Deep-link routing via #desk hash or ?view=desk / ?scenario= query params
   useEffect(() => {
-    handleRunAnalysis(ticker, thesisText, positionStance, leverage);
+    if (typeof window === 'undefined') return;
+
+    const hash = window.location.hash;
+    const searchParams = new URLSearchParams(window.location.search);
+    const viewParam = searchParams.get('view');
+    const scenarioParam = searchParams.get('scenario') || searchParams.get('ticker');
+
+    if (hash === '#desk' || viewParam === 'desk') {
+      setViewMode('desk');
+    }
+
+    if (scenarioParam) {
+      const clean = scenarioParam.toUpperCase();
+      if (clean.includes('TSLA')) {
+        setTicker('rTSLA');
+        setThesisText('Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples');
+        setPositionStance('short');
+        setLeverage(2);
+        handleRunAnalysis(
+          'rTSLA',
+          'Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples',
+          'short',
+          2
+        );
+      } else if (clean.includes('BTC')) {
+        setTicker('BTC');
+        setThesisText('Global central bank easing and Spot ETF inflows signal long-term cyclical continuation');
+        setPositionStance('long');
+        setLeverage(1);
+        handleRunAnalysis(
+          'BTC',
+          'Global central bank easing and Spot ETF inflows signal long-term cyclical continuation',
+          'long',
+          1
+        );
+      } else {
+        handleRunAnalysis(ticker, thesisText, positionStance, leverage);
+      }
+    } else {
+      handleRunAnalysis(ticker, thesisText, positionStance, leverage);
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash === '#desk') {
+        setViewMode('desk');
+      } else if (!window.location.hash || window.location.hash === '#') {
+        setViewMode('landing');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const handleSaveSettings = (newSettings: WorkbenchSettings) => {
@@ -107,6 +159,8 @@ export const App: React.FC = () => {
     } catch {
       // ignore
     }
+    // Re-run derivation immediately with updated settings
+    handleRunAnalysis(ticker, thesisText, positionStance, leverage, [], newSettings);
   };
 
   const handleRunAnalysis = async (
@@ -114,7 +168,8 @@ export const App: React.FC = () => {
     targetThesis: string,
     stance: 'long' | 'short' | 'flat' = positionStance,
     lev: number = leverage,
-    customDocs: string[] = []
+    customDocs: string[] = [],
+    activeSettings: WorkbenchSettings = settings
   ) => {
     setIsLoading(true);
     setRerunCount(0);
@@ -141,17 +196,28 @@ export const App: React.FC = () => {
       const indicators = await fetchBitgetLiveIndicators(targetTicker);
       setLiveIndicators(indicators);
 
-      // 2. Capture source set
+      // 2. Capture source set (passing configured MCP server URL)
       const docs = customDocs.length > 0 ? customDocs : userDocText.trim() ? [userDocText.trim()] : [];
       const snaps = await captureSourceSet({
         ticker: targetTicker,
         userDocs: docs,
-        forceFixture: false
+        forceFixture: false,
+        mcpUrl: activeSettings.mcpServerUrl
       });
       setSnapshots(snaps);
 
-      // 3. Coalition Removal Engine
-      const coalition = await computeCoalitionRemoval(targetThesis, targetTicker, snaps, { maxRemovals: 12 });
+      // 3. Coalition Removal Engine with DerivationOptions from settings
+      const derivationOpts: DerivationOptions = {
+        apiKey: activeSettings.apiKey,
+        baseUrl: activeSettings.baseUrl,
+        modelId: activeSettings.model,
+        temperature: 0
+      };
+
+      const coalition = await computeCoalitionRemoval(targetThesis, targetTicker, snaps, {
+        maxRemovals: 12,
+        derivationOptions: derivationOpts
+      });
 
       // 4. Inherited Anchor Computation
       const anchorResult = computeInheritedAnchor(coalition.load_bearing_set, snaps);
@@ -165,7 +231,10 @@ export const App: React.FC = () => {
         confidence_band: coalition.baseline.confidence_band,
         rationale: coalition.baseline.rationale,
         cited_sources: coalition.baseline.cited_sources,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        engine: coalition.baseline.engine,
+        model: coalition.baseline.model,
+        temperature: coalition.baseline.temperature
       };
       db.insertConclusion(conc);
 
@@ -215,8 +284,16 @@ export const App: React.FC = () => {
     if (!currentThesis || snapshots.length === 0 || !conclusion) return;
     setIsRerunning(true);
     try {
+      const derivationOpts: DerivationOptions = {
+        apiKey: settings.apiKey,
+        baseUrl: settings.baseUrl,
+        modelId: settings.model,
+        temperature: 0
+      };
+
       const coalition = await computeCoalitionRemoval(currentThesis.text, currentThesis.ticker, snapshots, {
-        maxRemovals: 12
+        maxRemovals: 12,
+        derivationOptions: derivationOpts
       });
       const anchorResult = computeInheritedAnchor(coalition.load_bearing_set, snapshots);
 
@@ -234,8 +311,21 @@ export const App: React.FC = () => {
       db.insertAttribution(updatedAttr);
       setAttribution(updatedAttr);
 
+      const updatedConc: Conclusion = {
+        ...conclusion,
+        direction: coalition.baseline.direction,
+        confidence_band: coalition.baseline.confidence_band,
+        rationale: coalition.baseline.rationale,
+        cited_sources: coalition.baseline.cited_sources,
+        engine: coalition.baseline.engine,
+        model: coalition.baseline.model,
+        temperature: coalition.baseline.temperature
+      };
+      db.insertConclusion(updatedConc);
+      setConclusion(updatedConc);
+
       if (currentThesis.user_position) {
-        const alignResult = evaluatePositionAlignment(currentThesis.user_position, conclusion, updatedAttr);
+        const alignResult = evaluatePositionAlignment(currentThesis.user_position, updatedConc, updatedAttr);
         setAlignment(alignResult);
       }
 
@@ -329,6 +419,18 @@ export const App: React.FC = () => {
 
         {/* Right Status Controls */}
         <div className="header-status-bar">
+          <a
+            href="https://github.com/natureloved/Sounding"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pill-btn github-link-btn"
+            id="github-header-btn"
+            title="View Open-Source Repository & Verification Tests on GitHub"
+          >
+            <span>GitHub</span>
+            <span style={{ fontSize: '10px', opacity: 0.8 }}>↗</span>
+          </a>
+
           <div className="safety-pill">
             <span>🛡️</span>
             <span className="safety-pill-text">--read-only Active</span>
@@ -584,6 +686,26 @@ export const App: React.FC = () => {
                   ) : (
                     <span style={{ color: 'var(--accent-emerald)', fontSize: '12px' }}>
                       ✓ Robust (Multi-Source Consensus)
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="exec-metric">
+                <span className="exec-label">Derivation Engine</span>
+                <div className="exec-value">
+                  {conclusion.engine === 'live_llm' ? (
+                    <span style={{ color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <span>⚡ {conclusion.model || 'qwen3.8-max'}</span>
+                      <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>(t={conclusion.temperature ?? 0})</span>
+                    </span>
+                  ) : (
+                    <span
+                      style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}
+                      onClick={() => setShowSettingsModal(true)}
+                      title="Click to configure live Bitget Qwen API key in Gateway Settings"
+                    >
+                      <span>⚙️ Offline Heuristic</span>
                     </span>
                   )}
                 </div>
@@ -893,6 +1015,7 @@ export const App: React.FC = () => {
                     {snapshots.map((snap) => {
                       const isLB = attribution?.load_bearing_set.includes(snap.source_name);
                       const isShut = snap.anchor_verdict === 'shut';
+                      const prov = snap.provenance || (snap.kind === 'market_feed' ? 'live-market-derived' : 'fixture');
                       return (
                         <div key={snap.id} className={`snapshot-card ${isLB ? 'is-load-bearing' : ''}`} title={snap.content}>
                           <div className="snapshot-card-top">
@@ -900,9 +1023,14 @@ export const App: React.FC = () => {
                               {isLB ? '★ ' : ''}
                               {snap.source_name}
                             </span>
-                            <span className={`anchor-pill ${snap.anchor_verdict}`}>
-                              {snap.anchor_verdict} {isShut ? '⚠️' : '✓'}
-                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span className={`provenance-chip ${prov}`} title={`Data provenance: ${prov}`}>
+                                {prov === 'live-mcp' ? 'live-mcp' : prov === 'live-market-derived' ? 'live-market-derived' : prov === 'user-submitted' ? 'user-doc' : 'fixture'}
+                              </span>
+                              <span className={`anchor-pill ${snap.anchor_verdict}`}>
+                                {snap.anchor_verdict} {isShut ? '⚠️' : '✓'}
+                              </span>
+                            </div>
                           </div>
                           <p className="snapshot-content">{snap.content}</p>
                           <div className="snapshot-meta">

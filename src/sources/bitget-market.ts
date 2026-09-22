@@ -56,7 +56,8 @@ export async function captureBitgetMarketFeed(
           kind: 'market_feed',
           content,
           retrieved_at: timestamp,
-          anchor_verdict: getAnchorVerdict(cleanTicker, timestamp)
+          anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
+          provenance: 'live-market-derived'
         };
       }
     }
@@ -71,7 +72,8 @@ export async function captureBitgetMarketFeed(
     return {
       ...found,
       retrieved_at: found.retrieved_at || timestamp,
-      anchor_verdict: found.anchor_verdict || getAnchorVerdict(cleanTicker, found.retrieved_at || timestamp)
+      anchor_verdict: found.anchor_verdict || getAnchorVerdict(cleanTicker, found.retrieved_at || timestamp),
+      provenance: 'fixture'
     };
   }
 
@@ -82,6 +84,7 @@ export async function captureBitgetMarketFeed(
     kind: 'market_feed',
     content: `${cleanTicker} Quote Feed: Bid/Ask spread within typical benchmark, market liquidity active.`,
     retrieved_at: timestamp,
-    anchor_verdict: getAnchorVerdict(cleanTicker, timestamp)
+    anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
+    provenance: 'fixture'
   };
 }

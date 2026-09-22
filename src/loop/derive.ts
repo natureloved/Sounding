@@ -11,12 +11,17 @@ export interface DerivationResult {
   confidence_band: ConfidenceBand;
   rationale: string;
   cited_sources: string[];
+  engine?: 'live_llm' | 'offline_heuristic';
+  model?: string;
+  temperature?: number;
 }
 
 export interface DerivationOptions {
   modelId?: string;
   temperature?: number;
   seed?: string;
+  apiKey?: string;
+  baseUrl?: string;
 }
 
 /**
@@ -77,7 +82,7 @@ function deriveOffline(
     confidence_band = 'low';
   }
 
-  const rationale = `Synthesis of ${snapshots.length} sources reveals a net ${direction.toUpperCase()} conviction (evidence balance: +${bullishScore.toFixed(1)} / -${bearishScore.toFixed(1)}). Primary driver stems from ${cited.slice(0, 3).join(', ')}.`;
+  const rationale = `[Offline heuristic synthesis] Synthesis of ${snapshots.length} sources reveals a net ${direction.toUpperCase()} conviction (evidence balance: +${bullishScore.toFixed(1)} / -${bearishScore.toFixed(1)}). Primary driver stems from ${cited.slice(0, 3).join(', ')}.`;
 
   return {
     direction,
@@ -102,9 +107,10 @@ export async function deriveConclusion(
     throw new Error('[SOUNDING_KILL=1] Derivation halted by kill switch.');
   }
 
-  const apiKey = env.BITGET_QWEN_API_KEY || env.OPENAI_API_KEY;
-  const baseUrl = env.BITGET_QWEN_BASE_URL || 'https://hackathon.bitgetops.com/v1';
+  const apiKey = (options.apiKey || env.BITGET_QWEN_API_KEY || env.OPENAI_API_KEY || '').trim();
+  const baseUrl = (options.baseUrl || env.BITGET_QWEN_BASE_URL || 'https://hackathon.bitgetops.com/v1').replace(/\/+$/, '');
   const model = options.modelId || env.SOUNDING_MODEL || 'qwen3.8-max';
+  const temperature = options.temperature ?? 0;
 
   // If live LLM API key is present, attempt live derivation
   if (apiKey) {
@@ -125,7 +131,7 @@ Output EXACT JSON:
   "cited_sources": ["source_name1", "source_name2"]
 }`;
 
-      const resp = await fetch(`${baseUrl}/chat/completions`, {
+      let resp = await fetch(`${baseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,7 +139,7 @@ Output EXACT JSON:
         },
         body: JSON.stringify({
           model,
-          temperature: options.temperature ?? 0,
+          temperature,
           messages: [
             { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
             { role: 'user', content: prompt }
@@ -142,24 +148,78 @@ Output EXACT JSON:
         })
       });
 
+      // If gateway rejects response_format (e.g. 400 Bad Request), retry once with pure prompt instruction
+      if (!resp.ok && resp.status === 400) {
+        resp = await fetch(`${baseUrl}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model,
+            temperature,
+            messages: [
+              { role: 'system', content: 'You are Sounding, a deterministic trading desk. Always output raw JSON only.' },
+              { role: 'user', content: prompt }
+            ]
+          })
+        });
+      }
+
       if (resp.ok) {
-        const data = await resp.json() as { choices?: Array<{ message?: { content?: string } }> };
+        const data = (await resp.json()) as { choices?: Array<{ message?: { content?: string } }> };
         const content = data.choices?.[0]?.message?.content;
         if (content) {
-          const parsed = JSON.parse(content);
+          let cleanContent = content.trim();
+          if (cleanContent.startsWith('```')) {
+            cleanContent = cleanContent.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+          }
+          const jsonMatch = cleanContent.match(/\{[\s\S]*\}/);
+          const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : cleanContent);
+
+          const rawDirection = String(parsed.direction || '').toLowerCase();
+          const direction: Direction = rawDirection.includes('bull')
+            ? 'bullish'
+            : rawDirection.includes('bear')
+            ? 'bearish'
+            : 'neutral';
+
+          const rawBand = String(parsed.confidence_band || '').toLowerCase();
+          const confidence_band: ConfidenceBand = rawBand.includes('high')
+            ? 'high'
+            : rawBand.includes('low')
+            ? 'low'
+            : 'medium';
+
           return {
-            direction: parsed.direction || 'neutral',
-            confidence_band: parsed.confidence_band || 'medium',
-            rationale: parsed.rationale || 'Derived via model synthesis.',
-            cited_sources: parsed.cited_sources || snapshots.map((s) => s.source_name)
+            direction,
+            confidence_band,
+            rationale: typeof parsed.rationale === 'string' && parsed.rationale.trim()
+              ? parsed.rationale.trim()
+              : 'Derived via Qwen model synthesis.',
+            cited_sources: Array.isArray(parsed.cited_sources) && parsed.cited_sources.length > 0
+              ? parsed.cited_sources
+              : snapshots.map((s) => s.source_name),
+            engine: 'live_llm',
+            model,
+            temperature
           };
         }
+      } else {
+        console.warn(`[Sounding Live LLM] HTTP ${resp.status} from ${baseUrl}/chat/completions. Falling back to offline heuristic.`);
       }
-    } catch {
-      // Fallback to deterministic engine
+    } catch (err) {
+      console.warn('[Sounding Live LLM] Error calling live LLM, falling back to offline heuristic:', err);
     }
   }
 
   // Deterministic local inference fallback
-  return deriveOffline(thesis, ticker, snapshots);
+  const offline = deriveOffline(thesis, ticker, snapshots);
+  return {
+    ...offline,
+    engine: 'offline_heuristic',
+    model,
+    temperature
+  };
 }
