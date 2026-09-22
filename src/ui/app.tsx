@@ -34,6 +34,7 @@ import { FoundationVisualizer } from './FoundationVisualizer.js';
 import { TripwireCard } from './TripwireCard.js';
 import { BenchmarkComparisonModal } from './BenchmarkComparisonModal.js';
 import { SettingsModal } from './SettingsModal.js';
+import { CaseStudyModal } from './CaseStudyModal.js';
 import { generateAttributionReceipt } from './AttributionReceipt.js';
 import { generateProjectDescription, generateCompliantXPost } from '../metrics/emit.js';
 
@@ -72,6 +73,7 @@ export const App: React.FC = () => {
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showBenchmarkModal, setShowBenchmarkModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showCaseStudyModal, setShowCaseStudyModal] = useState(false);
   const [settings, setSettings] = useState<WorkbenchSettings>(() => {
     try {
       const saved = localStorage.getItem('sounding_settings');
@@ -419,6 +421,21 @@ export const App: React.FC = () => {
 
         {/* Right Status Controls */}
         <div className="header-status-bar">
+          <button
+            className="pill-btn case-study-header-btn"
+            style={{
+              background: 'rgba(56, 189, 248, 0.1)',
+              borderColor: 'rgba(56, 189, 248, 0.3)',
+              color: 'var(--accent-cyan)',
+              fontWeight: 600
+            }}
+            onClick={() => setShowCaseStudyModal(true)}
+            id="case-study-btn"
+            title="Inspect Demonstrated Question ➔ Insight Research Walkthrough"
+          >
+            <span>📖 Case Study: Question ➔ Insight</span>
+          </button>
+
           <a
             href="https://github.com/natureloved/Sounding"
             target="_blank"
@@ -437,12 +454,19 @@ export const App: React.FC = () => {
           </div>
 
           <button
-            className="pill-btn"
+            className="pill-btn mode-indicator-btn"
+            style={{
+              background: settings.apiKey ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.08)',
+              borderColor: settings.apiKey ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.25)',
+              color: settings.apiKey ? 'var(--accent-emerald)' : 'var(--accent-cyan)',
+              fontWeight: 600
+            }}
             onClick={() => setShowSettingsModal(true)}
             id="settings-btn"
+            title={settings.apiKey ? 'Live Bitget Qwen Gateway active' : 'Zero-credential instant demo mode active. Click to configure API key.'}
           >
-            <span>⚙️</span>
-            <span className="settings-btn-text">{settings.apiKey ? 'Live API Key Set' : 'Gateway Settings'}</span>
+            <span className={`pulse-dot ${settings.apiKey ? '' : 'demo'}`} />
+            <span className="settings-btn-text">{settings.apiKey ? '⚡ Live Qwen Mode' : '🟢 Instant Demo Mode'}</span>
           </button>
         </div>
       </header>
@@ -578,9 +602,38 @@ export const App: React.FC = () => {
               </div>
             </form>
 
+            {/* Row 3: Live Bitget Public Market Data Stream & Quick Tickers (Point 4) */}
+            <div className="live-stream-bar">
+              <div className="live-stream-info">
+                <span className="live-stream-badge">LIVE BITGET SPOT V2</span>
+                <span className="live-stream-text">
+                  <strong style={{ color: '#ffffff' }}>{ticker.toUpperCase()}</strong>: Last <strong style={{ color: '#ffffff' }}>${liveIndicators ? liveIndicators.lastPrice.toLocaleString() : '---'}</strong> · 24h: <span style={{ color: (liveIndicators?.change24h ?? 0) >= 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)', fontWeight: 700 }}>{(liveIndicators?.change24h ?? 0) >= 0 ? '+' : ''}{liveIndicators?.change24h ?? 0}%</span> · RSI-14: <strong>{liveIndicators ? liveIndicators.rsi.toFixed(1) : '--'}</strong> · 20-EMA: <strong>${liveIndicators ? liveIndicators.ema20.toFixed(2) : '--'}</strong> · 1h Trend: <span style={{ textTransform: 'uppercase', fontWeight: 700, color: liveIndicators?.trend === 'bullish' ? 'var(--accent-emerald)' : liveIndicators?.trend === 'bearish' ? 'var(--accent-rose)' : 'var(--accent-amber)' }}>{liveIndicators?.trend ?? 'NEUTRAL'}</span>
+                </span>
+              </div>
+              <div className="quick-tickers-wrap">
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Quick Tickers:</span>
+                {['rNVDA', 'rTSLA', 'BTC', 'ETH', 'SOL'].map((sym) => (
+                  <button
+                    key={sym}
+                    type="button"
+                    className={`quick-ticker-btn ${ticker.toUpperCase() === sym ? 'active' : ''}`}
+                    onClick={() => {
+                      setTicker(sym);
+                      if (sym === 'rNVDA') setThesisText('Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation');
+                      else if (sym === 'rTSLA') setThesisText('Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples');
+                      else if (sym === 'BTC') setThesisText('Global central bank easing and Spot ETF inflows signal long-term cyclical continuation');
+                      else setThesisText(`${sym} momentum continuing following spot volume expansion and technical continuation`);
+                    }}
+                  >
+                    {sym}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Quick Presets */}
             <div className="preset-pills">
-              <span className="preset-label">Scenarios:</span>
+              <span className="preset-label">Preset Case Studies:</span>
               <button
                 className="pill-btn"
                 onClick={() =>
@@ -592,7 +645,7 @@ export const App: React.FC = () => {
                   )
                 }
               >
-                ⚡ rNVDA (Weekend Unanchored Call · High Fragility)
+                ⚡ Case Study A: rNVDA (Weekend Unanchored Call · High Fragility)
               </button>
               <button
                 className="pill-btn"
@@ -605,7 +658,7 @@ export const App: React.FC = () => {
                   )
                 }
               >
-                🛡️ rTSLA (Regular Hours Anchored Bearish)
+                🛡️ Case Study B: rTSLA (Regular Hours Anchored Bearish)
               </button>
               <button
                 className="pill-btn"
@@ -618,7 +671,7 @@ export const App: React.FC = () => {
                   )
                 }
               >
-                🌐 BTC (Continuous 24/7 Crypto)
+                🌐 Case Study C: BTC (Continuous 24/7 Crypto)
               </button>
             </div>
 
@@ -1083,6 +1136,21 @@ export const App: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Track 3 End-to-End Case Study Walkthrough Modal */}
+      {showCaseStudyModal && (
+        <CaseStudyModal
+          onClose={() => setShowCaseStudyModal(false)}
+          onLoadScenario={() => {
+            handleLaunchFromLanding(
+              'rNVDA',
+              'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
+              'long',
+              3
+            );
+          }}
+        />
       )}
     </div>
   );

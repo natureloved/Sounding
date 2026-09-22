@@ -239,14 +239,33 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <section className="scenarios-section">
         <div className="scenarios-header">
           <span className="section-eyebrow">
-            Instant Testing · 1-Click Launchers
+            Preset Case Studies · Zero Credentials Required
           </span>
           <h2 className="section-title">
-            Explore Pre-Configured Scenarios
+            Explore Pre-Loaded Demo Scenarios (1-Click Run)
           </h2>
           <p className="section-desc">
-            Click any scenario card below to launch directly into the live research workbench with that thesis preloaded.
+            Judges &amp; Evaluators: No API key needed. Click any preset case study below to immediately execute the full end-to-end attribution loop, clock grounding, and position alignment.
           </p>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-pill)',
+              background: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.25)',
+              fontSize: '11.5px',
+              color: 'var(--accent-emerald)',
+              fontFamily: 'var(--font-mono)',
+              marginTop: '12px'
+            }}
+          >
+            <span>✓ Preloaded Demo Mode Active</span>
+            <span style={{ color: 'var(--text-muted)' }}>|</span>
+            <span style={{ color: 'var(--text-secondary)' }}>Deterministic Causal Engine + Live Bitget Market Feed</span>
+          </div>
         </div>
 
         <div className="scenarios-grid">
@@ -258,7 +277,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   rNVDA
                 </span>
                 <span className="track-tag" style={{ color: 'var(--accent-amber)', borderColor: 'var(--accent-amber-border)' }}>
-                  Weekend Unanchored Call
+                  Case Study A · Weekend Trap
                 </span>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
@@ -284,7 +303,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Test rNVDA Scenario →
+              Run Case Study A (1-Click) →
             </button>
           </div>
 
@@ -296,7 +315,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   rTSLA
                 </span>
                 <span className="track-tag" style={{ color: 'var(--accent-emerald)', borderColor: 'var(--accent-emerald-border)' }}>
-                  Regular Hours Anchored
+                  Case Study B · Anchored
                 </span>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
@@ -322,7 +341,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Test rTSLA Scenario →
+              Run Case Study B (1-Click) →
             </button>
           </div>
 
@@ -334,7 +353,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   BTC
                 </span>
                 <span className="track-tag" style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan-border)' }}>
-                  Continuous 24/7 Crypto
+                  Case Study C · 24/7 Crypto
                 </span>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
@@ -360,7 +379,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Test BTC Scenario →
+              Run Case Study C (1-Click) →
+            </button>
+          </div>
+
+          {/* Card 4: Custom Live Research Desk */}
+          <div className="scenario-card" style={{ borderColor: 'rgba(56, 189, 248, 0.4)', background: 'linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(13, 17, 23, 0.6) 100%)' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
+                  CUSTOM
+                </span>
+                <span className="track-tag" style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan-border)' }}>
+                  Live Research Flow
+                </span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
+                "Test your own discretionary thesis across SOL, ETH, BTC, or US equity rTokens with real Bitget spot candles."
+              </p>
+              <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                • Custom Ticker: <strong>Any Asset</strong>
+                <br />
+                • Custom Stance: <strong>Long / Short / Flat</strong>
+                <br />
+                • Custom Notes: <strong>User S7 Notes Supported</strong>
+              </div>
+            </div>
+
+            <button
+              className="execute-btn scenario-btn"
+              style={{ background: 'var(--accent-cyan)', color: '#000000' }}
+              onClick={() => onLaunchDesk()}
+            >
+              Open Live Desk →
             </button>
           </div>
         </div>

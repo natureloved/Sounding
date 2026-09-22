@@ -18,8 +18,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
   const handleTestConnection = async () => {
     if (!apiKey.trim()) {
       setTestResult({
-        success: false,
-        message: 'Please provide a Bitget Qwen or OpenAI-compatible API key first.'
+        success: true,
+        message: '✓ Preloaded Demo Mode Active: Deterministic offline engine ready (0ms latency, zero credentials required).'
       });
       return;
     }
@@ -75,34 +75,111 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
     onClose();
   };
 
+  const handleResetDemo = () => {
+    setApiKey('');
+    setTestResult({
+      success: true,
+      message: '✓ Reset to Preloaded Demo Mode (Zero Credentials)'
+    });
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" style={{ maxWidth: '560px' }} onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content" style={{ maxWidth: '580px' }} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <span style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>
-            ⚙️ Workbench Gateway &amp; Model Settings
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>
+              ⚙️ Workbench Gateway &amp; Model Settings
+            </span>
+            <span
+              style={{
+                fontSize: '10px',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 700,
+                padding: '2px 8px',
+                borderRadius: 'var(--radius-pill)',
+                background: apiKey.trim() ? 'var(--accent-emerald-dim)' : 'var(--accent-cyan-dim)',
+                color: apiKey.trim() ? 'var(--accent-emerald)' : 'var(--accent-cyan)',
+                border: `1px solid ${apiKey.trim() ? 'var(--accent-emerald-border)' : 'var(--accent-cyan-border)'}`
+              }}
+            >
+              {apiKey.trim() ? 'Live LLM Configured' : 'Preloaded Demo Mode Active'}
+            </span>
+          </div>
           <button className="close-btn" onClick={onClose}>
             ✕
           </button>
         </div>
 
         <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Zero-friction helper notice */}
+          <div
+            style={{
+              padding: '12px 14px',
+              borderRadius: 'var(--radius-inner)',
+              background: 'rgba(16, 185, 129, 0.08)',
+              border: '1px solid rgba(16, 185, 129, 0.2)',
+              fontSize: '12px',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.5
+            }}
+          >
+            <strong style={{ color: 'var(--accent-emerald)' }}>⚡ Instant Preloaded Demo Mode:</strong>{' '}
+            No API key is required to evaluate Sounding. By default, Sounding runs deterministically on its offline causal removal engine and live Bitget market indicators. Connect your Bitget Qwen key below to enable live cloud LLM inference.
+          </div>
+
           <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
-              BITGET QWEN / OPENAI API KEY
-            </label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                BITGET QWEN / OPENAI API KEY <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(OPTIONAL)</span>
+              </label>
+              {apiKey.trim() && (
+                <button
+                  type="button"
+                  onClick={handleResetDemo}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--accent-amber)',
+                    fontSize: '11px',
+                    fontFamily: 'var(--font-mono)',
+                    cursor: 'pointer',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Clear Key &amp; Return to Demo Mode
+                </button>
+              )}
+            </div>
             <input
               type="password"
               className="thesis-input"
               style={{ width: '100%' }}
-              placeholder="sk-qwen-..."
+              placeholder="sk-qwen-... (Leave empty for instant preloaded demo)"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
             />
             <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
               Default: If blank, Sounding operates deterministically on its offline derivation engine.
             </span>
+          </div>
+
+          {/* Security Disclosure (Item 2) */}
+          <div
+            style={{
+              padding: '10px 14px',
+              borderRadius: 'var(--radius-inner)',
+              background: 'rgba(56, 189, 248, 0.06)',
+              border: '1px solid rgba(56, 189, 248, 0.18)',
+              fontSize: '11px',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.5
+            }}
+          >
+            <strong style={{ color: 'var(--accent-cyan)' }}>🔒 Client-Side Key Handling Disclosure:</strong>
+            <div style={{ marginTop: '3px' }}>
+              Sounding is an autonomous, client-side research desk. Your API key is stored strictly in your browser session memory (localStorage / React state) and used exclusively for direct outbound requests to the Bitget Qwen gateway (<code>hackathon.bitgetops.com</code>). It is never sent to any backend server, telemetry, or external storage.
+            </div>
           </div>
 
           <div>
