@@ -11,7 +11,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
   const [apiKey, setApiKey] = useState(settings.apiKey || '');
   const [baseUrl, setBaseUrl] = useState(settings.baseUrl || 'https://hackathon.bitgetops.com/v1');
   const [model, setModel] = useState(settings.model || 'qwen3.8-max');
-  const [mcpServerUrl, setMcpServerUrl] = useState(settings.mcpServerUrl || 'http://localhost:3001');
+  const [mcpServerUrl, setMcpServerUrl] = useState(settings.mcpServerUrl || '');
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
@@ -29,7 +29,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
     const start = Date.now();
 
     try {
-      const resp = await fetch(`${baseUrl}/chat/completions`, {
+      // In browser, route via /api/chat to eliminate CORS ('Failed to fetch')
+      const isBrowser = typeof window !== 'undefined';
+      const endpoint = isBrowser ? '/api/chat' : `${baseUrl}/chat/completions`;
+
+      const resp = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,6 +41,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
         },
         body: JSON.stringify({
           model,
+          baseUrl,
+          apiKey: apiKey.trim(),
           messages: [{ role: 'user', content: 'Ping: reply with "pong"' }],
           max_tokens: 5
         })
@@ -50,9 +56,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
         });
       } else {
         const errorText = await resp.text();
+        let displayError = errorText.slice(0, 100);
+        try {
+          const parsedErr = JSON.parse(errorText);
+          if (parsedErr.error) displayError = typeof parsedErr.error === 'string' ? parsedErr.error : JSON.stringify(parsedErr.error);
+        } catch {}
         setTestResult({
           success: false,
-          message: `HTTP ${resp.status}: ${errorText.slice(0, 100)}`
+          message: `HTTP ${resp.status}: ${displayError}`
         });
       }
     } catch (err: any) {
@@ -225,7 +236,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
               className="thesis-input"
               value={mcpServerUrl}
               onChange={(e) => setMcpServerUrl(e.target.value)}
-              placeholder="http://localhost:3001 (Optional local MCP server)"
+              placeholder="e.g. https://mcp.yourdomain.com (Optional)"
             />
             <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
               Official data layer for US stocks/ETF quotes &amp; fundamentals (e.g. <code>npx bitget-mcp-server</code>).

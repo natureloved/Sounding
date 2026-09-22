@@ -131,7 +131,11 @@ Output EXACT JSON:
   "cited_sources": ["source_name1", "source_name2"]
 }`;
 
-      let resp = await fetch(`${baseUrl}/chat/completions`, {
+      // In browser, route through /api/chat serverless proxy to eliminate CORS on Bitget gateway
+      const isBrowser = typeof window !== 'undefined';
+      const endpoint = isBrowser ? '/api/chat' : `${baseUrl}/chat/completions`;
+
+      let resp = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,6 +144,8 @@ Output EXACT JSON:
         body: JSON.stringify({
           model,
           temperature,
+          baseUrl,
+          apiKey,
           messages: [
             { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
             { role: 'user', content: prompt }
@@ -150,7 +156,7 @@ Output EXACT JSON:
 
       // If gateway rejects response_format (e.g. 400 Bad Request), retry once with pure prompt instruction
       if (!resp.ok && resp.status === 400) {
-        resp = await fetch(`${baseUrl}/chat/completions`, {
+        resp = await fetch(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -159,6 +165,8 @@ Output EXACT JSON:
           body: JSON.stringify({
             model,
             temperature,
+            baseUrl,
+            apiKey,
             messages: [
               { role: 'system', content: 'You are Sounding, a deterministic trading desk. Always output raw JSON only.' },
               { role: 'user', content: prompt }

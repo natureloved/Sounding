@@ -77,7 +77,18 @@ export const App: React.FC = () => {
   const [settings, setSettings] = useState<WorkbenchSettings>(() => {
     try {
       const saved = localStorage.getItem('sounding_settings');
-      return saved ? JSON.parse(saved) : {};
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Clean up any stale localhost:3001 from older defaults to avoid browser Local Network Access prompts
+        if (parsed.mcpServerUrl && parsed.mcpServerUrl.includes('localhost:3001')) {
+          parsed.mcpServerUrl = '';
+          try {
+            localStorage.setItem('sounding_settings', JSON.stringify(parsed));
+          } catch {}
+        }
+        return parsed;
+      }
+      return {};
     } catch {
       return {};
     }

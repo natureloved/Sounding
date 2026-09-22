@@ -102,29 +102,36 @@ export async function captureSignalSkill(
     const isNode = typeof process !== 'undefined' && process.env;
     const mcpUrl = (mcpUrlOverride || (isNode ? process.env.BITGET_SIGNAL_MCP_URL : undefined) || '').trim();
     if (mcpUrl) {
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 1500);
+      // Security guard: If running in browser over HTTPS, prevent calling http://localhost or http://127.0.0.1
+      // to avoid triggering browser Private Network Access security prompts.
+      const isHttpsBrowser = typeof window !== 'undefined' && window.location?.protocol === 'https:';
+      const isLocalhostUrl = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/i.test(mcpUrl);
 
-      const resp = await fetch(`${mcpUrl}/query`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ skill: skillName, ticker: cleanTicker }),
-        signal: controller.signal
-      });
-      clearTimeout(timer);
-      if (resp.ok) {
-        const body = (await resp.json()) as { content?: string };
-        if (body.content) {
-          return {
-            id: `snap-${skillName}-${Date.now()}`,
-            source_id: `skill-${skillName}`,
-            source_name: skillName,
-            kind: 'signal_skill',
-            content: body.content,
-            retrieved_at: timestamp,
-            anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
-            provenance: 'live-mcp'
-          };
+      if (!isHttpsBrowser || !isLocalhostUrl) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 1500);
+
+        const resp = await fetch(`${mcpUrl}/query`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ skill: skillName, ticker: cleanTicker }),
+          signal: controller.signal
+        });
+        clearTimeout(timer);
+        if (resp.ok) {
+          const body = (await resp.json()) as { content?: string };
+          if (body.content) {
+            return {
+              id: `snap-${skillName}-${Date.now()}`,
+              source_id: `skill-${skillName}`,
+              source_name: skillName,
+              kind: 'signal_skill',
+              content: body.content,
+              retrieved_at: timestamp,
+              anchor_verdict: getAnchorVerdict(cleanTicker, timestamp),
+              provenance: 'live-mcp'
+            };
+          }
         }
       }
     }
