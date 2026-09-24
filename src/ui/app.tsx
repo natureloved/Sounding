@@ -52,6 +52,7 @@ export const App: React.FC = () => {
   const [leverage, setLeverage] = useState<number>(3);
   const [userDocText, setUserDocText] = useState('');
   const [showUserDocInput, setShowUserDocInput] = useState(false);
+  const [isCustomTicker, setIsCustomTicker] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRerunning, setIsRerunning] = useState(false);
@@ -479,8 +480,81 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleSelectToken = (sym: string) => {
+    setTicker(sym);
+    setIsCustomTicker(false);
+    if (sym === 'rNVDA') {
+      setThesisText('Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation');
+      setPositionStance('long');
+      setLeverage(3);
+    } else if (sym === 'rTSLA') {
+      setThesisText('Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples');
+      setPositionStance('short');
+      setLeverage(2);
+    } else if (sym === 'rAAPL') {
+      setThesisText('Services gross margin expansion cushions iPhone cyclical upgrade slowdown');
+      setPositionStance('long');
+      setLeverage(1);
+    } else if (sym === 'rMSFT') {
+      setThesisText('Cloud infrastructure Azure AI enterprise workloads driving recurring margin acceleration');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'rAMZN') {
+      setThesisText('AWS margin expansion and retail logistics efficiency sustain positive cash-flow flywheel');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'rCOIN') {
+      setThesisText('Spot volume surge and Layer-2 Base transaction growth expand fee capture');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'rMETA') {
+      setThesisText('Ad delivery algorithmic efficiency and open-source AI infrastructure capex expansion');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'BTC') {
+      setThesisText('Global central bank easing and Spot ETF inflows signal long-term cyclical continuation');
+      setPositionStance('long');
+      setLeverage(1);
+    } else if (sym === 'ETH') {
+      setThesisText('Layer-2 blob throughput scaling and staking yield compression stabilize valuation');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'SOL') {
+      setThesisText('DEX volume dominance and high transaction velocity drive structural spot accumulation');
+      setPositionStance('long');
+      setLeverage(3);
+    } else if (sym === 'BGB') {
+      setThesisText('Exchange ecosystem utility and launchpool volume acceleration sustain structural floor');
+      setPositionStance('long');
+      setLeverage(1);
+    } else if (sym === 'DOGE') {
+      setThesisText('Retail liquidity rotation and speculative spot momentum drive short-term technical breakout');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'XRP') {
+      setThesisText('Cross-border liquidity settlement expansion and regulatory clarity drive speculative bidding');
+      setPositionStance('long');
+      setLeverage(1);
+    } else if (sym === 'SUI') {
+      setThesisText('Move-VM throughput adoption and DeFi liquidity incentives sustain ecosystem inflows');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'PEPE') {
+      setThesisText('High-beta memecoin liquidity reflexivity follows broad market risk-on sentiment');
+      setPositionStance('long');
+      setLeverage(2);
+    } else if (sym === 'AVAX') {
+      setThesisText('Subnet enterprise tokenization volume and gaming ecosystem activity drive transaction burn');
+      setPositionStance('long');
+      setLeverage(2);
+    } else {
+      setThesisText(`${sym} momentum continuing following spot volume expansion and technical continuation`);
+    }
+  };
+
   const handleSelectPreset = (t: string, text: string, stance: 'long' | 'short' | 'flat', lev: number) => {
     setTicker(t);
+    setIsCustomTicker(false);
     setThesisText(text);
     setPositionStance(stance);
     setLeverage(lev);
@@ -577,17 +651,6 @@ export const App: React.FC = () => {
             <span>📖 Case Study: Question ➔ Insight</span>
           </button>
 
-          <a
-            href="https://github.com/natureloved/Sounding"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pill-btn github-link-btn"
-            id="github-header-btn"
-            title="View Open-Source Repository & Verification Tests on GitHub"
-          >
-            <span>GitHub</span>
-            <span style={{ fontSize: '10px', opacity: 0.8 }}>↗</span>
-          </a>
 
           <div className="safety-pill">
             <span>🛡️</span>
@@ -645,14 +708,64 @@ export const App: React.FC = () => {
             >
               {/* Row 1: Ticker & Thesis Input */}
               <div className="form-row">
-                <input
-                  type="text"
-                  className="ticker-input"
-                  value={ticker}
-                  onChange={(e) => setTicker(e.target.value)}
-                  placeholder="TICKER"
-                  id="ticker-input"
-                />
+                {!isCustomTicker ? (
+                  <select
+                    className="ticker-select"
+                    value={ticker}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === '__CUSTOM__') {
+                        setIsCustomTicker(true);
+                      } else {
+                        handleSelectToken(val);
+                      }
+                    }}
+                    id="ticker-select"
+                    title="Select token from dropdown or choose custom"
+                  >
+                    <optgroup label="Tokenized Equities (Weekend Gap Exposure)">
+                      <option value="rNVDA">rNVDA (NVIDIA)</option>
+                      <option value="rTSLA">rTSLA (Tesla)</option>
+                      <option value="rAAPL">rAAPL (Apple)</option>
+                      <option value="rMSFT">rMSFT (Microsoft)</option>
+                      <option value="rAMZN">rAMZN (Amazon)</option>
+                      <option value="rCOIN">rCOIN (Coinbase)</option>
+                      <option value="rMETA">rMETA (Meta)</option>
+                    </optgroup>
+                    <optgroup label="Major Crypto Assets (24/7 Spot)">
+                      <option value="BTC">BTC (Bitcoin)</option>
+                      <option value="ETH">ETH (Ethereum)</option>
+                      <option value="SOL">SOL (Solana)</option>
+                      <option value="BGB">BGB (Bitget Token)</option>
+                      <option value="DOGE">DOGE (Dogecoin)</option>
+                      <option value="XRP">XRP (Ripple)</option>
+                      <option value="SUI">SUI (Sui)</option>
+                      <option value="PEPE">PEPE (Pepe)</option>
+                      <option value="AVAX">AVAX (Avalanche)</option>
+                    </optgroup>
+                    <option value="__CUSTOM__">✏️ Custom Ticker...</option>
+                  </select>
+                ) : (
+                  <div className="custom-ticker-wrap">
+                    <input
+                      type="text"
+                      className="ticker-input"
+                      value={ticker}
+                      onChange={(e) => setTicker(e.target.value.toUpperCase())}
+                      placeholder="TICKER"
+                      autoFocus
+                      id="ticker-input"
+                    />
+                    <button
+                      type="button"
+                      className="pill-btn custom-ticker-switch-btn"
+                      onClick={() => setIsCustomTicker(false)}
+                      title="Switch back to token dropdown"
+                    >
+                      ▼ List
+                    </button>
+                  </div>
+                )}
                 <input
                   type="text"
                   className="thesis-input"
@@ -758,13 +871,7 @@ export const App: React.FC = () => {
                     key={sym}
                     type="button"
                     className={`quick-ticker-btn ${ticker.toUpperCase() === sym ? 'active' : ''}`}
-                    onClick={() => {
-                      setTicker(sym);
-                      if (sym === 'rNVDA') setThesisText('Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation');
-                      else if (sym === 'rTSLA') setThesisText('Autonomous robotaxi regulatory delays and auto loan margin compression will depress multiples');
-                      else if (sym === 'BTC') setThesisText('Global central bank easing and Spot ETF inflows signal long-term cyclical continuation');
-                      else setThesisText(`${sym} momentum continuing following spot volume expansion and technical continuation`);
-                    }}
+                    onClick={() => handleSelectToken(sym)}
                   >
                     {sym}
                   </button>
