@@ -634,7 +634,7 @@ export const App: React.FC = () => {
             onClick={() => setViewMode('desk')}
             id="nav-desk-tab-btn"
           >
-            Live Research Desk
+            Tactical Trading Desk
           </button>
         </div>
 
@@ -650,15 +650,17 @@ export const App: React.FC = () => {
             }}
             onClick={() => setShowCaseStudyModal(true)}
             id="case-study-btn"
-            title="Inspect Demonstrated Question ➔ Insight Research Walkthrough"
+            title="Inspect Case Study: NVDA Weekend Trap & Evidence Attribution"
           >
-            <span>📖 Case Study: Question ➔ Insight</span>
+            <span>📖 Case Study: Weekend Trap &amp; Attribution</span>
           </button>
 
-
-          <div className="safety-pill">
+          <div
+            className="safety-pill"
+            title="Institutional Safety Strength: Sounding is strictly --read-only by construction (Invariant I5). It cannot place orders, move funds, or hold custody. Zero execution risk, untamperable deterministic analysis."
+          >
             <span>🛡️</span>
-            <span className="safety-pill-text">--read-only Active</span>
+            <span className="safety-pill-text">--read-only · Zero Execution Risk</span>
           </div>
 
           <button
@@ -689,18 +691,18 @@ export const App: React.FC = () => {
       ) : (
         /* Main Desk Layout: Spacious, clear, and organized */
         <main className="desk-container">
-          {/* 1. Conversational Thesis Box with Position Stance */}
+          {/* 1. Tactical Thesis Box with Position Stance */}
           <div className="glass-panel thesis-box">
             <div className="panel-header">
               <span className="panel-title">
-                <span>💬 State Investment Thesis &amp; Position</span>
+                <span>🎯 Trading Thesis &amp; Position Stance</span>
               </span>
               <button
                 type="button"
                 className="pill-btn"
                 onClick={() => setShowUserDocInput(!showUserDocInput)}
               >
-                {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Add Custom S7 Notes'}
+                {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Test Custom S7 Note'}
               </button>
             </div>
 
@@ -775,11 +777,11 @@ export const App: React.FC = () => {
                   className="thesis-input"
                   value={thesisText}
                   onChange={(e) => setThesisText(e.target.value)}
-                  placeholder="State your investment thesis in natural language..."
+                  placeholder="Enter trading thesis (e.g. Datacenter revenue expansion will sustain breakout above $130)..."
                   id="thesis-input"
                 />
                 <button type="submit" className="execute-btn" disabled={isLoading} id="run-analysis-btn">
-                  {isLoading ? 'Synthesizing...' : '⚡ Sound Desk'}
+                  {isLoading ? 'Testing Removals...' : '⚡ Stress-Test Thesis'}
                 </button>
               </div>
 
@@ -932,7 +934,7 @@ export const App: React.FC = () => {
                 <textarea
                   className="thesis-input"
                   style={{ width: '100%', height: '80px', resize: 'vertical' }}
-                  placeholder="Paste custom analyst memo, earnings transcript, or research notes (ingested as S7 user_doc)..."
+                  placeholder="Paste custom analyst memo, earnings release, or broker note for contradiction & removal testing..."
                   value={userDocText}
                   onChange={(e) => setUserDocText(e.target.value)}
                 />
@@ -1081,7 +1083,7 @@ export const App: React.FC = () => {
                 }}
               />
               <span style={{ fontSize: '12px', color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>
-                Synthesizing thesis with Bitget Qwen gateway and testing counterfactual removals...
+                Stress-testing trading thesis via Bitget Qwen gateway: running combinatorial source removals &amp; verifying market clocks...
               </span>
             </div>
           )}
@@ -1141,7 +1143,7 @@ export const App: React.FC = () => {
                 }}
               />
               <h3 style={{ fontSize: '18px', color: '#ffffff', marginBottom: '8px', fontWeight: 700 }}>
-                Synthesizing Multi-Agent Perception Layer &amp; Combinatorial Removals...
+                Evaluating Market Evidence &amp; Running Combinatorial Removals...
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '13px', maxWidth: '520px', margin: '0 auto', lineHeight: 1.5 }}>
                 Testing leave-one-out counterfactuals across captured snapshots, verifying market clock anchors, and deriving load-bearing coalitions.

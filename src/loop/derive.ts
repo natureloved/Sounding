@@ -115,7 +115,7 @@ export async function deriveConclusion(
   // If live LLM API key is present, attempt live derivation
   if (apiKey) {
     try {
-      const prompt = `You are Sounding, a deterministic research desk.
+      const prompt = `You are Sounding, a deterministic trading evidence evaluator. Analyze whether the trader's position thesis holds given ONLY the provided empirical sources.
 Thesis: "${thesis}"
 Ticker: ${ticker}
 
@@ -127,7 +127,7 @@ Output EXACT JSON:
 {
   "direction": "bullish" | "bearish" | "neutral",
   "confidence_band": "high" | "medium" | "low",
-  "rationale": "one concise paragraph explaining the synthesis",
+  "rationale": "one concise paragraph explaining whether trading evidence supports or contradicts the thesis",
   "cited_sources": ["source_name1", "source_name2"]
 }`;
 

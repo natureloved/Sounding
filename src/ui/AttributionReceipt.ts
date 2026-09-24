@@ -18,7 +18,7 @@ export function generateAttributionReceipt(
   return `
 \`\`\`text
 ================================================================================
-SOUNDING // AUTONOMOUS ATTRIBUTION RESEARCH DESK
+SOUNDING // QUANTITATIVE TRADING ATTRIBUTION DESK (--read-only)
 Causal Verification Receipt | sha256 Audit Trail
 ================================================================================
 Timestamp:       ${timestamp}
@@ -52,7 +52,8 @@ ${attribution.tested_removals
   )
   .join('\n')}
 ================================================================================
-Verification Guarantee: Invariants I1-I7 verified. Re-run reproduces from inputs.
+Safety & Audit: Strictly --read-only by construction (zero execution risk).
+Invariants I1-I7 verified. Deterministic re-run reproduces from inputs.
 ================================================================================
 \`\`\`
 `;

@@ -148,7 +148,7 @@ Executed on `rNVDA` frozen snapshot fixture across 10 iterations at `temperature
 
 ## §7 · Safety & Non-Goals
 
-- **Read-Only by Construction**: Sounding contains zero order placement, wallet integration, or transaction surfaces. It cannot move capital; the maximum failure mode is an imperfect analysis, never an unauthorized trade.
+- **Read-Only by Construction (Core Institutional Strength)**: Sounding contains strictly zero order placement, wallet integration, or transaction surfaces. It cannot move capital; limiting write access is an institutional safety strength that completely eliminates unauthorized trades, front-running, or execution risk, guaranteeing pure conflict-free evidence attribution.
 - **Spend Bounding**: `SOUNDING_MAX_REMOVALS` limits coalition permutations (default 12) to bound model token consumption.
 - **Kill Switch**: `SOUNDING_KILL=1` immediately halts all model derivation invocations.
 
@@ -180,7 +180,7 @@ To satisfy Track 3 evaluation standards on research quality and feature depth, h
    - The sole load-bearing pillar (`macro-analyst`) was captured off-hours with zero underlying reference liquidity.
    - Sounding flags: **Resting on Unanchored Ground**.
 6. **Actionable Trader Verdict & Protected Outcome**:
-   - Weekend Gap Risk: **EXTREME (83%)**.
+   - Weekend Gap Risk: **EXTREME (83% Scenario A fixture exposure)**.
    - Trader Position Fragility: **50/100 (HIGH Risk)** on 3x leverage.
    - Downside Kill-Condition: 20-EMA breach at $125.00.
    - **Trader Action**: Trader cancels the weekend 3x Long entry, waiting for Monday NYSE opening liquidity.

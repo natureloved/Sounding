@@ -10,7 +10,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
       <div className="modal-content" style={{ maxWidth: '880px' }} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <span style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>
-            ⚔️ Side-by-Side Benchmark: Conventional AI Chatbot vs. Sounding Desk
+            ⚔️ Side-by-Side Benchmark: Generic AI Chatbot vs. Sounding Trading Desk
           </span>
           <button className="close-btn" onClick={onClose}>
             ✕
@@ -32,7 +32,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-muted)' }}>
-                CONVENTIONAL AI CHATBOT / DESK
+                GENERIC AI CHATBOT / LLM SUMMARIZER
               </span>
               <span className="track-tag" style={{ color: 'var(--accent-rose)', borderColor: 'var(--accent-rose-border)', fontSize: '10px' }}>
                 95% of Submissions
@@ -88,7 +88,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)' }}>
-                SOUNDING RESEARCH WORKBENCH
+                SOUNDING TRADING ATTRIBUTION DESK
               </span>
               <span className="track-tag" style={{ fontSize: '10px' }}>
                 Causal Attribution Engine
@@ -113,7 +113,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
               <br />
               • Load-Bearing: <strong>[ macro-analyst ]</strong> (Clock: 🔴 SHUT)
               <br />
-              • Weekend Trap Exposure: <strong>83%</strong>
+              • Weekend Trap Exposure: <strong>83% (Scenario A fixture exposure)</strong>
               <br />
               • Invalidation Tripwire: Daily close &lt; $128.50 (20-EMA)
             </div>
@@ -125,7 +125,7 @@ export const BenchmarkComparisonModal: React.FC<BenchmarkComparisonModalProps> =
               <br />
               • Inherited anchor binds trust to the deterministic market clock.
               <br />
-              • Strict human-in-the-loop guarantee: trader retains absolute decision authority!
+              • Strictly --read-only by design: zero execution risk, zero custody. Human trader retains 100% execution sovereignty.
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
               {conclusion.direction.toUpperCase()}
             </div>
             {conclusion.engine === 'live_llm' ? (
-              <span className="engine-badge live" id="engine-status-badge" title="Synthesized live via Bitget Qwen Gateway">
+              <span className="engine-badge live" id="engine-status-badge" title="Evaluated live via Bitget Qwen Gateway">
                 ⚡ Derived by {conclusion.model || 'qwen3.8-max'} · temp {conclusion.temperature ?? 0}
               </span>
             ) : (

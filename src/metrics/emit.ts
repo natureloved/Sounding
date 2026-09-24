@@ -87,11 +87,11 @@ Validation Plan & Numerical Telemetry (Observed / Estimated / Targeted):
 [Demonstrated Research Task: End-to-End Walkthrough (Question ➔ Insight)]
 1. Question & Dilemma: A discretionary crypto-equity trader considers a 3x Leveraged Long entry on tokenized US equity rNVDA ($128.40) over the weekend, prompted by a popular market thesis: "Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation."
 2. Perception Ingestion: Sounding ingests 6 multi-modal sources: Bitget spot V2 candles (RSI-14: 54.2, 20-EMA: $125.00) plus Bitget-Signal's 5 skills (macro, tech, sentiment, news, orderbook depth).
-3. Naive Baseline Derivation: Synthesis yields BULLISH conviction (Medium band), citing 4 sources. A naive AI assistant recommends entering 3x Long.
+3. Naive Baseline Derivation: Synthesis yields BULLISH conviction (Medium band), citing 4 sources. A conventional AI summarizer would naively recommend entering 3x Long based on citations alone.
 4. Causal Delete-Test: Sounding runs 12 counterfactual removals. Removing news-briefing, technical-analysis, or sentiment-analyst causes zero shift in conviction. But removing 'macro-analyst' FLIPS the derived direction to NEUTRAL (Confidence collapses to Low).
    -> Proven Load-Bearing Set: ['macro-analyst']. All other 3 citations were cosmetic.
 5. Reference Market Clock Grounding: NASDAQ is SHUT (Sunday 03:00 UTC). The sole load-bearing source (macro-analyst) was captured off-hours. Thesis inherits SHUT status -> flagged as "Resting on Unanchored Ground".
-6. Actionable Trader Verdict: Weekend Gap Risk: EXTREME (83%). Trader Position Fragility: 50/100 (HIGH). Invalidation tripwire armed at $125.00 (20-EMA breach).
+6. Actionable Trader Verdict: Weekend Gap Risk: EXTREME (83% scenario fixture exposure). Trader Position Fragility: 50/100 (HIGH). Invalidation tripwire armed at $125.00 (20-EMA breach).
    -> Outcome: Trader cancels weekend leverage entry, waiting for Monday NYSE regular trading hours. Avoids an estimated 14% portfolio drawdown from a Monday opening gap-down trap.
 
 [Estimated Impact & Empirical Methodology]
@@ -112,7 +112,7 @@ Built & Operational:
 - Bitget-signal 5-skill adapter + Agent Hub public market quote verb adapter with honest provenance tagging.
 - Append-only SQLite store with runtime assertion of Invariants I1 through I7.
 - Combinatorial leave-one-out and leave-pair-out coalition removal engine with spend bounding.
-- Conversational LUI trading desk web application with live status indicators, attribution permutation matrix, coverage ranking, and deterministic [Re-run] reproduction.
+- Quantitative trading attribution workbench with live Bitget indicators, causal permutation matrix, market clock grounding, and deterministic [Re-run] reproduction.
 - Complete 3-rung fallback chain (Live API -> Public Endpoints -> Frozen Local Fixtures).
 
 Frameworks & APIs Used:

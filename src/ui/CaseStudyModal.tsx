@@ -14,10 +14,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
             <span style={{ fontSize: '18px' }}>📖</span>
             <div>
               <div style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>
-                End-to-End Research Case Study: Question ➔ Insight
+                Case Study: Weekend Trap &amp; Counterfactual Attribution (rNVDA)
               </div>
               <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>
-                Track 3 Validation Walkthrough · Tokenized US Equity (rNVDA)
+                Evidence Attribution &amp; Timing Verification · Tokenized US Equity (rNVDA)
               </div>
             </div>
           </div>
@@ -51,13 +51,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
             <div className="case-study-step-card">
               <div className="step-num-badge">STEP 1</div>
               <div className="step-body">
-                <div className="step-title">The Trader's Stance &amp; Question</div>
+                <div className="step-title">Trader Position Stance &amp; Timing Dilemma</div>
                 <p className="step-desc">
                   <strong>Trader Stance:</strong> 3x Leveraged Long on <code>rNVDA</code> ($128.40).
                   <br />
                   <strong>Stated Thesis:</strong> <em>"Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation."</em>
                   <br />
-                  <strong>Question:</strong> Should the trader execute this 3x long position over the weekend or wait for regular trading hours?
+                  <strong>Decision Under Test:</strong> Should the trader execute this 3x long position over the weekend or wait for regular trading hours price discovery?
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                   <br />
                   <strong>Cited Sources:</strong> 4 sources cited (macro, technical, sentiment, news).
                   <br />
-                  <span style={{ color: 'var(--accent-rose)' }}>⚠️ The Conventional AI Pitfall:</span> Standard chatbots stop here, saying <em>"4 out of 6 sources confirm bullish momentum—proceed with long."</em> The trader is led into false conviction.
+                  <span style={{ color: 'var(--accent-rose)' }}>⚠️ The Conventional AI Pitfall:</span> Standard AI bots and summarizers stop here, saying <em>"4 out of 6 sources confirm bullish momentum—proceed with long."</em> The trader is led into false conviction.
                 </p>
               </div>
             </div>
@@ -142,9 +142,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
             <div className="case-study-step-card">
               <div className="step-num-badge">STEP 6</div>
               <div className="step-body">
-                <div className="step-title">Actionable Trader Verdict &amp; Quantified Impact</div>
+                <div className="step-title">Actionable Trader Verdict &amp; Risk Mitigation</div>
                 <p className="step-desc">
-                  <strong>Weekend Gap Risk:</strong> <span style={{ color: 'var(--accent-rose)', fontWeight: 700 }}>EXTREME (83%)</span>.
+                  <strong>Weekend Gap Risk:</strong> <span style={{ color: 'var(--accent-rose)', fontWeight: 700 }}>EXTREME (83% Scenario A fixture exposure)</span>.
                   <br />
                   <strong>Trader Fragility:</strong> <span style={{ color: 'var(--accent-amber)', fontWeight: 700 }}>50/100 (HIGH)</span>.
                   <br />
@@ -159,21 +159,26 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
           </div>
 
           {/* Action Footer */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px', borderTop: '1px solid var(--border-hairline)', paddingTop: '16px' }}>
-            <button className="pill-btn" onClick={onClose}>
-              Close Case Study
-            </button>
-            <button
-              className="execute-btn"
-              style={{ padding: '8px 24px' }}
-              onClick={() => {
-                onClose();
-                onLoadScenario();
-              }}
-              id="load-rnvda-case-study-btn"
-            >
-              ⚡ Load rNVDA Scenario into Workbench →
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px', borderTop: '1px solid var(--border-hairline)', paddingTop: '16px' }}>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--accent-emerald)' }}>
+              🛡️ Strictly --read-only: Zero execution risk, trader retains 100% order sovereignty.
+            </span>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button className="pill-btn" onClick={onClose}>
+                Close Case Study
+              </button>
+              <button
+                className="execute-btn"
+                style={{ padding: '8px 24px' }}
+                onClick={() => {
+                  onClose();
+                  onLoadScenario();
+                }}
+                id="load-rnvda-case-study-btn"
+              >
+                ⚡ Load rNVDA Scenario into Workbench →
+              </button>
+            </div>
           </div>
         </div>
       </div>

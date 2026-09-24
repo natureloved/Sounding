@@ -35,7 +35,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
         {/* Subtext */}
         <p className="hero-subtext">
-          Sounding is a read-only research desk that measures attribution strictly by <strong>source removal</strong> (never claimed by citation) and binds thesis trust to the <strong>deterministic market clock</strong> of the underlying reference asset.
+          Sounding is a read-only trading attribution desk that measures evidence fragility strictly by <strong>source removal</strong> (never claimed by citation) and anchors trade conviction to the <strong>deterministic market clock</strong> of the underlying reference asset.
         </p>
 
         {/* Hero Actions */}
@@ -45,7 +45,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             onClick={() => onLaunchDesk()}
             id="hero-launch-desk-btn"
           >
-            <span>Launch Research Desk</span>
+            <span>Launch Trading Desk</span>
             <span style={{ fontSize: '16px' }}>→</span>
           </button>
           <a
@@ -82,8 +82,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             ✓ Invariants I1–I7 Verified
           </span>
           <span className="hero-telemetry-divider">|</span>
-          <span className="hero-telemetry-item" style={{ color: 'var(--text-muted)' }}>
-            🛡️ Read-Only Guard Active
+          <span className="hero-telemetry-item" style={{ color: 'var(--accent-emerald)', fontWeight: 700 }} title="Invariant I5 Enforced: Sounding contains strictly zero execution surface by design.">
+            🛡️ Strictly --read-only · Zero Execution Risk
           </span>
         </div>
       </section>
@@ -286,7 +286,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
                 • Offending Source: <strong>macro-analyst</strong> (SHUT)
                 <br />
-                • Weekend Gap Risk: <strong>EXTREME (83%)</strong>
+                • Weekend Gap Risk: <strong>EXTREME (83% scenario fixture exposure)</strong>
                 <br />
                 • Trader Fragility: <strong>50/100 (HIGH)</strong>
               </div>
@@ -391,7 +391,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   CUSTOM
                 </span>
                 <span className="track-tag" style={{ color: 'var(--accent-cyan)', borderColor: 'var(--accent-cyan-border)' }}>
-                  Live Research Flow
+                  Live Trading Evidence Flow
                 </span>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
@@ -472,17 +472,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span style={{ color: 'var(--accent-emerald)' }}>✓</span>
                 <span>Deterministic Reference Market Clocks</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
-                <span style={{ color: 'var(--accent-emerald)' }}>✓</span>
-                <span>Zero Execution Risk (Read-Only Guard)</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--accent-emerald)', fontWeight: 600 }}>
+                <span>🛡️</span>
+                <span>--read-only by Construction (Zero Execution Risk)</span>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Research Architecture */}
+          {/* Column 2: Trading Risk Architecture */}
           <div>
             <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>
-              Research Architecture
+              Trading Risk Architecture
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
               <li style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -527,8 +527,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <span><strong>Immutable Audit:</strong> Cryptographic receipts for every thesis derivation</span>
               </li>
               <li style={{ display: 'flex', gap: '8px' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)', fontWeight: 700 }}>I5–7</span>
-                <span><strong>Read-Only Safety:</strong> Strictly zero execution, zero custody, zero private keys</span>
+                <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-emerald)', fontWeight: 700 }}>I5–7</span>
+                <span><strong>Read-Only Strength:</strong> Strictly read-only analysis. Zero execution, zero custody, zero private keys. Limiting write access is our core strength: zero capital risk and un-tamperable determinism.</span>
               </li>
             </ul>
           </div>
@@ -620,10 +620,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="footer-bottom">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ color: 'var(--text-secondary)' }}>
-              © 2026 Sounding Research Desk. All rights reserved.
+              © 2026 Sounding Trading Evidence Desk. All rights reserved.
             </div>
             <div>
-              Sounding is an advisory research tool enforcing read-only analysis. It does not execute trades, manage funds, or hold custody.
+              Sounding is an institutional trading attribution workbench enforcing strict --read-only analysis. It cannot place orders, manage funds, or hold custody. That limitation is an institutional safety strength, ensuring uncompromised determinism and zero execution risk.
             </div>
           </div>
 
