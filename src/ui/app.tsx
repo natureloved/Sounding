@@ -641,6 +641,28 @@ export const App: React.FC = () => {
         {/* Right Status Controls */}
         <div className="header-status-bar">
           <button
+            className="pill-btn"
+            style={{
+              background: 'rgba(245, 158, 11, 0.12)',
+              borderColor: 'rgba(245, 158, 11, 0.35)',
+              color: 'var(--accent-amber)',
+              fontWeight: 700
+            }}
+            onClick={() => {
+              handleLaunchFromLanding(
+                'rNVDA',
+                'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
+                'long',
+                3
+              );
+            }}
+            id="guided-tour-header-btn"
+            title="1-Click 60-Second Judge Tour: Load rNVDA Weekend Trap dilemma"
+          >
+            <span>🧭 60s Judge Demo</span>
+          </button>
+
+          <button
             className="pill-btn case-study-header-btn"
             style={{
               background: 'rgba(56, 189, 248, 0.1)',

@@ -235,6 +235,154 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
+      {/* 3.1. Why Bitget? The 24/7 Tokenized Equity Dilemma */}
+      <section className="why-bitget-section">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <span className="section-eyebrow" style={{ color: 'var(--accent-cyan)' }}>
+              Ecosystem Alignment · Why Bitget?
+            </span>
+            <h2 className="section-title" style={{ fontSize: '24px', margin: '6px 0 10px' }}>
+              The Tokenized US Equity (rToken) Disconnect
+            </h2>
+            <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', maxWidth: '780px', lineHeight: 1.6, margin: 0 }}>
+              Bitget leads the industry by offering <strong>24/7 continuous trading for tokenized US equities</strong> (<code style={{ color: 'var(--accent-cyan)' }}>rNVDA</code>, <code style={{ color: 'var(--accent-cyan)' }}>rTSLA</code>, <code style={{ color: 'var(--accent-cyan)' }}>rAAPL</code>). But while crypto trades 24/7, underlying NYSE/NASDAQ reference markets are completely shut on weekends. Sounding is built specifically to protect Bitget traders from this structural gap.
+            </p>
+          </div>
+          <span className="track-tag" style={{ borderColor: 'rgba(56, 189, 248, 0.4)', color: 'var(--accent-cyan)' }}>
+            Track 3: AI Trading Desk
+          </span>
+        </div>
+
+        <div className="why-bitget-grid">
+          <div className="why-bitget-card">
+            <div className="why-bitget-card-icon">⚡</div>
+            <div className="why-bitget-card-title">1. Bitget 24/7 rTokens</div>
+            <p className="why-bitget-card-desc">
+              Conventional AI models treat weekend social chatter as live market conviction. When NASDAQ opens Monday at 09:30 EDT, institutional order imbalances trigger sudden gap-downs. Sounding flags unanchored weekend speculation before execution.
+            </p>
+          </div>
+
+          <div className="why-bitget-card">
+            <div className="why-bitget-card-icon">📊</div>
+            <div className="why-bitget-card-title">2. Bitget Spot V2 Live Feeds</div>
+            <p className="why-bitget-card-desc">
+              Directly streams live Bitget public tickers and calculates real-time RSI-14, 20-EMA, 50-EMA, and order book depth to arm quantitative thesis invalidation tripwires against structural technical levels.
+            </p>
+          </div>
+
+          <div className="why-bitget-card">
+            <div className="why-bitget-card-icon">🧠</div>
+            <div className="why-bitget-card-title">3. Bitget Qwen API Gateway</div>
+            <p className="why-bitget-card-desc">
+              Routes combinatorial counterfactual source removals through Bitget's high-speed, cost-effective Qwen inference gateway (<code>qwen3.8-max</code>), backed by an instant offline heuristic fallback.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3.2. 60-Second Guided Demo Banner for Evaluators */}
+      <section className="guided-demo-banner">
+        <div style={{ maxWidth: '680px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '18px' }}>🧭</span>
+            <span style={{ fontSize: '13px', fontWeight: 800, color: 'var(--accent-amber)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              60-Second Judge Tour · Experience the "Aha!" Moment
+            </span>
+          </div>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '6px 0 0', lineHeight: 1.5 }}>
+            Follow this 4-step sequence to see why attribution by removal outperforms conventional AI bots in under a minute:
+          </p>
+          <div className="guided-demo-steps">
+            <div className="guided-demo-step-pill">
+              <span>1. Choose</span> <strong>rNVDA</strong>
+            </div>
+            <span className="guided-demo-step-arrow">➔</span>
+            <div className="guided-demo-step-pill">
+              <span>2. Remove</span> <strong>macro-analyst</strong>
+            </div>
+            <span className="guided-demo-step-arrow">➔</span>
+            <div className="guided-demo-step-pill">
+              <span>3. Platform</span> <strong>Tilts &amp; Flips to Neutral</strong>
+            </div>
+            <span className="guided-demo-step-arrow">➔</span>
+            <div className="guided-demo-step-pill">
+              <span>4. Inspect</span> <strong>SHUT Clock &amp; $125 Tripwire</strong>
+            </div>
+          </div>
+        </div>
+
+        <button
+          className="execute-btn"
+          style={{ padding: '12px 24px', fontSize: '13px', boxShadow: 'var(--glow-amber)', whiteSpace: 'nowrap' }}
+          onClick={() =>
+            onLaunchDesk(
+              'rNVDA',
+              'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
+              'long',
+              3
+            )
+          }
+          id="launch-guided-demo-btn"
+        >
+          ⚡ Run 60-Second Demo (1-Click) →
+        </button>
+      </section>
+
+      {/* 3.3. Before vs. After Comparative Scorecard */}
+      <div className="before-after-card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+          <div>
+            <span className="section-eyebrow" style={{ color: 'var(--accent-emerald)' }}>
+              Measurable Result · Value in Under a Minute
+            </span>
+            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', margin: '4px 0 0' }}>
+              Before Sounding vs. After Sounding
+            </h3>
+          </div>
+          <span className="track-tag" style={{ borderColor: 'var(--accent-emerald-border)', color: 'var(--accent-emerald)' }}>
+            Capital Protection
+          </span>
+        </div>
+
+        <table className="before-after-table">
+          <thead>
+            <tr>
+              <th style={{ color: 'var(--text-muted)', width: '22%' }}>Evaluation Dimension</th>
+              <th style={{ color: 'var(--accent-rose)', width: '39%' }}>Conventional AI Assistant</th>
+              <th style={{ color: 'var(--accent-emerald)', width: '39%' }}>Sounding Trading Attribution Desk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Attribution Proof</strong></td>
+              <td style={{ color: 'var(--text-secondary)' }}>Cosmetic citation list (claims 4 sources agree). Hides single-source vulnerability.</td>
+              <td style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>Causal delete-test proves only <code>macro-analyst</code> is load-bearing. 3 citations are cosmetic.</td>
+            </tr>
+            <tr>
+              <td><strong>Market-Clock Awareness</strong></td>
+              <td style={{ color: 'var(--text-secondary)' }}>Blind to market hours. Treats Sunday off-hours chatter as active liquidity.</td>
+              <td style={{ color: 'var(--accent-amber)', fontWeight: 600 }}>Deterministic calendar flags NASDAQ is <strong>SHUT</strong>. Thesis tagged "Resting on Unanchored Ground".</td>
+            </tr>
+            <tr>
+              <td><strong>Trader Risk Action</strong></td>
+              <td style={{ color: 'var(--text-secondary)' }}>Recommends aggressive 3x Long entry over the weekend.</td>
+              <td style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>Arms downside kill-condition at $125.00 (20-EMA breach). Advises waiting for Monday 09:30 ET.</td>
+            </tr>
+            <tr>
+              <td><strong>Portfolio Outcome</strong></td>
+              <td style={{ color: 'var(--accent-rose)', fontWeight: 700 }}><strong>-14% Drawdown</strong> on Monday opening bell gap liquidation.</td>
+              <td style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}><strong>Capital Preserved</strong> with immutable cryptographic audit trail.</td>
+            </tr>
+            <tr>
+              <td><strong>Execution Boundary</strong></td>
+              <td style={{ color: 'var(--text-secondary)' }}>Asks to connect wallet or execute orders.</td>
+              <td style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}>Strictly <code>--read-only</code> by construction. Zero execution risk.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       {/* 4. One-Click Interactive Scenario Playground */}
       <section className="scenarios-section">
         <div className="scenarios-header">
