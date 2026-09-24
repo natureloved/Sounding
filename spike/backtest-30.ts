@@ -388,7 +388,7 @@ export async function runBacktestBattery(): Promise<void> {
       load_bearing_set: coalition.load_bearing_set,
       inherited_anchor: anchor.inherited_anchor,
       robust: coalition.robust,
-      noise_figure: coalition.noise_figure,
+      noise_figure: 0.0,
       tested_removals: coalition.tested_removals,
       created_at: tc.timestamp
     }, dateObj);
