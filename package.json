@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "start": "tsx src/main.ts --read-only",
     "spike": "tsx spike/a1-stability.ts",
+    "backtest": "tsx spike/backtest-30.ts",
     "metrics": "tsx src/metrics/emit.ts",
     "test": "tsx tests/run-all.ts"
   },

@@ -35,8 +35,8 @@ export const CURRENT_METRICS: SubmissionMetrics = {
     supported_bitget_signal_skills: 5
   },
   estimated: {
-    false_conviction_reduction: '42% reduction in trades based on stale/off-market weekend narratives (estimated across N=30 historical off-hours thesis backtests with Monday opening gaps)',
-    analyst_time_saved_per_thesis: '25 minutes per macro/technical thesis deconstruction (benchmarked from N=15 discretionary analyst manual leave-one-out source verification trials)',
+    false_conviction_reduction: '42% (illustrative target; validation plan: N=30 off-hours thesis backtests against Monday opening gaps — executable harness in spike/backtest-30.ts)',
+    analyst_time_saved_per_thesis: '~20–25 minutes per thesis (estimated workflow reduction compared to manual combinatorial permutation and session verification; empirical trial in progress)',
     unanchored_source_detection_rate: '100% deterministic detection via NYSE/Nasdaq regular hours calendar'
   },
   targeted: {

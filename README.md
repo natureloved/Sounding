@@ -201,17 +201,20 @@ npm test
 # 3. Run Day-1 Stability Spike (A1 Go/No-Go verification: 10/10 PASS)
 npm run spike
 
-# 4. Run CLI Evaluation Flow (Under 90s offline demo)
+# 4. Run Empirical N=30 Backtest Battery (30 Historical Scenarios in < 250ms)
+npm run backtest
+
+# 5. Run CLI Evaluation Flow (Under 90s offline demo)
 npm run start -- demo
 
 # Test mandatory refusal without read-only flag:
 npx tsx src/main.ts               # Refuses with exit code 1 (Invariant I5 enforced)
 npx tsx src/main.ts --read-only   # Executes successfully
 
-# 5. Emit Official Submission Project Description & D1 X Post
+# 6. Emit Official Submission Project Description & D1 X Post
 npm run metrics
 
-# 6. Launch Web Trading Desk
+# 7. Launch Web Trading Desk
 npm run dev
 # Open http://localhost:3000/
 ```
