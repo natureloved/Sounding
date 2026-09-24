@@ -1659,22 +1659,13 @@ body {
   }
 
   .logo-group {
-    order: 1;
-    gap: 8px;
-  }
-
-  .header-status-bar {
-    order: 2;
-    margin-left: auto;
     gap: 8px;
   }
 
   .header-view-toggle {
-    order: 3;
-    width: 100%;
     margin-top: 2px;
     display: flex;
-    justify-content: stretch;
+    justify-content: flex-end;
   }
 
   .header-view-toggle button {

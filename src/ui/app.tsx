@@ -637,30 +637,6 @@ export const App: React.FC = () => {
             Tactical Trading Desk
           </button>
         </div>
-
-        {/* Right Status Controls */}
-        <div className="header-status-bar">
-          <button
-            className="pill-btn mode-indicator-btn"
-            style={{
-              background: settings.apiKey ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.08)',
-              borderColor: settings.apiKey ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.25)',
-              color: settings.apiKey ? 'var(--accent-emerald)' : 'var(--accent-cyan)',
-              fontWeight: 600,
-              padding: '6px 12px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-            onClick={() => setShowSettingsModal(true)}
-            id="settings-btn"
-            title={settings.apiKey ? 'Live Bitget Qwen Gateway active. Click to configure parameters.' : 'Instant Demo Mode active. Click to configure Bitget Qwen key.'}
-          >
-            <span className={`pulse-dot ${settings.apiKey ? '' : 'demo'}`} />
-            <span className="settings-btn-text">{settings.apiKey ? 'Live Qwen' : 'Demo Mode'}</span>
-            <span style={{ fontSize: '11px', opacity: 0.75 }}>⚙️</span>
-          </button>
-        </div>
       </header>
 
       {/* Conditionally Render: Landing Page vs Live Research Desk */}
@@ -679,13 +655,24 @@ export const App: React.FC = () => {
               <span className="panel-title">
                 <span>🎯 Trading Thesis &amp; Position Stance</span>
               </span>
-              <button
-                type="button"
-                className="pill-btn"
-                onClick={() => setShowUserDocInput(!showUserDocInput)}
-              >
-                {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Test Custom S7 Note'}
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <button
+                  type="button"
+                  className="pill-btn"
+                  onClick={() => setShowSettingsModal(true)}
+                  id="settings-btn"
+                  title="Configure Bitget Qwen API Gateway & Inference Parameters"
+                >
+                  <span>⚙️ Gateway Settings</span>
+                </button>
+                <button
+                  type="button"
+                  className="pill-btn"
+                  onClick={() => setShowUserDocInput(!showUserDocInput)}
+                >
+                  {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Test Custom S7 Note'}
+                </button>
+              </div>
             </div>
 
             <form
