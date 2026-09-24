@@ -46,7 +46,7 @@ export const App: React.FC = () => {
 
   const [ticker, setTicker] = useState('rNVDA');
   const [thesisText, setThesisText] = useState(
-    'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation'
+    'Datacenter capex expansion will sustain breakout into next quarter'
   );
   const [positionStance, setPositionStance] = useState<'long' | 'short' | 'flat'>('long');
   const [leverage, setLeverage] = useState<number>(3);
@@ -641,64 +641,24 @@ export const App: React.FC = () => {
         {/* Right Status Controls */}
         <div className="header-status-bar">
           <button
-            className="pill-btn"
-            style={{
-              background: 'rgba(245, 158, 11, 0.12)',
-              borderColor: 'rgba(245, 158, 11, 0.35)',
-              color: 'var(--accent-amber)',
-              fontWeight: 700
-            }}
-            onClick={() => {
-              handleLaunchFromLanding(
-                'rNVDA',
-                'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation',
-                'long',
-                3
-              );
-            }}
-            id="guided-tour-header-btn"
-            title="1-Click 60-Second Judge Tour: Load rNVDA Weekend Trap dilemma"
-          >
-            <span>🧭 60s Judge Demo</span>
-          </button>
-
-          <button
-            className="pill-btn case-study-header-btn"
-            style={{
-              background: 'rgba(56, 189, 248, 0.1)',
-              borderColor: 'rgba(56, 189, 248, 0.3)',
-              color: 'var(--accent-cyan)',
-              fontWeight: 600
-            }}
-            onClick={() => setShowCaseStudyModal(true)}
-            id="case-study-btn"
-            title="Inspect Case Study: NVDA Weekend Trap & Evidence Attribution"
-          >
-            <span>📖 Case Study: Weekend Trap &amp; Attribution</span>
-          </button>
-
-          <div
-            className="safety-pill"
-            title="Institutional Safety Strength: Sounding is strictly --read-only by construction (Invariant I5). It cannot place orders, move funds, or hold custody. Zero execution risk, untamperable deterministic analysis."
-          >
-            <span>🛡️</span>
-            <span className="safety-pill-text">--read-only · Zero Execution Risk</span>
-          </div>
-
-          <button
             className="pill-btn mode-indicator-btn"
             style={{
               background: settings.apiKey ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.08)',
               borderColor: settings.apiKey ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.25)',
               color: settings.apiKey ? 'var(--accent-emerald)' : 'var(--accent-cyan)',
-              fontWeight: 600
+              fontWeight: 600,
+              padding: '6px 12px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
             }}
             onClick={() => setShowSettingsModal(true)}
             id="settings-btn"
-            title={settings.apiKey ? 'Live Bitget Qwen Gateway active' : 'Zero-credential instant demo mode active. Click to configure API key.'}
+            title={settings.apiKey ? 'Live Bitget Qwen Gateway active. Click to configure parameters.' : 'Instant Demo Mode active. Click to configure Bitget Qwen key.'}
           >
             <span className={`pulse-dot ${settings.apiKey ? '' : 'demo'}`} />
-            <span className="settings-btn-text">{settings.apiKey ? '⚡ Live Qwen Mode' : '🟢 Instant Demo Mode'}</span>
+            <span className="settings-btn-text">{settings.apiKey ? 'Live Qwen' : 'Demo Mode'}</span>
+            <span style={{ fontSize: '11px', opacity: 0.75 }}>⚙️</span>
           </button>
         </div>
       </header>
@@ -948,6 +908,21 @@ export const App: React.FC = () => {
                 }
               >
                 🌐 Case Study C: BTC (Continuous 24/7 Crypto)
+              </button>
+              <button
+                type="button"
+                className="pill-btn"
+                style={{
+                  background: 'rgba(56, 189, 248, 0.08)',
+                  borderColor: 'rgba(56, 189, 248, 0.3)',
+                  color: 'var(--accent-cyan)',
+                  fontWeight: 600
+                }}
+                onClick={() => setShowCaseStudyModal(true)}
+                id="case-study-preset-btn"
+                title="Inspect Step-by-Step NVDA Weekend Trap & Attribution Case Study Modal"
+              >
+                📖 Case Study Walkthrough
               </button>
             </div>
 

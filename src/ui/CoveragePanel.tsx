@@ -21,35 +21,55 @@ export const CoveragePanel: React.FC<CoveragePanelProps> = ({ stats, onOpenProje
       </p>
 
       <div className="coverage-list">
-        {stats.map((item) => {
-          const pct = Math.round(item.load_bearing_ratio * 100);
-          return (
-            <div key={item.source_name} className="coverage-item">
-              <div className="coverage-item-header">
-                <span className="coverage-item-name">{item.source_name}</span>
-                <span className="coverage-ratio">{pct}% LB</span>
-              </div>
-              <div className="coverage-progress-bg">
-                <div
-                  className="coverage-progress-fill"
-                  style={{
-                    width: `${Math.max(pct, 4)}%`,
-                    background:
-                      pct >= 50
-                        ? 'linear-gradient(90deg, var(--accent-cyan), var(--accent-amber))'
-                        : 'rgba(255, 255, 255, 0.2)'
-                  }}
-                />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
-                <span>Captured: {item.total_captured}x</span>
-                <span style={{ color: item.last_anchor_verdict === 'open' ? 'var(--accent-emerald)' : 'var(--accent-rose)', fontWeight: 600 }}>
-                  Clock: {item.last_anchor_verdict.toUpperCase()}
-                </span>
-              </div>
+        {stats.length === 0 ? (
+          <div
+            style={{
+              padding: '24px 16px',
+              textAlign: 'center',
+              background: 'var(--bg-input)',
+              borderRadius: 'var(--radius-inner)',
+              border: '1px dashed var(--border-hairline)'
+            }}
+          >
+            <div style={{ fontSize: '20px', marginBottom: '8px' }}>📊</div>
+            <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+              No historical derivations yet
             </div>
-          );
-        })}
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+              Run analyses to build source influence &amp; load-bearing rankings
+            </div>
+          </div>
+        ) : (
+          stats.map((item) => {
+            const pct = Math.round(item.load_bearing_ratio * 100);
+            return (
+              <div key={item.source_name} className="coverage-item">
+                <div className="coverage-item-header">
+                  <span className="coverage-item-name">{item.source_name}</span>
+                  <span className="coverage-ratio">{pct}% LB</span>
+                </div>
+                <div className="coverage-progress-bg">
+                  <div
+                    className="coverage-progress-fill"
+                    style={{
+                      width: `${Math.max(pct, 4)}%`,
+                      background:
+                        pct >= 50
+                          ? 'linear-gradient(90deg, var(--accent-cyan), var(--accent-amber))'
+                          : 'rgba(255, 255, 255, 0.2)'
+                    }}
+                  />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                  <span>Captured: {item.total_captured}x</span>
+                  <span style={{ color: item.last_anchor_verdict === 'open' ? 'var(--accent-emerald)' : 'var(--accent-rose)', fontWeight: 600 }}>
+                    Clock: {item.last_anchor_verdict.toUpperCase()}
+                  </span>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       <div style={{ marginTop: '20px', paddingTop: '14px', borderTop: '1px solid var(--border-hairline-subtle)' }}>

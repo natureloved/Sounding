@@ -78,10 +78,16 @@ export async function computeCoalitionRemoval(
 
   for (const { snap, result } of singleResults) {
     const changed = isChanged(result);
+    const dirFlip = result.direction !== baseline.direction;
+    const bandShift = result.confidence_band !== baseline.confidence_band;
 
-    const reason = changed
-      ? `Direction flipped from ${baseline.direction} to ${result.direction} or band shifted from ${baseline.confidence_band} to ${result.confidence_band}`
-      : `Conclusion unchanged (${result.direction}, ${result.confidence_band})`;
+    const reason = !changed
+      ? `Conclusion unchanged (${result.direction}, ${result.confidence_band})`
+      : dirFlip && bandShift
+        ? `Direction flipped ${baseline.direction}→${result.direction}; band shifted ${baseline.confidence_band}→${result.confidence_band}`
+        : dirFlip
+          ? `Direction flipped from ${baseline.direction} to ${result.direction}`
+          : `Direction held ${result.direction}; band shifted from ${baseline.confidence_band} to ${result.confidence_band}`;
 
     tested_removals.push({
       removed_sources: [snap.source_name],
@@ -137,10 +143,16 @@ export async function computeCoalitionRemoval(
 
   for (const { s1, s2, result } of pairResults) {
     const changed = isChanged(result);
+    const dirFlip = result.direction !== baseline.direction;
+    const bandShift = result.confidence_band !== baseline.confidence_band;
 
-    const reason = changed
-      ? `Joint removal of [${s1.source_name}, ${s2.source_name}] flipped conclusion`
-      : `Conclusion unchanged without [${s1.source_name}, ${s2.source_name}]`;
+    const reason = !changed
+      ? `Conclusion unchanged without [${s1.source_name}, ${s2.source_name}]`
+      : dirFlip && bandShift
+        ? `Joint removal [${s1.source_name}+${s2.source_name}]: direction flipped ${baseline.direction}→${result.direction}, band shifted ${baseline.confidence_band}→${result.confidence_band}`
+        : dirFlip
+          ? `Joint removal [${s1.source_name}+${s2.source_name}]: direction flipped from ${baseline.direction} to ${result.direction}`
+          : `Joint removal [${s1.source_name}+${s2.source_name}]: direction held ${result.direction}, band shifted from ${baseline.confidence_band} to ${result.confidence_band}`;
 
     tested_removals.push({
       removed_sources: [s1.source_name, s2.source_name],

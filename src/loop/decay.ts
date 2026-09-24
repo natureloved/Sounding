@@ -6,6 +6,17 @@
 import { Snapshot, DataDecayInfo } from '../types.js';
 
 export function calculateSourceDecay(snapshots: Snapshot[], currentTime: Date = new Date()): DataDecayInfo[] {
+  // When all snapshots share fixture provenance, anchor reference time to the latest retrieved_at
+  // rather than wall-clock time, evaluating freshness as of the market session close.
+  const isFixtureSet = snapshots.length > 0 && snapshots.every((s) => s.provenance === 'fixture');
+  let referenceTime = currentTime;
+  if (isFixtureSet) {
+    const latestMs = Math.max(...snapshots.map((s) => new Date(s.retrieved_at).getTime()));
+    if (!isNaN(latestMs) && latestMs > 0) {
+      referenceTime = new Date(latestMs);
+    }
+  }
+
   return snapshots.map((snap) => {
     let half_life_hours = 24;
 
@@ -25,7 +36,7 @@ export function calculateSourceDecay(snapshots: Snapshot[], currentTime: Date = 
     }
 
     const retrievedDate = new Date(snap.retrieved_at);
-    const ageMs = Math.max(0, currentTime.getTime() - retrievedDate.getTime());
+    const ageMs = Math.max(0, referenceTime.getTime() - retrievedDate.getTime());
     const ageHours = ageMs / (1000 * 60 * 60);
 
     // Half-life formula: Freshness = 100 * (0.5)^(age / half_life)

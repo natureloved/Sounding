@@ -2323,14 +2323,43 @@ body {
 }
 
 .flip-status-badge {
-  color: var(--accent-rose);
   font-weight: 800;
   font-family: var(--font-mono);
   font-size: 11px;
-  background: rgba(244, 63, 94, 0.12);
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.02em;
+}
+
+.flip-status-badge.direction-flip {
+  color: var(--accent-rose);
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+.flip-status-badge.band-shift {
+  color: var(--accent-amber);
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.flip-pulse-badge.direction-flip {
+  background: rgba(244, 63, 94, 0.2);
+  color: var(--accent-rose);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+.flip-pulse-badge.band-shift {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.tr-band-shift {
+  background: rgba(245, 158, 11, 0.05);
 }
 
 /* ========================================================================= */

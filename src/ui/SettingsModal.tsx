@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WorkbenchSettings } from '../types.js';
 
 interface SettingsModalProps {
@@ -14,6 +14,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
   const [mcpServerUrl, setMcpServerUrl] = useState(settings.mcpServerUrl || '');
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const handleTestConnection = async () => {
     if (!apiKey.trim()) {

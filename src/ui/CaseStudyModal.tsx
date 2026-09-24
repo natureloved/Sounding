@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface CaseStudyModalProps {
   onClose: () => void;
@@ -6,6 +6,13 @@ interface CaseStudyModalProps {
 }
 
 export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadScenario }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content case-study-modal" onClick={(e) => e.stopPropagation()}>
@@ -53,7 +60,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
               <div className="step-body">
                 <div className="step-title">Trader Position Stance &amp; Timing Dilemma</div>
                 <p className="step-desc">
-                  <strong>Trader Stance:</strong> 3x Leveraged Long on <code>rNVDA</code> ($128.40).
+                  <strong>Trader Stance:</strong> 3x Leveraged Long on <code>rNVDA</code> ($132.80).
                   <br />
                   <strong>Stated Thesis:</strong> <em>"Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation."</em>
                   <br />
@@ -70,7 +77,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                 <p className="step-desc">
                   Sounding fetches 6 multi-modal intelligence sources across live Bitget public feeds and signal skills:
                   <br />
-                  • <strong>bitget-market:</strong> Live price $128.40, RSI-14: 54.2, 20-EMA: $125.00.
+                  • <strong>bitget-market:</strong> Live price $132.80, RSI-14: 64.2, 20-EMA: $128.50.
                   <br />
                   • <strong>macro-analyst:</strong> US fiscal policy &amp; AI CAPEX report.
                   <br />
@@ -91,7 +98,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
               <div className="step-body">
                 <div className="step-title">Baseline Derivation (The Naive Trap)</div>
                 <p className="step-desc">
-                  <strong>Initial Derived Call:</strong> <span style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}>BULLISH</span> (Medium Conviction).
+                  <strong>Initial Derived Call:</strong> <span style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}>BULLISH</span> (HIGH Conviction).
                   <br />
                   <strong>Cited Sources:</strong> 4 sources cited (macro, technical, sentiment, news).
                   <br />
@@ -114,9 +121,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                   <br />
                   • Without <code>sentiment-analyst</code> ➔ Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
                   <br />
-                  • Without <code>macro-analyst</code> ➔ Call <span style={{ color: 'var(--accent-amber)', fontWeight: 800 }}>FLIPS TO NEUTRAL ⚡</span>.
+                  • Without <code>macro-analyst</code> ➔ Call confidence <span style={{ color: 'var(--accent-amber)', fontWeight: 800 }}>COLLAPSES FROM HIGH TO MEDIUM ⚡</span>.
                   <br />
-                  <strong>Empirical Proof:</strong> The <code>load_bearing_set</code> is <code>['macro-analyst']</code>. The entire bullish thesis was an illusion of consensus resting on a single pillar!
+                  <strong>Empirical Proof:</strong> The <code>load_bearing_set</code> is <code>['macro-analyst']</code>. The entire high-conviction bullish thesis was an illusion of consensus resting on a single pillar!
                 </p>
               </div>
             </div>
@@ -148,7 +155,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                   <br />
                   <strong>Trader Fragility:</strong> <span style={{ color: 'var(--accent-amber)', fontWeight: 700 }}>50/100 (HIGH)</span>.
                   <br />
-                  <strong>Tripwire Trigger:</strong> Downside invalidation armed at $125.00 (20-EMA breach).
+                  <strong>Tripwire Trigger:</strong> Downside invalidation armed at $128.50 (20-EMA breach).
                   <br />
                   <strong>Actionable Decision:</strong> The trader cancels the 3x weekend long order and waits for Monday NYSE 09:30 EDT opening price discovery.
                   <br />

@@ -102,19 +102,42 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
               </div>
 
               {/* Flipped Result */}
-              <div className="causal-col flipped">
-                <span className="causal-col-label">2. COUNTERFACTUAL CALL</span>
-                <div className="causal-col-call">
-                  <span className={`direction-chip ${flippedRemoval.direction}`}>{flippedRemoval.direction.toUpperCase()}</span>
-                  <span className="causal-band-tag">({flippedRemoval.confidence_band.toUpperCase()})</span>
-                  <span className="flip-pulse-badge">⚡ FLIPPED</span>
-                </div>
-                <span className="causal-col-desc">{flippedRemoval.reason}</span>
-              </div>
+              {(() => {
+                const isDirFlip = flippedRemoval.direction !== conclusion.direction;
+                return (
+                  <div className="causal-col flipped">
+                    <span className="causal-col-label">2. COUNTERFACTUAL CALL</span>
+                    <div className="causal-col-call">
+                      <span className={`direction-chip ${flippedRemoval.direction}`}>{flippedRemoval.direction.toUpperCase()}</span>
+                      <span className="causal-band-tag">({flippedRemoval.confidence_band.toUpperCase()})</span>
+                      {isDirFlip ? (
+                        <span className="flip-pulse-badge direction-flip">⬢ DIRECTION FLIP</span>
+                      ) : (
+                        <span className="flip-pulse-badge band-shift">⬣ BAND SHIFT</span>
+                      )}
+                    </div>
+                    <span className="causal-col-desc">{flippedRemoval.reason}</span>
+                  </div>
+                );
+              })()}
             </div>
 
             <div className="causal-proof-summary">
-              <strong>Decisive Empirical Finding:</strong> The thesis was accompanied by {snapshots.length} citations, but removing <code>{flippedRemoval.removed_sources.join(' + ')}</code> caused the entire bullish conviction to collapse to {flippedRemoval.direction.toUpperCase()}. Control removals of all other sources caused zero change—proving those citations were decorative.
+              {(() => {
+                const isDirFlip = flippedRemoval.direction !== conclusion.direction;
+                const removedNames = flippedRemoval.removed_sources.join(' + ');
+                return (
+                  <span>
+                    <strong>Decisive Empirical Finding:</strong> The thesis was accompanied by {snapshots.length} citations, but removing <code>{removedNames}</code>{' '}
+                    {isDirFlip ? (
+                      <>caused the {conclusion.direction.toUpperCase()} conviction to collapse to {flippedRemoval.direction.toUpperCase()} ({flippedRemoval.confidence_band.toUpperCase()}).</>
+                    ) : (
+                      <>caused confidence to collapse from {conclusion.confidence_band.toUpperCase()} to {flippedRemoval.confidence_band.toUpperCase()} (direction held {flippedRemoval.direction.toUpperCase()}).</>
+                    )}{' '}
+                    Control removals of other sources caused zero change—proving those citations were decorative.
+                  </span>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -265,23 +288,29 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
               </tr>
             </thead>
             <tbody>
-              {attribution.tested_removals.map((rem, idx) => (
-                <tr key={idx} className={rem.changed ? 'tr-flipped' : ''}>
-                  <td style={{ color: rem.changed ? 'var(--accent-amber)' : 'inherit', fontWeight: rem.changed ? 700 : 500 }}>
-                    {rem.removed_sources.join(' + ')}
-                  </td>
-                  <td style={{ textTransform: 'uppercase' }}>{rem.direction}</td>
-                  <td style={{ textTransform: 'uppercase' }}>{rem.confidence_band}</td>
-                  <td>
-                    {rem.changed ? (
-                      <span className="flip-status-badge">FLIPPED ⚡</span>
-                    ) : (
-                      <span style={{ color: 'var(--text-muted)' }}>UNCHANGED</span>
-                    )}
-                  </td>
-                  <td style={{ color: rem.changed ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{rem.reason}</td>
-                </tr>
-              ))}
+              {attribution.tested_removals.map((rem, idx) => {
+                const isDirFlip = rem.direction !== conclusion.direction;
+                const isBandShift = rem.confidence_band !== conclusion.confidence_band;
+                return (
+                  <tr key={idx} className={rem.changed ? (isDirFlip ? 'tr-flipped' : 'tr-band-shift') : ''}>
+                    <td style={{ color: rem.changed ? (isDirFlip ? 'var(--accent-rose)' : 'var(--accent-amber)') : 'inherit', fontWeight: rem.changed ? 700 : 500 }}>
+                      {rem.removed_sources.join(' + ')}
+                    </td>
+                    <td style={{ textTransform: 'uppercase' }}>{rem.direction}</td>
+                    <td style={{ textTransform: 'uppercase' }}>{rem.confidence_band}</td>
+                    <td>
+                      {isDirFlip ? (
+                        <span className="flip-status-badge direction-flip">⬢ DIRECTION FLIP</span>
+                      ) : isBandShift ? (
+                        <span className="flip-status-badge band-shift">⬣ BAND SHIFT</span>
+                      ) : (
+                        <span style={{ color: 'var(--text-muted)' }}>UNCHANGED</span>
+                      )}
+                    </td>
+                    <td style={{ color: rem.changed ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{rem.reason}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
