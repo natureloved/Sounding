@@ -160,7 +160,7 @@ sounding/
     ├── calendar.test.ts                # Market clock & holiday schedule tests (10 tests)
     ├── coalition.test.ts               # Combinatorial removal attribution tests (9 tests)
     ├── invariants.test.ts              # Runtime verification of Invariants I1–I7 (16 tests)
-    ├── indicators.test.ts              # Live Bitget indicator calculation tests (8 tests)
+    ├── live-market.test.ts             # Live Bitget indicator calculation tests (8 tests)
     ├── alignment.test.ts               # Position stance & fragility index tests (9 tests)
     ├── weekend-trap.test.ts            # Weekend trap & Monday gap tests (6 tests)
     ├── tripwires.test.ts               # Invalidation tripwires & decay tests (10 tests)
@@ -205,6 +205,9 @@ npm run spike
 npm run backtest
 
 # 5. Run CLI Evaluation Flow (Under 90s offline demo)
+# Canonical reproducible narrative (frozen Sunday-03:00 fixture from §8 -> [macro-analyst]):
+npm run start -- demo --fixture
+# Live session run (captures real-time market clock & live Bitget candles; note that live runs vary by capture time):
 npm run start -- demo
 
 # Test mandatory refusal without read-only flag:
@@ -264,5 +267,6 @@ Executed on `rNVDA` frozen snapshot fixture across 10 iterations at `temperature
 
 Sounding is built as a zero-custody, client-side trading desk:
 - **Instant Preloaded Demo Mode**: Runs 100% out of the box with zero credentials required.
-- **Client-Side Key Isolation**: If a user enters an optional Bitget Qwen key in Gateway Settings, it is stored strictly in local browser memory (`localStorage` / React state).
-- **Zero Third-Party Telemetry**: Requests route through Sounding's own serverless proxy (`/api/chat`) directly to the Bitget Qwen inference gateway (`https://hackathon.bitgetops.com/v1`). Keys and prompts are never stored, logged, or shared.
+- **Client-Side Key Isolation**: Keys are stored client-side only (`localStorage` / React state). Anonymous judges use the server-side environment key.
+- **Stateless HTTPS Proxy**: Transit goes via a stateless Vercel proxy (`/api/chat`) over HTTPS to the Bitget Qwen gateway (`https://hackathon.bitgetops.com/v1`) that neither logs nor persists keys.
+- **Zero Custody / Read-Only**: Sounding possesses zero transaction or wallet capabilities. No capital can ever be moved.

@@ -61,6 +61,7 @@ async function main() {
   // CLI Demo / Query Flow
   let ticker = 'rNVDA';
   let thesis = 'Datacenter revenue expansion will sustain further breakout into next quarter';
+  const forceFixture = args.includes('--fixture');
 
   const tickerIdx = args.indexOf('--ticker');
   if (tickerIdx !== -1 && args[tickerIdx + 1]) {
@@ -77,10 +78,11 @@ async function main() {
   console.log(`   Ticker: ${ticker}`);
   console.log(`   Thesis: "${thesis}"`);
   console.log(`   Safety: --read-only active · Invariant I5 verified`);
+  console.log(`   Mode:   ${forceFixture ? 'Frozen Historical Fixture (Canonical Scenario A)' : 'Live Market Capture (Dynamic Session Clock)'}`);
   console.log(`======================================================\n`);
 
   console.log(`[Step 1/3] Capturing 6 sources (S1..S5 bitget-signal + S6 market)...`);
-  const snapshots = await captureSourceSet({ ticker, forceFixture: false });
+  const snapshots = await captureSourceSet({ ticker, forceFixture });
   for (const s of snapshots) {
     const clockBadge = s.anchor_verdict === 'open' ? '🟢 OPEN' : '🔴 SHUT';
     console.log(`  • [${s.source_name.padEnd(18)}] Clock: ${clockBadge.padEnd(8)} | Time: ${s.retrieved_at}`);
