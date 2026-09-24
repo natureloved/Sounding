@@ -78,6 +78,7 @@ export const App: React.FC = () => {
   const [showCaseStudyModal, setShowCaseStudyModal] = useState(false);
   const [settings, setSettings] = useState<WorkbenchSettings>(() => {
     try {
+      const envKey = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_BITGET_QWEN_API_KEY) || '';
       const saved = localStorage.getItem('sounding_settings');
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -88,9 +89,12 @@ export const App: React.FC = () => {
             localStorage.setItem('sounding_settings', JSON.stringify(parsed));
           } catch {}
         }
+        if (!parsed.apiKey && envKey) {
+          parsed.apiKey = envKey;
+        }
         return parsed;
       }
-      return {};
+      return envKey ? { apiKey: envKey } : {};
     } catch {
       return {};
     }
