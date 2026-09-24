@@ -131,9 +131,31 @@ Output EXACT JSON:
   "cited_sources": ["source_name1", "source_name2"]
 }`;
 
-      // In browser, route through /api/chat serverless proxy to eliminate CORS on Bitget gateway
       const isBrowser = typeof window !== 'undefined';
       const endpoint = isBrowser ? '/api/chat' : `${baseUrl}/chat/completions`;
+
+      // SECURITY: when running in the browser, the API key is NOT sent to the server.
+      // The /api/chat serverless proxy uses its own server-side BITGET_QWEN_API_KEY.
+      // Only when the user explicitly typed a key into Gateway Settings do we forward it
+      // (needed for self-hosted/local runs where no server key is configured).
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      const payload: Record<string, unknown> = {
+        model,
+        temperature,
+        messages: [
+          { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
+          { role: 'user', content: prompt }
+        ],
+        response_format: { type: 'json_object' }
+      };
+      if (!isBrowser) {
+        headers['Authorization'] = `Bearer ${apiKey}`;
+      } else if (options.apiKey) {
+        // User-supplied key (Gateway Settings) — required only when the server has no key configured
+        headers['Authorization'] = `Bearer ${options.apiKey}`;
+        payload.apiKey = options.apiKey;
+      }
+      payload.baseUrl = baseUrl;
 
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 5000);
@@ -142,21 +164,8 @@ Output EXACT JSON:
       try {
         resp = await fetch(endpoint, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model,
-            temperature,
-            baseUrl,
-            apiKey,
-            messages: [
-              { role: 'system', content: 'You are Sounding, a deterministic trading desk.' },
-              { role: 'user', content: prompt }
-            ],
-            response_format: { type: 'json_object' }
-          }),
+          headers,
+          body: JSON.stringify(payload),
           signal: controller.signal
         });
 
@@ -164,15 +173,10 @@ Output EXACT JSON:
         if (!resp.ok && resp.status === 400) {
           resp = await fetch(endpoint, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${apiKey}`
-            },
+            headers,
             body: JSON.stringify({
-              model,
-              temperature,
-              baseUrl,
-              apiKey,
+              ...payload,
+              response_format: undefined,
               messages: [
                 { role: 'system', content: 'You are Sounding, a deterministic trading desk. Always output raw JSON only.' },
                 { role: 'user', content: prompt }

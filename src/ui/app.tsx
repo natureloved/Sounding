@@ -324,7 +324,7 @@ export const App: React.FC = () => {
 
       // 3. Coalition Removal Engine with DerivationOptions from settings
       const derivationOpts: DerivationOptions = {
-        apiKey: activeSettings.apiKey,
+        apiKey: activeSettings.apiKey?.trim() ? activeSettings.apiKey.trim() : undefined,
         baseUrl: activeSettings.baseUrl,
         modelId: activeSettings.model,
         temperature: 0
@@ -433,7 +433,7 @@ export const App: React.FC = () => {
     setIsRerunning(true);
     try {
       const derivationOpts: DerivationOptions = {
-        apiKey: settings.apiKey,
+        apiKey: settings.apiKey?.trim() ? settings.apiKey.trim() : undefined,
         baseUrl: settings.baseUrl,
         modelId: settings.model,
         temperature: 0

@@ -27,7 +27,24 @@ export async function computeCoalitionRemoval(
   options: CoalitionOptions = {}
 ): Promise<CoalitionResult> {
   const env = typeof process !== 'undefined' && process.env ? process.env : {};
-  const maxRemovals = options.maxRemovals ?? (env.SOUNDING_MAX_REMOVALS ? parseInt(env.SOUNDING_MAX_REMOVALS, 10) : 12);
+  const maxRemovals = Math.min(
+    options.maxRemovals ?? (env.SOUNDING_MAX_REMOVALS ? parseInt(env.SOUNDING_MAX_REMOVALS, 10) : 12),
+    8
+  );
+  // Memoize derivations per snapshot-subset: the removal engine re-evaluates overlapping
+  // subsets; caching identical subsets cuts live-LLM calls dramatically (cost + rate limits).
+  const derivationCache = new Map<string, Promise<DerivationResult>>();
+  const cacheKey = (subset: Snapshot[]) => subset.map((x) => x.id).sort().join('|');
+  const cachedDerive = (thesis: string, ticker: string, subset: Snapshot[], opts: DerivationOptions): Promise<DerivationResult> => {
+    const k = `${thesis}::${ticker}::${cacheKey(subset)}`;
+    let p = derivationCache.get(k);
+    if (!p) {
+      p = deriveConclusion(thesis, ticker, subset, opts);
+      derivationCache.set(k, p);
+      p.catch(() => derivationCache.delete(k));
+    }
+    return p;
+  };
   const derivationOptions = options.derivationOptions || {};
   const tested_removals: TestedRemoval[] = [];
 
@@ -36,7 +53,7 @@ export async function computeCoalitionRemoval(
   const unknownSources = snapshots.filter((s) => s.anchor_verdict === 'unknown');
 
   // Baseline derivation with all available snapshots
-  const baseline = await deriveConclusion(thesis, ticker, snapshots, derivationOptions);
+  const baseline = await cachedDerive(thesis, ticker, snapshots, derivationOptions);
   let removalCalls = 0;
 
   function isChanged(candidate: DerivationResult): boolean {
@@ -54,7 +71,7 @@ export async function computeCoalitionRemoval(
   const singleResults = await Promise.all(
     singleRemovalCandidates.map(async (snap) => {
       const subset = snapshots.filter((s) => s.id !== snap.id);
-      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, subset, derivationOptions);
       return { snap, result };
     })
   );
@@ -113,7 +130,7 @@ export async function computeCoalitionRemoval(
   const pairResults = await Promise.all(
     pairCandidates.map(async ([s1, s2]) => {
       const subset = snapshots.filter((s) => s.id !== s1.id && s.id !== s2.id);
-      const result = await deriveConclusion(thesis, ticker, subset, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, subset, derivationOptions);
       return { s1, s2, result };
     })
   );
@@ -162,7 +179,7 @@ export async function computeCoalitionRemoval(
       const [removed] = remaining.splice(idx, 1);
       greedyRemoved.push(removed.source_name);
 
-      const result = await deriveConclusion(thesis, ticker, remaining, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, remaining, derivationOptions);
       const changed = isChanged(result);
 
       tested_removals.push({

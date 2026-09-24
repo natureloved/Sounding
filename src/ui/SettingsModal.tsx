@@ -37,12 +37,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey.trim()}`
+          ...(apiKey.trim() ? { Authorization: `Bearer ${apiKey.trim()}` } : {})
         },
         body: JSON.stringify({
           model,
           baseUrl,
-          apiKey: apiKey.trim(),
+          ...(apiKey.trim() ? { apiKey: apiKey.trim() } : {}),
           messages: [{ role: 'user', content: 'Ping: reply with "pong"' }],
           max_tokens: 5
         })
@@ -189,7 +189,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ settings, onSave, 
           >
             <strong style={{ color: 'var(--accent-cyan)' }}>🔒 Client-Side Key Handling Disclosure:</strong>
             <div style={{ marginTop: '3px' }}>
-              Sounding is an autonomous, client-side research desk. Your API key is stored strictly in your browser session memory (localStorage / React state) and used exclusively for direct outbound requests to the Bitget Qwen gateway (<code>hackathon.bitgetops.com</code>). It is never sent to any backend server, telemetry, or external storage.
+              Sounding is an autonomous research desk. Your API key, if you provide one, is stored strictly in your browser session memory (localStorage / React state). Requests are relayed through Sounding's own serverless proxy (/api/chat), which forwards them to the Bitget Qwen gateway (<code>hackathon.bitgetops.com</code>) and never logs, persists, or shares keys. If no personal key is configured, the proxy uses its own server-side key so the live LLM engine works out of the box.
             </div>
           </div>
 
