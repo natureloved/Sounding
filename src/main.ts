@@ -68,9 +68,14 @@ async function main() {
     ticker = args[tickerIdx + 1].toUpperCase();
   }
 
-  const queryIdx = args.indexOf('query');
-  if (queryIdx !== -1 && args[queryIdx + 1] && !args[queryIdx + 1].startsWith('--')) {
-    thesis = args[queryIdx + 1];
+  const thesisIdx = args.indexOf('--thesis');
+  if (thesisIdx !== -1 && args[thesisIdx + 1]) {
+    thesis = args[thesisIdx + 1];
+  } else {
+    const queryIdx = args.indexOf('query');
+    if (queryIdx !== -1 && args[queryIdx + 1] && !args[queryIdx + 1].startsWith('--')) {
+      thesis = args[queryIdx + 1];
+    }
   }
 
   console.log(`\n======================================================`);
