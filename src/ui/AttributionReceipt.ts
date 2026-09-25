@@ -48,7 +48,7 @@ TESTED REMOVAL PERMUTATIONS (${attribution.tested_removals.length}):
 ${attribution.tested_removals
   .map(
     (r) =>
-      `• Without [${r.removed_sources.join(' + ')}]: -> ${r.direction.toUpperCase()} (${r.confidence_band.toUpperCase()}) | ${r.changed ? '[!] FLIPPED' : 'UNCHANGED'}`
+      `• Without [${r.removed_sources.join(' + ')}]: ${r.direction.toUpperCase()} (${r.confidence_band.toUpperCase()}) | ${r.changed ? '[!] FLIPPED' : 'UNCHANGED'}`
   )
   .join('\n')}
 ================================================================================

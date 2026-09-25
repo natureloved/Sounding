@@ -658,7 +658,7 @@ export const App: React.FC = () => {
                   className="pill-btn"
                   onClick={() => setShowUserDocInput(!showUserDocInput)}
                 >
-                  {showUserDocInput ? '▲ Hide Custom S7 Notes' : '▼ Test Custom S7 Note'}
+                  {showUserDocInput ? 'Hide Custom S7 Notes' : 'Test Custom S7 Note'}
                 </button>
               </div>
             </div>
@@ -725,7 +725,7 @@ export const App: React.FC = () => {
                       onClick={() => setIsCustomTicker(false)}
                       title="Switch back to token dropdown"
                     >
-                      ▼ List
+                      List
                     </button>
                   </div>
                 )}
@@ -755,7 +755,7 @@ export const App: React.FC = () => {
                       onClick={() => setPositionStance('long')}
                     >
                       <span className="stance-pip long" />
-                      ▲ Long
+                      Long
                     </button>
                     <button
                       type="button"
@@ -763,7 +763,7 @@ export const App: React.FC = () => {
                       onClick={() => setPositionStance('short')}
                     >
                       <span className="stance-pip short" />
-                      ▼ Short
+                      Short
                     </button>
                     <button
                       type="button"
@@ -771,7 +771,7 @@ export const App: React.FC = () => {
                       onClick={() => setPositionStance('flat')}
                     >
                       <span className="stance-pip flat" />
-                      ● Flat
+                      Flat
                     </button>
                   </div>
                 </div>
@@ -909,7 +909,7 @@ export const App: React.FC = () => {
                           : 'var(--accent-cyan)'
                     }}
                   >
-                    {conclusion.direction === 'bullish' ? '▲ BULLISH' : conclusion.direction === 'bearish' ? '▼ BEARISH' : '● NEUTRAL'}
+                    {conclusion.direction === 'bullish' ? 'BULLISH' : conclusion.direction === 'bearish' ? 'BEARISH' : 'NEUTRAL'}
                   </span>
                   <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                     ({conclusion.confidence_band.toUpperCase()} CONVICTION)

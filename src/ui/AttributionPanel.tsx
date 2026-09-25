@@ -97,7 +97,6 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
               {/* The Causal Removal Operator */}
               <div className="causal-arrow-col">
                 <span className="causal-operator-tag">REMOVING</span>
-                <div className="causal-arrow-symbol">➔</div>
                 <span className="causal-target-name">{flippedRemoval.removed_sources.join(' + ')}</span>
               </div>
 
@@ -262,7 +261,7 @@ export const AttributionPanel: React.FC<AttributionPanelProps> = ({
           onClick={() => setShowPermutations(!showPermutations)}
           id="toggle-permutations-btn"
         >
-          {showPermutations ? '▲ Hide Removal Permutations' : `▼ Inspect ${attribution.tested_removals.length} Removals (Live Matrix)`}
+          {showPermutations ? 'Hide Removal Permutations' : `Inspect ${attribution.tested_removals.length} Removals (Live Matrix)`}
         </button>
       </div>
 

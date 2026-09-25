@@ -57,13 +57,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             id="hero-launch-desk-btn"
           >
             <span>Launch Trading Desk</span>
-            <span style={{ fontSize: '16px' }}>→</span>
           </button>
           <a
             href="#interactive-demo"
             className="pill-btn hero-btn-secondary"
           >
-            <span>Interactive Explainer ↓</span>
+            <span>Interactive Explainer</span>
           </a>
           <a
             href="https://github.com/natureloved/Sounding"
@@ -72,7 +71,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             className="pill-btn hero-btn-secondary"
             id="hero-github-link"
           >
-            <span>GitHub Code &amp; Tests ↗</span>
+            <span>GitHub Code &amp; Tests</span>
           </a>
         </div>
 
@@ -308,15 +307,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="guided-demo-step-pill">
               <span>1. Choose</span> <strong>rNVDA</strong>
             </div>
-            <span className="guided-demo-step-arrow">➔</span>
             <div className="guided-demo-step-pill">
               <span>2. Remove</span> <strong>macro-analyst</strong>
             </div>
-            <span className="guided-demo-step-arrow">➔</span>
             <div className="guided-demo-step-pill">
               <span>3. Platform</span> <strong>Tilts &amp; Flips to Neutral</strong>
             </div>
-            <span className="guided-demo-step-arrow">➔</span>
             <div className="guided-demo-step-pill">
               <span>4. Inspect</span> <strong>SHUT Clock &amp; $125 Tripwire</strong>
             </div>
@@ -336,7 +332,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           }
           id="launch-guided-demo-btn"
         >
-          ⚡ Run 60-Second Demo (1-Click) →
+          ⚡ Run 60-Second Demo (1-Click)
         </button>
       </section>
 
@@ -462,7 +458,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Run Case Study A (1-Click) →
+              Run Case Study A (1-Click)
             </button>
           </div>
 
@@ -500,7 +496,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Run Case Study B (1-Click) →
+              Run Case Study B (1-Click)
             </button>
           </div>
 
@@ -538,7 +534,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 )
               }
             >
-              Run Case Study C (1-Click) →
+              Run Case Study C (1-Click)
             </button>
           </div>
 
@@ -570,7 +566,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               style={{ background: 'var(--accent-cyan)', color: '#000000' }}
               onClick={() => onLaunchDesk()}
             >
-              Open Live Desk →
+              Open Live Desk
             </button>
           </div>
         </div>
@@ -589,7 +585,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             className="execute-btn cta-btn"
             onClick={() => onLaunchDesk()}
           >
-            Enter Sounding Trading Desk →
+            Enter Sounding Trading Desk
           </button>
         </div>
       </section>
@@ -769,7 +765,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 style={{ marginTop: '6px', padding: '10px 14px', fontSize: '13px', justifyContent: 'center' }}
                 onClick={() => onLaunchDesk()}
               >
-                Launch Workbench Desk →
+                Launch Workbench Desk
               </button>
             </div>
           </div>
@@ -795,7 +791,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               onMouseOver={(e) => (e.currentTarget.style.color = '#ffffff')}
               onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
             >
-              GitHub (Code &amp; Tests) ↗
+              GitHub (Code &amp; Tests)
             </a>
             <span style={{ color: 'var(--border-hairline-bright)' }}>•</span>
             <a
@@ -821,7 +817,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 gap: '4px'
               }}
             >
-              Back to Top ↑
+              Back to Top
             </button>
           </div>
         </div>

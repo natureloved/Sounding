@@ -84,7 +84,7 @@ export async function computeCoalitionRemoval(
     const reason = !changed
       ? `Conclusion unchanged (${result.direction}, ${result.confidence_band})`
       : dirFlip && bandShift
-        ? `Direction flipped ${baseline.direction}→${result.direction}; band shifted ${baseline.confidence_band}→${result.confidence_band}`
+        ? `Direction flipped from ${baseline.direction} to ${result.direction}; band shifted from ${baseline.confidence_band} to ${result.confidence_band}`
         : dirFlip
           ? `Direction flipped from ${baseline.direction} to ${result.direction}`
           : `Direction held ${result.direction}; band shifted from ${baseline.confidence_band} to ${result.confidence_band}`;
@@ -149,7 +149,7 @@ export async function computeCoalitionRemoval(
     const reason = !changed
       ? `Conclusion unchanged without [${s1.source_name}, ${s2.source_name}]`
       : dirFlip && bandShift
-        ? `Joint removal [${s1.source_name}+${s2.source_name}]: direction flipped ${baseline.direction}→${result.direction}, band shifted ${baseline.confidence_band}→${result.confidence_band}`
+        ? `Joint removal [${s1.source_name}+${s2.source_name}]: direction flipped from ${baseline.direction} to ${result.direction}, band shifted from ${baseline.confidence_band} to ${result.confidence_band}`
         : dirFlip
           ? `Joint removal [${s1.source_name}+${s2.source_name}]: direction flipped from ${baseline.direction} to ${result.direction}`
           : `Joint removal [${s1.source_name}+${s2.source_name}]: direction held ${result.direction}, band shifted from ${baseline.confidence_band} to ${result.confidence_band}`;

@@ -115,13 +115,13 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                 <p className="step-desc">
                   Sounding executes 12 counterfactual combinatorial removals:
                   <br />
-                  • Without <code>news-briefing</code> ➔ Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
+                  • Without <code>news-briefing</code>: Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
                   <br />
-                  • Without <code>technical-analysis</code> ➔ Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
+                  • Without <code>technical-analysis</code>: Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
                   <br />
-                  • Without <code>sentiment-analyst</code> ➔ Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
+                  • Without <code>sentiment-analyst</code>: Call remains <span style={{ color: 'var(--accent-emerald)' }}>BULLISH</span> (Redundant).
                   <br />
-                  • Without <code>macro-analyst</code> ➔ Call confidence <span style={{ color: 'var(--accent-amber)', fontWeight: 800 }}>COLLAPSES FROM HIGH TO MEDIUM ⚡</span>.
+                  • Without <code>macro-analyst</code>: Call confidence <span style={{ color: 'var(--accent-amber)', fontWeight: 800 }}>COLLAPSES FROM HIGH TO MEDIUM ⚡</span>.
                   <br />
                   <strong>Empirical Proof:</strong> The <code>load_bearing_set</code> is <code>['macro-analyst']</code>. The entire high-conviction bullish thesis was an illusion of consensus resting on a single pillar!
                 </p>
@@ -183,7 +183,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ onClose, onLoadS
                 }}
                 id="load-rnvda-case-study-btn"
               >
-                ⚡ Load rNVDA Scenario into Workbench →
+                ⚡ Load rNVDA Scenario into Workbench
               </button>
             </div>
           </div>
