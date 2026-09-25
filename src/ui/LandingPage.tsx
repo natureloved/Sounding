@@ -25,6 +25,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div className="landing-container">
       {/* 1. Hero Section */}
       <section className="landing-hero">
+        {/* Cult UI / Skiper UI Illuminated Radar Badge */}
+        <div className="hero-radar-badge">
+          <span className="radar-ping-wrap">
+            <span className="radar-ping" />
+            <span className="radar-dot" />
+          </span>
+          <span className="radar-text">ATTRIBUTION KERNEL V2 · READ-ONLY ATTRIBUTION DESK</span>
+          <span className="radar-divider">/</span>
+          <span className="radar-subtext">INVARIANTS I1–I7 ACTIVE</span>
+        </div>
+
         {/* Headline */}
         <h1 className="hero-headline">
           Don't trade on cosmetic citations.{' '}

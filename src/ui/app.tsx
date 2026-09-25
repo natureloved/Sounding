@@ -605,36 +605,24 @@ export const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Center View Mode Switcher (Overview vs Desk) */}
+        {/* Center View Mode Switcher (Machined Capsule Navigation) */}
         <div className="header-view-toggle">
           <button
-            className="pill-btn"
-            style={{
-              padding: '5px 14px',
-              fontSize: '12px',
-              border: 'none',
-              background: viewMode === 'landing' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-              color: viewMode === 'landing' ? '#ffffff' : 'var(--text-secondary)',
-              fontWeight: viewMode === 'landing' ? 700 : 500
-            }}
+            type="button"
+            className={`toggle-tab ${viewMode === 'landing' ? 'active' : ''}`}
             onClick={() => setViewMode('landing')}
+            id="nav-overview-tab-btn"
           >
-            Overview &amp; Tour
+            <span>Overview &amp; Tour</span>
           </button>
           <button
-            className="pill-btn"
-            style={{
-              padding: '5px 14px',
-              fontSize: '12px',
-              border: 'none',
-              background: viewMode === 'desk' ? 'var(--accent-cyan-dim)' : 'transparent',
-              color: viewMode === 'desk' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-              fontWeight: viewMode === 'desk' ? 700 : 500
-            }}
+            type="button"
+            className={`toggle-tab ${viewMode === 'desk' ? 'active desk' : ''}`}
             onClick={() => setViewMode('desk')}
             id="nav-desk-tab-btn"
           >
-            Tactical Trading Desk
+            <span className="live-dot" />
+            <span>Tactical Trading Desk</span>
           </button>
         </div>
       </header>
@@ -763,41 +751,26 @@ export const App: React.FC = () => {
                   <div className="stance-options">
                     <button
                       type="button"
-                      className="pill-btn stance-btn"
-                      style={{
-                        borderColor: positionStance === 'long' ? 'var(--accent-emerald)' : 'var(--border-hairline)',
-                        background: positionStance === 'long' ? 'var(--accent-emerald-dim)' : 'transparent',
-                        color: positionStance === 'long' ? 'var(--accent-emerald)' : 'inherit',
-                        fontWeight: 600
-                      }}
+                      className={`pill-btn stance-btn ${positionStance === 'long' ? 'active-long' : ''}`}
                       onClick={() => setPositionStance('long')}
                     >
+                      <span className="stance-pip long" />
                       ▲ Long
                     </button>
                     <button
                       type="button"
-                      className="pill-btn stance-btn"
-                      style={{
-                        borderColor: positionStance === 'short' ? 'var(--accent-rose)' : 'var(--border-hairline)',
-                        background: positionStance === 'short' ? 'var(--accent-rose-dim)' : 'transparent',
-                        color: positionStance === 'short' ? 'var(--accent-rose)' : 'inherit',
-                        fontWeight: 600
-                      }}
+                      className={`pill-btn stance-btn ${positionStance === 'short' ? 'active-short' : ''}`}
                       onClick={() => setPositionStance('short')}
                     >
+                      <span className="stance-pip short" />
                       ▼ Short
                     </button>
                     <button
                       type="button"
-                      className="pill-btn stance-btn"
-                      style={{
-                        borderColor: positionStance === 'flat' ? 'var(--accent-cyan)' : 'var(--border-hairline)',
-                        background: positionStance === 'flat' ? 'var(--accent-cyan-dim)' : 'transparent',
-                        color: positionStance === 'flat' ? 'var(--accent-cyan)' : 'inherit',
-                        fontWeight: 600
-                      }}
+                      className={`pill-btn stance-btn ${positionStance === 'flat' ? 'active-flat' : ''}`}
                       onClick={() => setPositionStance('flat')}
                     >
+                      <span className="stance-pip flat" />
                       ● Flat
                     </button>
                   </div>
@@ -813,13 +786,7 @@ export const App: React.FC = () => {
                         <button
                           key={lvl}
                           type="button"
-                          className="pill-btn leverage-btn"
-                          style={{
-                            borderColor: leverage === lvl ? 'var(--accent-amber)' : 'var(--border-hairline)',
-                            background: leverage === lvl ? 'var(--accent-amber-dim)' : 'transparent',
-                            color: leverage === lvl ? 'var(--accent-amber)' : 'inherit',
-                            fontWeight: 700
-                          }}
+                          className={`pill-btn leverage-btn ${leverage === lvl ? 'active-leverage' : ''}`}
                           onClick={() => setLeverage(lvl)}
                         >
                           {lvl}x
