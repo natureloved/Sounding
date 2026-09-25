@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="public/sounding_banner.jpg" alt="Sounding Autonomous Attribution Desk Banner" width="100%" />
+</div>
+
 # SOUNDING // Autonomous Attribution Trading Desk
 ### Bitget AI Base Camp Hackathon (Season 2) — Track 3: AI Trading Desk
 

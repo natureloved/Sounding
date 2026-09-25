@@ -597,7 +597,7 @@ export const App: React.FC = () => {
       {/* Top Header Navigation */}
       <header className="desk-header">
         <div className="logo-group" style={{ cursor: 'pointer' }} onClick={() => setViewMode('landing')}>
-          <div className="logo-icon">S</div>
+          <img src="/sounding_logo.jpg" alt="Sounding Logo" className="brand-logo-img" />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span className="brand-title">SOUNDING</span>
