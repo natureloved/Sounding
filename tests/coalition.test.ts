@@ -5,7 +5,7 @@
 
 import { computeCoalitionRemoval } from '../src/loop/coalition.js';
 import { loadFixtureSnapshots } from '../src/sources/signal-skills.js';
-import { Snapshot } from '../types.js';
+import { Snapshot } from '../src/types.js';
 
 export async function runCoalitionTests(): Promise<{ passed: number; failed: number }> {
   let passed = 0;

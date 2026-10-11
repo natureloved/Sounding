@@ -34,6 +34,7 @@ export interface Contradiction {
 }
 
 export interface LiveIndicatorData {
+  ticker?: string;
   lastPrice: number;
   change24h: number;
   rsi: number;
@@ -41,9 +42,11 @@ export interface LiveIndicatorData {
   ema50: number;
   macd: number;
   signal: number;
-  volumeRatio: number;
+  volumeRatio?: number;
   trend: 'bullish' | 'bearish' | 'neutral';
+  timestamp?: string;
 }
+
 
 export interface WeekendTrapReport {
   isRToken: boolean;

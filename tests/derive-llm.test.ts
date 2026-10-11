@@ -8,7 +8,7 @@ import { computeCoalitionRemoval } from '../src/loop/coalition.js';
 import { captureSourceSet } from '../src/loop/capture.js';
 import { createUserDocSnapshot } from '../src/sources/user-doc.js';
 import { loadFixtureSnapshots } from '../src/sources/signal-skills.js';
-import { Snapshot } from '../types.js';
+import { Snapshot } from '../src/types.js';
 
 export async function runDeriveLLMTests(): Promise<{ passed: number; failed: number }> {
   let passed = 0;
