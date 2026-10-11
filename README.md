@@ -6,7 +6,7 @@
 ### Bitget AI Base Camp Hackathon (Season 2) — Track 3: AI Trading Desk
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-natureloved%2FSounding-blue?logo=github)](https://github.com/natureloved/Sounding)
-[![Test Suite](https://img.shields.io/badge/Tests-84%2F84%20Passing-emerald)](https://github.com/natureloved/Sounding)
+[![Test Suite](https://img.shields.io/badge/Tests-91%2F91%20Passing-emerald)](https://github.com/natureloved/Sounding)
 [![Invariants](https://img.shields.io/badge/Invariants-I1--I7%20Verified-cyan)](https://github.com/natureloved/Sounding)
 [![Day--1 Spike](https://img.shields.io/badge/A1%20Spike-10%2F10%20PASS-amber)](https://github.com/natureloved/Sounding)
 [![Security](https://img.shields.io/badge/--read--only-Zero%20Execution%20Risk-emerald)](https://github.com/natureloved/Sounding)
@@ -25,7 +25,7 @@
 | **1. The Problem** | Conventional financial AI tools present confident conclusions supported by superficial citation lists. Citations assert relevance, not causal influence—they conceal when an entire thesis collapses without a single source. Furthermore, in 24/7 tokenized equities (rTokens), AI agents mistake off-hours social chatter for real-time market conviction. |
 | **2. Core Innovation** | **Attribution by Removal:** Measures influence strictly by combinatorial counterfactual removal (leave-one-out and leave-pair-out re-derivation), isolating the minimal **load-bearing set**. <br>**Inherited Market-Clock Anchoring:** Binds conclusion trust to the deterministic market session (NYSE/NASDAQ) of the underlying reference asset. |
 | **3. Why Bitget?** | **Directly tailored to Bitget's 24/7 tokenized US equities (`rNVDA`, `rTSLA`, `rAAPL`).** Crypto trades continuously on Bitget while reference equity exchanges are shut on weekends. Sounding ingests Bitget Spot V2 candles & indicators (RSI-14, 20-EMA, orderbook depth) and routes through the Bitget Qwen API gateway. |
-| **4. Technical Implementation** | Mathematically rigorous implementation enforcing **Invariants I1–I7** with runtime assertions, append-only SQLite audit log, 10/10 stability spike, and **84/84 automated production tests** (`tests/run-all.ts`). |
+| **4. Technical Implementation** | Mathematically rigorous implementation enforcing **Invariants I1–I7** with runtime assertions, append-only SQLite audit log, 10/10 stability spike, and **91/91 automated production tests** (`tests/run-all.ts`). |
 | **5. Measurable Result** | In real-world Case Study A (`rNVDA`), exposes that 3 citations were decorative and 1 off-hours source carried the call. Flags an unanchored **`SHUT`** clock, prompting the trader to cancel a 3x leveraged weekend long and preventing a -14% Monday opening gap-down drawdown. |
 
 ---
@@ -169,7 +169,7 @@ sounding/
     ├── weekend-trap.test.ts            # Weekend trap & Monday gap tests (6 tests)
     ├── tripwires.test.ts               # Invalidation tripwires & decay tests (10 tests)
     ├── derive-llm.test.ts              # Derivation engine & provenance tests (16 tests)
-    └── run-all.ts                      # Master test runner (84/84 tests passing)
+    └── run-all.ts                      # Master test runner (91/91 tests passing)
 ```
 
 ---
@@ -199,7 +199,7 @@ Sounding supports three graceful rungs of operation, ensuring zero barriers for 
 # 1. Install dependencies (Node >= 20 required)
 npm install
 
-# 2. Run Comprehensive Production Test Suite (84/84 Passing)
+# 2. Run Comprehensive Production Test Suite (91/91 Passing)
 npm test
 
 # 3. Run Day-1 Stability Spike (A1 Go/No-Go verification: 10/10 PASS)
