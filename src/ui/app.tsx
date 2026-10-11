@@ -30,6 +30,7 @@ import { db } from '../store/db.js';
 
 import { LandingPage } from './LandingPage.js';
 import { AttributionPanel } from './AttributionPanel.js';
+import { VerdictCard } from './VerdictCard.js';
 import { CoveragePanel } from './CoveragePanel.js';
 import { FoundationVisualizer } from './FoundationVisualizer.js';
 import { TripwireCard } from './TripwireCard.js';
@@ -1040,6 +1041,12 @@ export const App: React.FC = () => {
           )}
 
           {/* 3. Desk Subnavigation Tabs */}
+          {/* The verdict first: what the desk concluded, how fragile it is, and
+              what it is resting on — before any tab is opened. */}
+          {conclusion && attribution && (
+            <VerdictCard conclusion={conclusion} attribution={attribution} />
+          )}
+
           <div className="desk-subnav">
             <button
               className={`subnav-btn ${deskTab === 'attribution' ? 'active' : ''}`}
