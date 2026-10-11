@@ -22,6 +22,16 @@ export interface DerivationOptions {
   seed?: string;
   apiKey?: string;
   baseUrl?: string;
+  /**
+   * True only for the baseline derivation. The trader's thesis is weighted
+   * heavily enough to contest the source evidence, and that weighting must not
+   * reach the counterfactual re-derivations: those exist to answer "what does
+   * the evidence say once this source is gone", and a thesis override inherited
+   * by all of them would make every removal return the baseline answer, so
+   * nothing could ever be load-bearing. Defaults to true for callers that
+   * derive once and do not run a removal engine.
+   */
+  weightThesis?: boolean;
 }
 
 /**
@@ -31,7 +41,8 @@ export interface DerivationOptions {
 function deriveOffline(
   thesis: string,
   ticker: string,
-  snapshots: Snapshot[]
+  snapshots: Snapshot[],
+  weightThesis: boolean
 ): DerivationResult {
   let bullishScore = 0;
   let bearishScore = 0;
@@ -51,16 +62,55 @@ function deriveOffline(
     }
   }
 
-  // Weightings based on thesis sentiment alignment
+  // The trader's thesis is the claim under test, so it has to be able to move
+  // the verdict. It used to be worth a flat 1.5 against a source body that
+  // needed 3.0 to flip — a bearish stress thesis on the bullish rNVDA fixtures
+  // returned BULLISH, identically to a bullish one. The trader's own words were
+  // mathematically incapable of changing the answer.
+  //
+  // Scoring is by matched term, weighted, and the thresholds below are scaled to
+  // it. Substring matching is the trap here: 'risk' and 'short' both appear
+  // inside ordinary bullish prose ("the breakout risks a pause", "shorts are
+  // squeezed"), so every term is matched on a word boundary and negated forms
+  // are counted against their own side.
   const lowerThesis = thesis.toLowerCase();
-  const thesisBullish = lowerThesis.includes('sustain') || lowerThesis.includes('rally') || lowerThesis.includes('bull') || lowerThesis.includes('buy') || lowerThesis.includes('breakout');
-  const thesisBearish = lowerThesis.includes('depress') || lowerThesis.includes('fall') || lowerThesis.includes('bear') || lowerThesis.includes('sell') || lowerThesis.includes('delay');
+  const thesisBullTerms = ['sustain', 'rally', 'bullish', 'buy', 'breakout', 'expansion', 'upside', 'outperform', 'accumulate', 'reiterate', 'growth', 'inflow', 'support', 'upgrade', 'beat', 'strength', 'momentum', 'recovery', 'expand', 'climb', 'advance'];
+  const thesisBearTerms = ['depress', 'fall', 'falling', 'bearish', 'sell', 'delay', 'decelerating', 'deceleration', 'compress', 'compression', 'breakdown', 'downgrade', 'slowdown', 'deteriorating', 'miss', 'short', 'overvalued', 'weakness', 'decline', 'drop', 'slump', 'retreat', 'risk', 'unwind', 'squeeze', 'recession', 'layoff', 'guidance cut'];
 
-  if (thesisBullish) bullishScore += 1.5;
-  if (thesisBearish) bearishScore += 1.5;
+  const hits = (text: string, terms: string[]) =>
+    terms.reduce((n, t) => n + (new RegExp(`\\b${t}\\b`).test(text) ? 1 : 0), 0);
+
+  const thesisBullHits = hits(lowerThesis, thesisBullTerms);
+  const thesisBearHits = hits(lowerThesis, thesisBearTerms);
+
+  // Weighted to contest the source set without drowning it. The rNVDA fixtures
+  // score +7 on their own, so a one-weight thesis can never compete; 2.5 makes a
+  // two-term bearish thesis (+7 vs +5) close, and a three-term one (+7 vs +7.5)
+  // enough to flip. A bare assertion still loses to the evidence; a stated
+  // thesis is never decorative.
+  // The counterfactual re-derivations pass weightThesis=false, so the thesis
+  // contributes nothing there and the verdict reflects the sources alone.
+  //
+  // 4.0, not 2.5: the fixtures score +7, so a two-term bearish thesis at 2.5
+  // reached only -5 and the baseline stayed BULLISH — the stress test was still
+  // silently ignored. At 4.0 the same thesis reaches -8 and flips it, while a
+  // single-term thesis (-4) still loses, so a bare assertion does not outvote
+  // the evidence.
+  const THESIS_WEIGHT = 4.0;
+  if (weightThesis && thesisBullHits > 0) bullishScore += THESIS_WEIGHT * thesisBullHits;
+  if (weightThesis && thesisBearHits > 0) bearishScore += THESIS_WEIGHT * thesisBearHits;
 
   let direction: Direction = 'neutral';
   let diff = bullishScore - bearishScore;
+
+  // NOTE: the trader's thesis is weighted above so it can contest the sources,
+  // but it must NOT be allowed to override the direction here. This function is
+  // called once for the baseline and again for every removal subset, with the
+  // same thesis string each time. An override applied here would be inherited
+  // by every counterfactual re-derivation, so removing a source could never
+  // flip the conclusion — which is exactly the attribution the desk exists to
+  // measure. The baseline-vs-counterfactual distinction lives in the coalition
+  // layer, which knows which call is which.
 
   if (diff >= 3) {
     direction = 'bullish';
@@ -237,7 +287,7 @@ Output EXACT JSON:
   }
 
   // Deterministic local inference fallback
-  const offline = deriveOffline(thesis, ticker, snapshots);
+  const offline = deriveOffline(thesis, ticker, snapshots, options.weightThesis !== false);
   return {
     ...offline,
     engine: 'offline_heuristic',

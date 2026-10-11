@@ -79,6 +79,57 @@ export async function runCoalitionTests(): Promise<{ passed: number; failed: num
   assert(resRobust.robust === true, 'Redundant evidence classified as ROBUST when tested removals do not alter call');
   assert(resRobust.load_bearing_set.length === 0, 'Robust conclusion has empty load_bearing_set');
 
+  // 4. The trader's thesis must be able to move the verdict.
+  //
+  //    It could not: the thesis was worth a flat 1.5 against source evidence
+  //    needing 3.0 to flip, so a bearish stress thesis on the bullish rNVDA
+  //    fixtures returned BULLISH — the same answer as a bullish thesis. The
+  //    desk's own stress test was silently ignored.
+  //
+  //    Two things must hold at once: the baseline follows the thesis, and the
+  //    counterfactual re-derivations still ignore it. The second is the one that
+  //    breaks quietly — if the thesis weighting reaches the removals, every
+  //    removal returns the baseline answer and nothing is ever load-bearing.
+  const bearThesis =
+    'Datacenter revenue is decelerating sharply and the multiple will compress into next quarter';
+  const bullThesis =
+    'Datacenter revenue expansion will sustain further breakout into next quarter despite elevated valuation';
+
+  const bearResult = await computeCoalitionRemoval(bearThesis, 'rNVDA', nvdaSnaps, { maxRemovals: 12 });
+  const bullResult = await computeCoalitionRemoval(bullThesis, 'rNVDA', nvdaSnaps, { maxRemovals: 12 });
+
+  assert(
+    bearResult.baseline.direction === 'bearish',
+    'a bearish stress thesis on bullish sources returns BEARISH, not BULLISH'
+  );
+  assert(
+    bullResult.baseline.direction === 'bullish',
+    'the bullish thesis still returns BULLISH'
+  );
+  assert(
+    bearResult.baseline.direction !== bullResult.baseline.direction,
+    'the two theses produce different verdicts'
+  );
+  assert(
+    bearResult.load_bearing_set.length > 0,
+    'attribution still finds a load-bearing source under the bearish thesis'
+  );
+  assert(
+    bullResult.load_bearing_set.includes('macro-analyst'),
+    'macro-analyst is still identified as load-bearing under the bullish thesis'
+  );
+  assert(
+    bearResult.tested_removals.some((r) => r.changed),
+    'removing a source still changes the conclusion under the bearish thesis'
+  );
+
+  // A bare one-word assertion must not outvote the sources.
+  const weakBear = await computeCoalitionRemoval('I am bearish', 'rNVDA', nvdaSnaps, { maxRemovals: 12 });
+  assert(
+    weakBear.baseline.direction === 'bullish',
+    'a bare assertion does not outvote the source evidence'
+  );
+
   return { passed, failed };
 }
 

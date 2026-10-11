@@ -52,9 +52,20 @@ export async function computeCoalitionRemoval(
   const eligibleSources = snapshots.filter((s) => s.anchor_verdict !== 'unknown');
   const unknownSources = snapshots.filter((s) => s.anchor_verdict === 'unknown');
 
-  // Baseline derivation with all available snapshots
-  const baseline = await cachedDerive(thesis, ticker, snapshots, derivationOptions);
+  // Baseline derivation with all available snapshots. The trader's thesis is
+  // weighted here so a stress-test thesis can return a different answer from a
+  // confirmation thesis — that is the whole point of asking the question.
+  const baseline = await cachedDerive(thesis, ticker, snapshots, {
+    ...derivationOptions,
+    weightThesis: true
+  });
   let removalCalls = 0;
+
+  // Every re-derivation below drops the thesis weighting. These answer "what do
+  // the sources say once this one is gone", so the trader's claim must not be
+  // inherited by them: if it were, every removal would return the baseline
+  // answer and nothing could ever be load-bearing.
+  const counterfactualOpts: DerivationOptions = { ...derivationOptions, weightThesis: false };
 
   function isChanged(candidate: DerivationResult): boolean {
     return (
@@ -71,7 +82,7 @@ export async function computeCoalitionRemoval(
   const singleResults = await Promise.all(
     singleRemovalCandidates.map(async (snap) => {
       const subset = snapshots.filter((s) => s.id !== snap.id);
-      const result = await cachedDerive(thesis, ticker, subset, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, subset, counterfactualOpts);
       return { snap, result };
     })
   );
@@ -136,7 +147,7 @@ export async function computeCoalitionRemoval(
   const pairResults = await Promise.all(
     pairCandidates.map(async ([s1, s2]) => {
       const subset = snapshots.filter((s) => s.id !== s1.id && s.id !== s2.id);
-      const result = await cachedDerive(thesis, ticker, subset, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, subset, counterfactualOpts);
       return { s1, s2, result };
     })
   );
@@ -191,7 +202,7 @@ export async function computeCoalitionRemoval(
       const [removed] = remaining.splice(idx, 1);
       greedyRemoved.push(removed.source_name);
 
-      const result = await cachedDerive(thesis, ticker, remaining, derivationOptions);
+      const result = await cachedDerive(thesis, ticker, remaining, counterfactualOpts);
       const changed = isChanged(result);
 
       tested_removals.push({
