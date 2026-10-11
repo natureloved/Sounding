@@ -222,7 +222,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="primitive-icon" style={{ background: 'var(--accent-cyan-dim)', borderColor: 'var(--accent-cyan-border)', color: 'var(--accent-cyan)' }}>
               ⚖️
             </div>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', marginBottom: '10px' }}>
+            <h3 className="feature-card-title">
               1. The Load-Bearing Set
             </h3>
             <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
@@ -235,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="primitive-icon" style={{ background: 'var(--accent-amber-dim)', borderColor: 'var(--accent-amber-border)', color: 'var(--accent-amber)' }}>
               ⏱️
             </div>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', marginBottom: '10px' }}>
+            <h3 className="feature-card-title">
               2. The Inherited Anchor
             </h3>
             <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
@@ -252,7 +252,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span className="section-eyebrow" style={{ color: 'var(--accent-cyan)' }}>
               Ecosystem Alignment · Why Bitget?
             </span>
-            <h2 className="section-title" style={{ fontSize: '24px', margin: '6px 0 10px' }}>
+            <h2 className="section-title">
               The Tokenized US Equity (rToken) Disconnect
             </h2>
             <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', maxWidth: '780px', lineHeight: 1.6, margin: 0 }}>
@@ -343,7 +343,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span className="section-eyebrow" style={{ color: 'var(--accent-emerald)' }}>
               Measurable Result · Value in Under a Minute
             </span>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', margin: '4px 0 0' }}>
+            <h3 className="feature-card-title">
               Before Sounding vs. After Sounding
             </h3>
           </div>

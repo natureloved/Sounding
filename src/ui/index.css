@@ -17,6 +17,13 @@
 
   /* Precision Hairlines & Double-Bezel */
   --border-hairline: rgba(255, 255, 255, 0.07);
+
+  /* One content measure for every section and one gutter beside it. The page
+     previously carried four different max-widths (1100 / 1200 / 1380 plus a set
+     of one-off caps), so each section boundary sat at a different x and the
+     whole page shifted sideways as it was scrolled. */
+  --content-width: 1200px;
+  --content-gutter: 24px;
   --border-hairline-bright: rgba(255, 255, 255, 0.14);
   --border-hairline-subtle: rgba(255, 255, 255, 0.04);
   --bevel-card: 0 16px 36px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.09);
@@ -327,7 +334,7 @@ body {
 }
 
 .desk-container {
-  max-width: 1380px;
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: 20px 28px 60px;
   width: 100%;
@@ -1371,8 +1378,8 @@ body {
 }
 
 .landing-hero {
-  padding: 60px 24px 40px;
-  max-width: 1200px;
+  padding: 60px var(--content-gutter) 40px;
+  max-width: var(--content-width);
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -1521,8 +1528,8 @@ body {
 
 /* Demo Section */
 .landing-demo-section {
-  padding: 50px 24px;
-  max-width: 1100px;
+  padding: 50px var(--content-gutter);
+  max-width: var(--content-width);
   margin: 0 auto;
   width: 100%;
 }
@@ -1553,7 +1560,7 @@ body {
   font-size: 14px;
   color: var(--text-secondary);
   max-width: 640px;
-  margin: 8px auto 0;
+  margin: 8px 0 0;
   line-height: 1.5;
 }
 
@@ -1619,8 +1626,8 @@ body {
 
 /* Primitives Section */
 .primitives-section {
-  padding: 40px 24px;
-  max-width: 1100px;
+  padding: 40px var(--content-gutter);
+  max-width: var(--content-width);
   margin: 0 auto;
   width: 100%;
 }
@@ -1668,8 +1675,8 @@ body {
 
 /* Scenarios Playground */
 .scenarios-section {
-  padding: 50px 24px;
-  max-width: 1100px;
+  padding: 50px var(--content-gutter);
+  max-width: var(--content-width);
   margin: 0 auto;
   width: 100%;
 }
@@ -1767,7 +1774,7 @@ body {
 }
 
 .footer-grid {
-  max-width: 1200px;
+  max-width: var(--content-width);
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1776,7 +1783,7 @@ body {
 }
 
 .footer-bottom {
-  max-width: 1200px;
+  max-width: var(--content-width);
   margin: 0 auto;
   padding-top: 24px;
   border-top: 1px solid var(--border-hairline);
@@ -2849,8 +2856,9 @@ body {
 /* 15. WHY BITGET & BEFORE-VS-AFTER COMPARISON MATRIX                        */
 /* ------------------------------------------------------------------------- */
 .why-bitget-section {
-  margin: 50px 0;
+  margin: 50px auto;
   padding: 32px;
+  max-width: var(--content-width);
   background: linear-gradient(180deg, rgba(56, 189, 248, 0.04) 0%, rgba(13, 17, 23, 0.7) 100%);
   border: 1px solid rgba(56, 189, 248, 0.25);
   border-radius: var(--radius-card);
@@ -2914,11 +2922,14 @@ body {
 }
 
 .guided-demo-banner {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(56, 189, 248, 0.06) 100%);
   border: 1px solid rgba(245, 158, 11, 0.35);
   border-radius: var(--radius-card);
   padding: 24px 28px;
-  margin: 40px 0;
+  margin: 40px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2957,8 +2968,9 @@ body {
   font-size: 13px;
 }
 
-.before-after-card {
-  margin: 40px 0;
+.before-after-card {max-width: var(--content-width);
+  
+  margin: 40px auto;
   background: var(--bg-card);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-card);
@@ -3152,4 +3164,13 @@ body {
 @media (max-width: 640px) {
   .verdict-card { padding: 16px; }
   .verdict-fragility { text-align: left; }
+}
+
+/* Feature-card title. Four headings in the landing page carried this as an
+   inline style block, each a copy of the same four declarations. */
+.feature-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0 0;
 }

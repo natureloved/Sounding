@@ -12,3 +12,6 @@ skills-lock.json
 *.db
 .DS_Store
 Thumbs.db
+
+# design capture workspace (stitch CLI)
+/.stitch/
